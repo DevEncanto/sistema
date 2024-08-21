@@ -12,7 +12,7 @@ import {
 import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
 
 import { celulasEntradas, entradaInsumos, insumos } from './data';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 
 
 export const TabelaEntradaInsumos = (props) => {

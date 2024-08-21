@@ -12,7 +12,7 @@ import { sxCardScrollPersonalizada } from '../../components/config-componentes/c
 
 import { celulasFornecedores, fornecedores } from './data';
 import { useContext } from 'react';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 
 
 

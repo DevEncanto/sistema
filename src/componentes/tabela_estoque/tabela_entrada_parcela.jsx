@@ -18,14 +18,17 @@ import { SeverityPill } from 'src/components/severity-pill';
 import { alterarStatus } from 'src/util/util-admin';
 import { useContext, useMemo } from 'react';
 import { celulasEntradas, celulasParcelas, entradaInsumos, insumos } from './data';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import formatSaldo from '../../utils/formatarSaldos';
+import { EstoqueContext } from '../../contexts/components_context/estoque_context';
 
 
 export const TabelaParcelas = (props) => {
 
     const sx = { textAlign: "center" }
-    const { formularioEntrada, parcelar, maxHeight = 200, minHeight = 200 } = useContext(UserContext)
+
+    const {maxHeight = 200, minHeight = 200} = props
+    const { formularioEntrada } = useContext(EstoqueContext)
 
 
     return (

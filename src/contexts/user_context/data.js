@@ -1,0 +1,6 @@
+const initUsuario = {
+    usuario: "",
+    permissoes: [
+
+    ]
+}

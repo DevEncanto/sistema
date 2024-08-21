@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { HistoricoSaques } from "../components/historico-saques"
-import { UserContext } from '../contexts/user-context';
+import { UserContext } from '../contexts/user_context/user_context';
 import { Fab } from '@mui/material';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import { atualizarDadosUsuario } from '../util/util-atualizar-dados';

@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography, TextField, Button } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { loadMapeamento, changeMapeamento } from '../../util/util-admin';
 import { useRouter } from 'next/router';
 import { Acordion } from 'src/components/acordion';

@@ -1,8 +1,8 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { TabelaEntradaInsumos } from "./tabela_entrada_insumos";
 import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/user-context";
-import { ButtonSearch } from "../botao_busca";
+import { UserContext } from "../../contexts/user_context/user_context";
+import { ButtonSearch } from "./botoes/botao_busca";
 import { Calendario } from "../calendario";
 import { Selector } from "../select";
 import { TabelaParcelas } from "./tabela_entrada_parcela";
@@ -10,12 +10,14 @@ import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } f
 import { PopupAlerta } from "./popups/popup_status";
 import { ModalTabelaFornecedores } from "./modais/modalFornecedores";
 import { ModalTabelaInsumos } from "./modais/modalInsumos";
+import { CadastroFornecedor } from "./cadastroFornecedor";
+import { EstoqueContext } from "../../contexts/components_context/estoque_context";
 
 export const EntradaInsumos = () => {
-    const { tabsEntrada } = useContext(UserContext);
+    const { controle } = useContext(EstoqueContext);
 
     const renderContent = () => {
-        switch (tabsEntrada) {
+        switch (controle.tabsEntrada) {
             case "tabela":
                 return <TabelaEntradaInsumos />;
             case "form":
@@ -24,6 +26,8 @@ export const EntradaInsumos = () => {
                 return <ModalTabelaFornecedores />;
             case "modalInsumos":
                 return <ModalTabelaInsumos />;
+            case "cadastroFornecedor":
+                return <CadastroFornecedor />;
             default:
                 return null;
         }
@@ -44,9 +48,7 @@ export const EntradaInsumos = () => {
 };
 
 const CadastroNovaEntrada = () => {
-    const { formularioEntrada, setFormularioEntrada, calculoValores, alterarDados, setTabsEntrada, initFormularioEntrada } = useContext(UserContext);
-    const [alert, setAlert] = useState("");
-    const [type, setType] = useState("");
+    const { controle, gerenciarControle, formularioEntrada, setFormularioEntrada, funcoes, initFormularioEntrada } = useContext(EstoqueContext);
 
     const cancelarCadastros = () => {
         setTabsEntrada("tabela");
@@ -56,30 +58,23 @@ const CadastroNovaEntrada = () => {
     const validarDados = async () => {
         for (const campo of camposObrigatorios) {
             if (!formularioEntrada[campo]) {
-                exibirAlerta("Preencha todos os campos", "warning");
+                funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
 
         if (parseInt(formularioEntrada.parcelamento) !== formularioEntrada.parcelamentos.length) {
-            exibirAlerta("Atualize os parcelamentos", "error");
+            funcoes.exibirAlerta("Atualize os parcelamentos", "error");
             return;
         }
 
         console.log(JSON.stringify(formularioEntrada));
     };
 
-    const exibirAlerta = (mensagem, tipo) => {
-        setAlert(mensagem);
-        setType(tipo);
-        setTimeout(() => {
-            setAlert("");
-            setType("");
-        }, 2500);
-    };
+
 
     const renderAlert = () => (
-        alert && <PopupAlerta type={type} title={alert} />
+        controle.alert && <PopupAlerta type={controle.type} title={controle.alert} />
     );
 
     return (
@@ -101,7 +96,7 @@ const CadastroNovaEntrada = () => {
                         width: "60%",
                     }}
                 >
-                    Dados do Lançamento
+                    Nova Entrada
                 </Typography>
                 <Stack
                     direction="row"
@@ -120,18 +115,18 @@ const CadastroNovaEntrada = () => {
                 spacing={4}
             >
                 <Stack>
-                    <CampoComBotao label="Fornecedor" value={formularioEntrada.fornecedor} onClick={() => setTabsEntrada("modalFornecedor")} />
-                    <CampoComBotao label="Insumo" value={formularioEntrada.insumo} onClick={() => setTabsEntrada("modalInsumos")} />
+                    <CampoComBotao label="Fornecedor" value={formularioEntrada.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
+                    <CampoComBotao label="Insumo" value={formularioEntrada.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
-                        <Calendario item="data_emissao" value={formularioEntrada.data_emissao} setValue={alterarDados} width="180px" label="Data de Emissão" />
-                        <Calendario item="data_recebimento" value={formularioEntrada.data_recebimento} setValue={alterarDados} width="218px" label="Data de Recebimento" />
+                        <Calendario item="data_emissao" value={formularioEntrada.data_emissao} setValue={funcoes.alterarDados} width="180px" label="Data de Emissão" />
+                        <Calendario item="data_recebimento" value={formularioEntrada.data_recebimento} setValue={funcoes.alterarDados} width="218px" label="Data de Recebimento" />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px", alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "180px", marginTop: "0px" }} label="Nº Nota Fiscal/Boleto" onChange={e => alterarDados(e, "nf_boleto")} value={formularioEntrada.nf_boleto} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "180px", marginTop: "0px" }} label="Nº Nota Fiscal/Boleto" onChange={e => funcoes.alterarDados(e, "nf_boleto")} value={formularioEntrada.nf_boleto} />
                         {formularioEntrada.status_financeiro === "Em Aberto" && (
                             <>
-                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Parcelamento" onChange={e => alterarDados(e, "parcelamento")} value={formularioEntrada.parcelamento} />
-                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Prazo" onChange={e => alterarDados(e, "prazo")} value={formularioEntrada.prazo} />
+                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Parcelamento" onChange={e => funcoes.alterarDados(e, "parcelamento")} value={formularioEntrada.parcelamento} />
+                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Prazo" onChange={e => funcoes.alterarDados(e, "prazo")} value={formularioEntrada.prazo} />
                             </>
                         )}
                     </Stack>
@@ -141,12 +136,12 @@ const CadastroNovaEntrada = () => {
                     </Stack>
                 </Stack>
                 <Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center",marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Qtde do Insumo" onChange={e => calculoValores(e, "qtde_insumo")} value={formularioEntrada.qtde_insumo} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Unitário" onChange={e => calculoValores(e, "valor_unitario")} value={formularioEntrada.valor_unitario} />
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Qtde do Insumo" onChange={e => funcoes.calculoValores(e, "qtde_insumo")} value={formularioEntrada.qtde_insumo} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Unitário" onChange={e => funcoes.calculoValores(e, "valor_unitario")} value={formularioEntrada.valor_unitario} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Descontos" onChange={e => calculoValores(e, "descontos")} value={formularioEntrada.descontos} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Descontos" onChange={e => funcoes.calculoValores(e, "descontos")} value={formularioEntrada.descontos} />
                         <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Total" value={formularioEntrada.valor_total} />
                     </Stack>
                     <TabelaParcelas />

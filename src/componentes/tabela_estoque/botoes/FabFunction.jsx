@@ -1,17 +1,18 @@
 import { Fab } from '@mui/material';
 import ArrowPathIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import { useContext } from 'react';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../../contexts/user_context/user_context';
+import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
 export const FabClick = () => {
 
-    const { parcelar } = useContext(UserContext)
+    const { funcoes } = useContext(EstoqueContext)
     return (
         <Fab
             color="primary"
             aria-label="add"
 
-            onClick={parcelar}
+            onClick={funcoes.parcelar}
             sx={{
                 justifyContent: "center",
                 alignItems: "center",

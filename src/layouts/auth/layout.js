@@ -5,17 +5,16 @@ import { useEffect, useState } from 'react';
 
 export const Layout = (props) => {
   const { children } = props;
-  const MAX = 6
+  const MAX = 12
   const MIN = 1
 
   const [width, setWidth] = useState(1000)
-  const [img, setImg] = useState(1)
+  const [img, setImg] = useState(Math.floor(Math.random() * (MAX - MIN + 1)) + MIN)
 
   useEffect(() => {
     setWidth(window.innerWidth)
-    setImg(Math.floor(Math.random() * (MAX - MIN + 1)) + MIN)
   }, [])
-  return (
+  return (                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     <Box
       component="main"
       sx={{
@@ -53,15 +52,16 @@ export const Layout = (props) => {
               sx={{
                 display: 'inline-flex',
                 height: 32,
-                width: 32
+                width: 32,
+                paddingLeft: "45px"
               }}
             >
               <img
                 className='imagem-auth'
                 alt=""
-                src="/assets/logo_encanto.png"
-                width={100}
-                height={100}
+                src="/assets/logo_encanto_transparente.png"
+                width={140}
+                height={140}
               />
             </Box>
           </Box>
@@ -72,7 +72,7 @@ export const Layout = (props) => {
           lg={6}
           sx={{
             alignItems: 'center',
-            background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
+            background: 'radial-gradient(50% 50% at 50% 50%, #3870c9 0%, #243785 100%)',
             color: 'white',
             display: `${width < 500 ? 'none' : 'flex'}`,
             justifyContent: 'center',
@@ -82,7 +82,7 @@ export const Layout = (props) => {
           }}
         >
           <Box sx={{ p: 3 }}>
-            <Typography
+            {/* <Typography
               align="center"
               color="#fff"
               sx={{
@@ -121,12 +121,12 @@ export const Layout = (props) => {
               >
                 {'  '}R$ 1,00!
               </Box>
-            </Typography>
+            </Typography> */}
             <img
               className='imagem-auth'
               alt=""
               style={{ marginTop: "-15px" }}
-              src={`/assets/media-social-${Math.floor(Math.random() * (MAX - MIN + 1)) + MIN}.svg`}
+              src={`/assets/enc_painel_${img}.svg`}
               width={530}
               height={530}
             />

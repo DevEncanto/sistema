@@ -17,7 +17,7 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
-import { UserContext } from 'src/contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { useContext, useEffect } from 'react';
 import { SeverityPill } from 'src/components/severity-pill';
 
@@ -27,7 +27,7 @@ const TOP_NAV_HEIGHT = 64;
 export const TopNav = (props) => {
   const { user, loadUser } = useContext(UserContext)
   useEffect(() => {
-    loadUser()
+   
   }, [])
 
   const { onNavOpen } = props;

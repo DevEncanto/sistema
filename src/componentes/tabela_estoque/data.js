@@ -1,6 +1,7 @@
 import { Button } from "@mui/material"
-import { FabClick } from "./FabFunction"
+import { FabClick } from "./botoes/FabFunction"
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon"
+import { BotaoNovoCadastro } from "./botoes/botao_novo_cadastro"
 
 
 export const celulasEstoque = [
@@ -60,18 +61,7 @@ export const celulasParcelas = [
 export const celulasFornecedores = [
     "ID FORNECEDOR",
     "FORNECEDOR",
-    <Button
-        sx={{
-            fontSize: "12px",
-            padding: .9
-        }}
-        key={`btn_entrada`}
-        variant='contained'
-        onClick={() => { }}
-        startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
-    >
-        Novo Fornecedor
-    </Button>
+    <BotaoNovoCadastro title="Novo Fornecedor" cadastro="cadastroFornecedor" />
 ]
 
 export const celulasInsumos = [

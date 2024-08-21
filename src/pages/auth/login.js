@@ -8,10 +8,9 @@ import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import { login } from '../../util/util-login';
 import { useRouter } from 'next/router';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 
-
-const Page = () => {
+const Page = () => {  
   const router = useRouter();
   const auth = useAuth();
   const [method, setMethod] = useState('email');
@@ -52,14 +51,12 @@ const Page = () => {
   const handleLogin = async () => {
     await login(usuario, senha, setMessage, setAlert, router, setUser, setLoad)
   }
-  const handleTrocarSenha = async () => {
-    router.push("/auth/trocar-senha")
-  }
+  
   return (
     <>
       <Head>
         <title>
-          Login | CherrySocial
+          Login | Encanto
         </title>
       </Head>
       <Box
@@ -75,7 +72,7 @@ const Page = () => {
           sx={{
             maxWidth: 550,
             px: 3,
-            py: '100px',
+            py: '50px',
             width: '100%'
           }}
         >
@@ -96,22 +93,24 @@ const Page = () => {
                 }
               </Stack>
               {!!(!message) ?
-                <Typography
-                  color="text.secondary"
-                  variant="body2"
-                >
-                  Ainda não possui uma conta?
-                  &nbsp;
-                  <Link
-                    component={NextLink}
-                    href="/auth/register"
-                    underline="hover"
-                    variant="subtitle2"
-                    color="cereja.100"
-                  >
-                    Faça o seu cadastro aqui!
-                  </Link>
-                </Typography> :
+                // <Typography
+                //   color="text.secondary"
+                //   variant="body2"
+                // >
+                //   Ainda não possui uma conta?
+                //   &nbsp;
+                //   <Link
+                //     component={NextLink}
+                //     href="/auth/register"
+                //     underline="hover"
+                //     variant="subtitle2"
+                //     color="cereja.100"
+                //   >
+                //     Faça o seu cadastro aqui!
+                //   </Link>
+                // </Typography>
+                <></> 
+                :
                 <Typography
                   color={alert}
                   variant="body2"
@@ -148,7 +147,7 @@ const Page = () => {
                 />
               </Stack>
               <Stack>
-                <Button onClick={handleTrocarSenha}
+                {/* <Button onClick={handleTrocarSenha}
                   sx={{
                     background: "none",
                     "&:hover": {
@@ -166,7 +165,7 @@ const Page = () => {
                     }}>
                     Esqueceu sua senha?
                   </Typography>
-                </Button>
+                </Button> */}
               </Stack>
               {formik.errors.submit && (
                 <Typography

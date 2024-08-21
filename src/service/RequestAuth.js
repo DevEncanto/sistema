@@ -7,12 +7,12 @@ const inserirUsuario = async (nome, email, senha, codigo) => {
         senha: senha,
         codigo: codigo
     })
-    return data
+    return data 
 }
 
 const loginUsuario = async (usuario, senha) => {
-    const { data } = await api.post("/login", {
-        usuario: usuario,
+    const { data } = await api.post("/login_usuario", {
+        acesso: usuario,
         senha: senha
     })
     return data

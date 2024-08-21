@@ -14,6 +14,9 @@ const login = async (usuario, senha, setMessage, setAlert, router, setUser, setL
         try {
             setLoad(true)
             const response = await loginUsuario(usuario, senha)
+
+            console.log(response)
+
             await delay(1200)
             setAlert(response.view)
             setMessage(response.message)
@@ -26,18 +29,20 @@ const login = async (usuario, senha, setMessage, setAlert, router, setUser, setL
 
             if (response?.status == 200) {
                 api.defaults.headers['Authorization'] = `Bearer ${response.token}`
-                const dataUser = await buscarUsuario(response.idUsuario)
-                setUser(dataUser)
-                window.localStorage.removeItem("user")
-                window.localStorage.setItem("user", JSON.stringify(dataUser))
+                
+                // setUser(dataUser)
+                // window.localStorage.removeItem("user")
+                // window.localStorage.setItem("user", JSON.stringify(dataUser))
                 Cookie.set("auth_token", response.token)
-                if (response?.tipoUsuario === "USER") {
-                    router.push("/atualizacoes")
-                } else {
-                    window.localStorage.removeItem("user")
-                    await dadosAdmin(setUser, dataUser?.usuario?.idUsuario, setLoad, true)
-                    router.push("/admin/usuarios")
-                }
+                router.push("/estoques")
+                console.log("REDIRECT 2")
+                // if (response?.tipoUsuario === "USER") {
+                //     router.push("/atualizacoes")
+                // } else {
+                //     window.localStorage.removeItem("user")
+                //     await dadosAdmin(setUser, dataUser?.usuario?.idUsuario, setLoad, true)
+                //     router.push("/admin/usuarios")
+                // }
             }
         } catch (error) {
             console.log(error)

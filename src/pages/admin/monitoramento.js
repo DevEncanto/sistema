@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Divider, Stack, Typography, TextField, Button, Fab } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { GraficoProcessador } from 'src/components/grafico-processador';
 import { ManutencaoProgramada, Memoria, Processador, StatusPlataforma } from 'src/components/abas-laterais';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';

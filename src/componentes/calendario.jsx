@@ -1,20 +1,18 @@
-import * as React from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TextField } from '@mui/material';
 import { ptBR } from '@mui/x-date-pickers';
 import 'dayjs/locale/pt-br';
-import { UserContext } from '../contexts/user-context';
-
+import { useContext } from 'react';
+import { EstoqueContext } from '../contexts/components_context/estoque_context';
 
 export const Calendario = (props) => {
 
 
     const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText;
     const { width, label, item } = props
-    const { formularioEntrada, alterarDados } = React.useContext(UserContext)
-
+    const { formularioEntrada, funcoes } = useContext(EstoqueContext)
 
     const sx = {
         width: width,
@@ -36,7 +34,7 @@ export const Calendario = (props) => {
                 color="blue"
                 format="DD/MM/YYYY"
                 value={formularioEntrada[item]}
-                onChange={e => alterarDados(e, item)}
+                onChange={e => funcoes.alterarDados(e, item)}
                 renderInput={(params) => <TextField sx={sx} {...params} error={false} placeholder={"DD/MM/YYYY"} />}
             />
         </LocalizationProvider>

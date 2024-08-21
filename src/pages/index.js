@@ -8,7 +8,7 @@ const Page = () => {
   const router = useRouter()
 
   useEffect(() => {
-    router.push("/atualizacoes")
+    
   }, [])
   return <h2></h2>
 }

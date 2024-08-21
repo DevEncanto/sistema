@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography, Fab, Button } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { TabelaRotas } from 'src/components/tabela-rotas';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import ArrowDownOnSquareStackIcon from '@heroicons/react/24/solid/ArrowDownOnSquareStackIcon';

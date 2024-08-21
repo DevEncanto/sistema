@@ -1,12 +1,8 @@
-
 import { createContext, useState } from "react";
-import formatSaldo from "../utils/formatarSaldos";
-import { calcularDatas } from "../utils/gerador-datas";
-import { converterDateParaString } from "../utils/formatar-datas-createdAt";
 
-export const UserContext = createContext();
+export const DataContext = createContext();
 
-export const UserProvider = ({ children }) => {
+export const DataProvider = ({ children }) => {
 
     //Estados de controle do estoque
 
@@ -15,26 +11,8 @@ export const UserProvider = ({ children }) => {
     const [insumo, setInsumo] = useState("")
     const [tabsEntrada, setTabsEntrada] = useState("tabela")
 
-    const initFormularioEntrada = {
-        fornecedor: "",
-        insumo: "",
-        data_emissao: "",
-        data_recebimento: "",
-        status_financeiro: "Em Aberto",
-        forma_pagamento: "Pix",
-        qtde_insumo: "",
-        prazo: "",
-        valor_unitario: "",
-        descontos: "",
-        valor_total: "",
-        parcelamento: "",
-        nf_boleto: "",
-        parcelamentos: [
-
-        ]
-    }
-
     const [formularioEntrada, setFormularioEntrada] = useState(initFormularioEntrada)
+    const [formularioFornecedor, setFormularioFornecedor] = useState(initFormularioFornecedor)
 
     const calculoValores = (e, item) => {
         let total = 0
@@ -69,6 +47,11 @@ export const UserProvider = ({ children }) => {
         }
         setFormularioEntrada((currentState) => {
             return { ...currentState, [item]: data }
+        })
+    }
+    const alterarDadosFornecedor = (e, item) => {
+        setFormularioFornecedor((currentState) => {
+            return { ...currentState, [item]: e.target.value }
         })
     }
 
@@ -136,7 +119,10 @@ export const UserProvider = ({ children }) => {
         alterarDados,
         calculoValores,
         parcelar,
-        initFormularioEntrada
+        initFormularioEntrada,
+        alterarDadosFornecedor,
+        formularioFornecedor, 
+        setFormularioFornecedor
     }
 
 

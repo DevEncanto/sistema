@@ -1,11 +1,12 @@
 import { Stack, SvgIcon, Typography } from "@mui/material"
 import { useContext } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import { UserContext } from "../../../contexts/user-context";
+import { UserContext } from "../../../contexts/user_context/user_context";
+import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 
 export const ModalEstoque = (props) => {
 
-    const { setTabsEntrada } = useContext(UserContext)
+    const { gerenciarControle } = useContext(EstoqueContext)
     const { destino, children, title, width = "450px", height = "460px" } = props
 
     return (
@@ -44,7 +45,7 @@ export const ModalEstoque = (props) => {
                 >
                     <Typography
                         variant="h5"
-                        sx={{fontSize: "20px"}}
+                        sx={{ fontSize: "20px" }}
                     >
                         {title}
                     </Typography>
@@ -57,7 +58,7 @@ export const ModalEstoque = (props) => {
                     }}
                 >
                     <SvgIcon
-                        onClick={() => setTabsEntrada(destino)}
+                        onClick={() => gerenciarControle(destino, "tabsEntrada", false)}
                         sx={{
                             cursor: "pointer"
                         }}
@@ -75,7 +76,7 @@ export const ModalEstoque = (props) => {
             >
                 {children}
             </Stack>
-            
+
         </Stack>
     );
 

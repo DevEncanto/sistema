@@ -10,23 +10,24 @@ import {
 import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
 import { useContext, useMemo } from 'react';
 import { celulasEstoque, insumos } from './data';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
+import { EstoqueContext } from '../../contexts/components_context/estoque_context';
 
 
 export const TabelaInsumos = () => {
 
-    const { insumo } = useContext(UserContext);
+    const { controle } = useContext(EstoqueContext);
 
     const sx = { textAlign: "center" }
 
     const insumosFiltrados = useMemo(() => {
-        const buscaInsumo = insumo.toLowerCase()
+        const buscaInsumo = controle.insumo.toLowerCase()
         const filter = insumos.filter((item) =>
             item.insumo.toLowerCase().includes(buscaInsumo)
         )
 
         return buscaInsumo === "" ? insumos : filter
-    }, [insumos, insumo])
+    }, [insumos, controle.insumo])
 
     return (
         <Paper sx={{ width: '100%' }}>

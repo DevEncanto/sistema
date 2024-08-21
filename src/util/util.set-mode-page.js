@@ -3,6 +3,9 @@ import Cookies from "js-cookie"
 
 
 const modoDashboard = async (router, setMode) => {
+
+    console.log("useLayoutEffect")
+    const response = await solicitarModoDashaboard()
     // try {
     //     const response = await solicitarModoDashaboard()
     //     setMode(response.mode)

@@ -1,16 +1,9 @@
-import ChartBarIcon from '@heroicons/react/24/solid/ChartBarIcon';
 import UserIcon from '@heroicons/react/24/solid/UserIcon';
-import InboxArrowDownIcon from '@heroicons/react/24/solid/InboxArrowDownIcon'
-import ClipboardDocumentListIcon from '@heroicons/react/24/solid/ClipboardDocumentListIcon'
-import PresentationChartBarIcon from '@heroicons/react/24/solid/PresentationChartBarIcon'
-import Puzzle from '@heroicons/react/24/solid/PuzzlePieceIcon'
 import CpuChipIcon from '@heroicons/react/24/solid/CpuChipIcon'
 import MapPinIcon from '@heroicons/react/24/solid/MapPinIcon'
 import ServerIcon from '@heroicons/react/24/solid/ServerIcon'
 import ListBulletIcon from '@heroicons/react/24/solid/ListBulletIcon';
-import AcademicCapIcon from '@heroicons/react/24/solid/AcademicCapIcon';
 import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';
-import ChatBubbleLeftRightIcon from '@heroicons/react/24/solid/ChatBubbleOvalLeftEllipsisIcon';
 import HomeIcon from '@heroicons/react/24/solid/HomeIcon';
 import LinkIcon from '@heroicons/react/24/solid/LinkIcon';
 import { FaBoxes } from "react-icons/fa";
@@ -18,6 +11,16 @@ import { SvgIcon } from '@mui/material';
 
 export const items = {
   USER: [
+    {
+      title: 'Home',
+      path: '/home',
+      icon: (
+        <SvgIcon fontSize="small">
+          <HomeIcon />
+        </SvgIcon>
+      ),
+      mode: "USER"
+    },
     {
       title: 'Estoques',
       path: '/estoques',
@@ -27,7 +30,7 @@ export const items = {
         </SvgIcon>
       ),
       mode: "USER"
-    }
+    },
   ],
   ADMIN: [
     {

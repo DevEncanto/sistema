@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { styled } from '@mui/material/styles';
 import { SideNav } from './side-nav';
 import { TopNav } from './top-nav';
 import { modoDashboard } from '../../util/util.set-mode-page';
 import { useContext } from 'react';
-import { UserContext } from 'src/contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { useRouter } from 'next/router';
 
 const SIDE_NAV_WIDTH = 280;
@@ -32,6 +32,7 @@ export const Layout = (props) => {
   const { mode, setMode, chat } = useContext(UserContext)
   const [openNav, setOpenNav] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
+
   const handlePathnameChange = useCallback(
     () => {
       if (openNav) {
@@ -40,17 +41,23 @@ export const Layout = (props) => {
     },
     [openNav]
   );
+
   const handleSetMode = async () => {
     await modoDashboard(router, setMode)
   }
+
+  useLayoutEffect(() => {
+    handleSetMode()
+  }, [])
+
   useEffect(() => {
+    console.log("useEffect")
     handlePathnameChange()
     handleSetMode()
     setIsLoading(false)
-  }, []);
-  useEffect(() => {
+  }, [])
 
-  }, [chat])
+
   return (
     <>
       {isLoading

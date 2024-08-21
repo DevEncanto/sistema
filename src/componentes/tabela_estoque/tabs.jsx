@@ -3,11 +3,12 @@ import { TabelaInsumos } from "./estoque_insumos"
 import { entradaInsumos, insumos } from "./data"
 import { EntradaInsumos, TabelaEntradaInsumos } from "./entrada_insumos"
 import { useContext } from "react"
-import { UserContext } from "../../contexts/user-context"
+import { UserContext } from "../../contexts/user_context/user_context"
+import { EstoqueContext } from "../../contexts/components_context/estoque_context"
 
 export const TabsInsumos = () => {
 
-    const { tab } = useContext(UserContext)
+    const { controle } = useContext(EstoqueContext)
     const sx = {
         width: "100%",
         heigth: "100%",
@@ -18,9 +19,9 @@ export const TabsInsumos = () => {
 
     return (
         <Stack sx={sx}>
-            {tab === "resumo" ? <TabelaInsumos /> : <></>}
-            {tab === "entradas" ? <EntradaInsumos /> : <></>}
-            {tab === "saidas" ? <TabelaInsumos /> : <></>}
+            {controle.tab === "resumo" ? <TabelaInsumos /> : <></>}
+            {controle.tab === "entradas" ? <EntradaInsumos /> : <></>}
+            {controle.tab === "saidas" ? <TabelaInsumos /> : <></>}
         </Stack>
     )
 }

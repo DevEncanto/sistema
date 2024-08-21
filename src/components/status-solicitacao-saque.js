@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useEffect, useContext } from 'react';
-import { UserContext } from '../contexts/user-context';
+import { UserContext } from '../contexts/user_context/user_context';
 import formatSaldo from '../utils/formatarSaldos';
 
 export const SolicitacaoSaque = () => {

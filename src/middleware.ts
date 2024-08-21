@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function middleware(request: NextRequest, response: NextResponse) {
 
-    // let token = request.cookies.get('auth_token')?.value
-    const token = true  
+    let token = request.cookies.get('auth_token')?.value
+    // const token = true  
     const signInURL = new URL('/auth/login', request.url)
-    const homeURL = new URL('/atualizacoes', request.url)
+    const homeURL = new URL('/home', request.url)
     const manutencaoURL = new URL('/manutencao', request.url)
     let mode = "nuvem"
     const validateAdmin = `${mode === "nuvem" ? "https://www.encanto-service.online" : "http://localhost:4000"}/api/admin/validate`
@@ -34,7 +34,7 @@ export const config = {
         '/historico-saques/:path*',
         '/perfil/:path*',
         '/auth/:path*',
-
+        '/insumos/:path*',
         '/desafios/:path*',
         '/solicitar-saque/:path*',
         '/admin/:path*',

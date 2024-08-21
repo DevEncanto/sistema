@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box, Paper, Table, TableContainer, Unstable_Grid2 as Grid, Stack, Link, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useContext, useEffect } from 'react';
-import { UserContext } from '../contexts/user-context';
+import { UserContext } from '../contexts/user_context/user_context';
 import { useRouter } from 'next/router';
 import { modoDashboard } from 'src/util/util.set-mode-page';
 import { tutoriais } from 'src/utils/tutoriais';

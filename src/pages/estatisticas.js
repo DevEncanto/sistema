@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box, Container, Unstable_Grid2 as Grid, Stack, Fab, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../contexts/user-context';
+import { UserContext } from '../contexts/user_context/user_context';
 import formatSaldo from '../utils/formatarSaldos';
 import WalletIcon from '@heroicons/react/24/solid/WalletIcon';
 import CurrencyDollarIcon from '@heroicons/react/24/solid/CurrencyDollarIcon';

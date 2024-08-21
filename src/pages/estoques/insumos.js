@@ -2,23 +2,26 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Divider, Container, Stack, Typography, Fab, Button, TextField } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import { botoesNavegacao, insumos } from '../../componentes/tabela_estoque/data';
 import { TabsInsumos } from '../../componentes/tabela_estoque/tabs';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import { EstoqueContext } from '../../contexts/components_context/estoque_context';
 
 
 
 const Page = () => {
 
   const [insumo, setInsumo] = useState("")
-  const { loadUser, tab, setTab, setTabsEntrada } = useContext(UserContext)
+  const { controle, gerenciarControle } = useContext(EstoqueContext)
   const [idUsuario, setIdUsuario] = useState("")
-  const [load, setLoad] = useState(false) 
+  const [load, setLoad] = useState(false)
+  let e = { target: { value: "" } }
+
 
   useEffect(() => {
-    loadUser()
+
   }, [])
 
   return (
@@ -43,9 +46,9 @@ const Page = () => {
               <Stack spacing={1}>
                 <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
                   <Typography variant="h4">
-                    {tab === "resumo" ? "Estoque de Insumos" : ""}
-                    {tab === "entradas" ? "Entrada de Insumos" : ""}
-                    {tab === "saidas" ? "Saída de Insumos" : ""}
+                    {controle.tab === "resumo" ? "Estoque de Insumos" : ""}
+                    {controle.tab === "entradas" ? "Entrada de Insumos" : ""}
+                    {controle.tab === "saidas" ? "Saída de Insumos" : ""}
                   </Typography>
                   {load ?
                     <img src="/assets/loading.svg" width={40} height={40} />
@@ -80,9 +83,9 @@ const Page = () => {
                     return <Button
                       key={`btn_nav${index}`}
                       variant='contained'
-                      onClick={() => { setTab(botao.tab) }}
+                      onClick={() => { gerenciarControle(botao.tab, "tab", false) }}
                       sx={{
-                        backgroundColor: tab === botao.tab ? "primary.dark" : "grey"
+                        backgroundColor: controle.tab === botao.tab ? "primary.dark" : "grey"
                       }}
                     >
                       {botao.label}
@@ -95,10 +98,10 @@ const Page = () => {
                 direction="row-reverse"
                 width="50%"
               >
-                {tab === "entradas" ? <Button
+                {controle.tab === "entradas" && controle.tabsEntrada == "tabela" ? <Button
                   key={`btn_entrada`}
                   variant='contained'
-                  onClick={() => { setTabsEntrada("form") }}
+                  onClick={() => { gerenciarControle("form", "tabsEntrada", false) }}
                   startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
                 >
                   Nova Entrada

@@ -8,7 +8,7 @@ import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import { login } from '../../util/util-login';
 import { useRouter } from 'next/router';
-import { UserContext } from '../../contexts/user-context';
+import { UserContext } from '../../contexts/user_context/user_context';
 import { solicitarTokenEmail, trocarSenha } from 'src/util/util-trocar-senha';
 
 const Page = () => {
