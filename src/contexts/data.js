@@ -40,5 +40,6 @@ export const camposObrigatoriosFornecedor = [
     "bairro",
     "cidade",
     "cep",
-    "estado"
+    "estado",
+    "fantasia"
 ]

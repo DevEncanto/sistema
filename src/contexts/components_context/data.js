@@ -40,5 +40,6 @@ export const initFormularioFornecedor = {
     pix: "",
     agencia: "",
     conta: "",
-    banco: ""
+    banco: "",
+    fantasia: ""
 }

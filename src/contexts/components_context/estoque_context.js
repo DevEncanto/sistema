@@ -14,7 +14,6 @@ export const EstoqueProvider = ({ children }) => {
     const [formularioEntrada, setFormularioEntrada] = useState(initFormularioEntrada)
     const [formularioFornecedor, setFormularioFornecedor] = useState(initFormularioFornecedor)
 
-
     const gerenciarControle = (e, item, target = true) => {
         setControle((currentState) => {
             return { ...currentState, [item]: target ? e.target.value : e }
@@ -29,6 +28,15 @@ export const EstoqueProvider = ({ children }) => {
             gerenciarControle("", "type", false)
         }, 2500);
     };
+
+    const validarCampo = (campo, mensagem) => {
+        if (campo === null || campo === undefined || campo === "") {
+            exibirAlerta(mensagem, "warning");
+            return false;
+        }
+        return true;
+    }
+
 
     const funcoes = {
         calculoValores: (e, item) => {
@@ -76,22 +84,10 @@ export const EstoqueProvider = ({ children }) => {
             const { valor_total, parcelamento, data_emissao, prazo } = formularioEntrada
 
 
-            if (data_emissao == null || data_emissao == "" || undefined) {
-                exibirAlerta("Informe uma data de emissão!", "warning")
-                return
-            }
-            if (parcelamento == null || parcelamento == "" || undefined) {
-                exibirAlerta("Informe um parcelamento!", "warning")
-                return
-            }
-            if (prazo == null || prazo == "" || undefined) {
-                exibirAlerta("Informe o prazo de pagamento!", "warning")
-                return
-            }
-            if (valor_total == null || valor_total == "" || undefined) {
-                exibirAlerta("Informe o total do lançamento", "warning")
-                return
-            }
+            if (!validarCampo(data_emissao, "Informe uma data de emissão!")) return;
+            if (!validarCampo(parcelamento, "Informe um parcelamento!")) return;
+            if (!validarCampo(prazo, "Informe o prazo de pagamento!")) return;
+            if (!validarCampo(valor_total, "Informe o total do lançamento")) return;
 
             const num1 = valor_total == "" ? 0 : parseFloat(valor_total)
             const num2 = parcelamento == "" ? 0 : parseFloat(parcelamento)
@@ -120,7 +116,11 @@ export const EstoqueProvider = ({ children }) => {
         gerenciarControle,
         controle,
         formularioFornecedor,
-        formularioEntrada
+        setFormularioEntrada,
+        setFormularioFornecedor,
+        formularioEntrada,
+        initFormularioEntrada,
+        initFormularioFornecedor
     }
 
 

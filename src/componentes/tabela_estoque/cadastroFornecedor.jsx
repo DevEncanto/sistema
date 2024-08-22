@@ -9,14 +9,18 @@ import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } f
 import { PopupAlerta } from "./popups/popup_status";
 import { camposObrigatoriosFornecedor } from "../../contexts/data";
 import { EstoqueContext } from "../../contexts/components_context/estoque_context";
+import { cadastrarFornecedor } from "../../service/request_cadastro";
+import { DataContext } from "../../contexts/data_context/data_context";
 
 export const CadastroFornecedor = () => {
     const { funcoes, gerenciarControle, formularioFornecedor } = useContext(EstoqueContext);
+    const { controle } = useContext(DataContext)
+
     const [alert, setAlert] = useState("");
     const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
-        setTabsEntrada("modalFornecedor");
+        gerenciarControle("modalFornecedor", "tabsEntrada", false);
     };
 
     const validarDados = async () => {
@@ -26,13 +30,15 @@ export const CadastroFornecedor = () => {
                 return;
             }
         }
+        const response = await cadastrarFornecedor(formularioFornecedor)
 
-        console.log(JSON.stringify(formularioFornecedor));
-        exibirAlerta("Cadastro Realizado com sucesso!", "success")
+        exibirAlerta(response.alert, response.type)
 
-        setTimeout(() => {
-            setTabsEntrada("modalFornecedor")
-        }, 2500)
+        if (response.type) {
+            setTimeout(() => {
+                gerenciarControle("modalFornecedor", "tabsEntrada", false);
+            }, 2500)
+        }
     };
 
     const exibirAlerta = (mensagem, tipo) => {
@@ -86,9 +92,10 @@ export const CadastroFornecedor = () => {
                 spacing={4}
             >
                 <Stack>
-
+                    {JSON.stringify(controle)}
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "405px", marginTop: "px" }} label="Nome" onChange={e => funcoes.alterarDadosFornecedor(e, "nome")} value={formularioFornecedor.nome} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Nome" onChange={e => funcoes.alterarDadosFornecedor(e, "nome")} value={formularioFornecedor.nome} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.alterarDadosFornecedor(e, "fantasia")} value={formularioFornecedor.fantasia} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.alterarDadosFornecedor(e, "cpf_cnpj")} value={formularioFornecedor.cpf_cnpj} />

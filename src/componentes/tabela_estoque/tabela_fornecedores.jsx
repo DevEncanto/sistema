@@ -10,15 +10,17 @@ import {
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
 
-import { celulasFornecedores, fornecedores } from './data';
+import { celulasFornecedores } from './data';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/user_context/user_context';
+import { DataContext } from '../../contexts/data_context/data_context';
 
 
 
 export const TabelaFornecedores = (props) => {
 
     const { alterarDados, setTabsEntrada } = useContext(UserContext)
+    const { controle } = useContext(DataContext)
     const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
@@ -42,7 +44,7 @@ export const TabelaFornecedores = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {fornecedores.map((fornecedor, index) => {
+                        {controle.fornecedores.map((fornecedor, index) => {
                             return (
                                 <TableRow
                                     hover
@@ -53,7 +55,7 @@ export const TabelaFornecedores = (props) => {
                                     </TableCell>
                                     <TableCell sx={sx}>
 
-                                        {fornecedor.fornecedor}
+                                        {fornecedor.fantasia}
 
                                     </TableCell>
                                     <TableCell sx={sx}>
@@ -61,7 +63,7 @@ export const TabelaFornecedores = (props) => {
                                         <Button
                                             sx={{
                                                 fontSize: "12px",
-                                                padding:1
+                                                padding: 1
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'

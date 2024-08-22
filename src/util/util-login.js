@@ -4,7 +4,7 @@ import delay from "src/utils/delay"
 import { api } from "../service/api"
 import { dadosAdmin } from "./util-admin"
 
-const login = async (usuario, senha, setMessage, setAlert, router, setUser, setLoad) => {
+const login = async (usuario, senha, setMessage, setAlert, router, iniciarControle, setLoad) => {
     if (!usuario || !senha) {
         setAlert("error")
         setMessage("Preencha todos os campos!")
@@ -12,11 +12,10 @@ const login = async (usuario, senha, setMessage, setAlert, router, setUser, setL
         setMessage("")
     } else {
         try {
+            
             setLoad(true)
             const response = await loginUsuario(usuario, senha)
-
-            console.log(response)
-
+            iniciarControle(response.dados)
             await delay(1200)
             setAlert(response.view)
             setMessage(response.message)
@@ -29,10 +28,8 @@ const login = async (usuario, senha, setMessage, setAlert, router, setUser, setL
 
             if (response?.status == 200) {
                 api.defaults.headers['Authorization'] = `Bearer ${response.token}`
-                
-                // setUser(dataUser)
-                // window.localStorage.removeItem("user")
-                // window.localStorage.setItem("user", JSON.stringify(dataUser))
+               
+                window.localStorage.setItem("dados", JSON.stringify(response))
                 Cookie.set("auth_token", response.token)
                 router.push("/estoques")
                 console.log("REDIRECT 2")

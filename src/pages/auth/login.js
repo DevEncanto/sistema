@@ -9,12 +9,14 @@ import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import { login } from '../../util/util-login';
 import { useRouter } from 'next/router';
 import { UserContext } from '../../contexts/user_context/user_context';
+import { DataContext } from '../../contexts/data_context/data_context';
 
 const Page = () => {  
   const router = useRouter();
   const auth = useAuth();
   const [method, setMethod] = useState('email');
   const { setUser } = useContext(UserContext)
+  const {iniciarControle} = useContext(DataContext)
   const [load, setLoad] = useState(false)
   const [usuario, setUsuario] = useState("")
   const [senha, setSenha] = useState("")
@@ -49,7 +51,7 @@ const Page = () => {
     }
   });
   const handleLogin = async () => {
-    await login(usuario, senha, setMessage, setAlert, router, setUser, setLoad)
+    await login(usuario, senha, setMessage, setAlert, router, iniciarControle, setLoad)
   }
   
   return (

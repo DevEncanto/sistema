@@ -3,10 +3,11 @@ import { usePathname } from 'next/navigation';
 import { styled } from '@mui/material/styles';
 import { SideNav } from './side-nav';
 import { TopNav } from './top-nav';
-import { modoDashboard } from '../../util/util.set-mode-page';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/user_context/user_context';
 import { useRouter } from 'next/router';
+import { validarToken } from '../../service/request_autenticacao';
+import { Stack } from '@mui/material';
 
 const SIDE_NAV_WIDTH = 280;
 
@@ -43,25 +44,41 @@ export const Layout = (props) => {
   );
 
   const handleSetMode = async () => {
-    await modoDashboard(router, setMode)
+    const response = await validarToken()
+    if (!response.status) {
+      router.push("/auth/login")
+    }
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 2000)
   }
 
   useLayoutEffect(() => {
     handleSetMode()
+
   }, [])
 
   useEffect(() => {
-    console.log("useEffect")
     handlePathnameChange()
-    handleSetMode()
-    setIsLoading(false)
   }, [])
 
 
   return (
     <>
       {isLoading
-        ? <></>
+        ?
+        <>
+          <Stack
+            sx={{
+              width: "100vw",
+              height: "100vh",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img src="/assets/loading.svg" width={80} height={80} />
+          </Stack>
+        </>
         :
         <>
           {!chat ? <TopNav onNavOpen={() => setOpenNav(true)} /> : <></>}

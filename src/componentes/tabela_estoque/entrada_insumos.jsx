@@ -12,6 +12,7 @@ import { ModalTabelaFornecedores } from "./modais/modalFornecedores";
 import { ModalTabelaInsumos } from "./modais/modalInsumos";
 import { CadastroFornecedor } from "./cadastroFornecedor";
 import { EstoqueContext } from "../../contexts/components_context/estoque_context";
+import { DataContext } from "../../contexts/data_context/data_context";
 
 export const EntradaInsumos = () => {
     const { controle } = useContext(EstoqueContext);
@@ -49,9 +50,9 @@ export const EntradaInsumos = () => {
 
 const CadastroNovaEntrada = () => {
     const { controle, gerenciarControle, formularioEntrada, setFormularioEntrada, funcoes, initFormularioEntrada } = useContext(EstoqueContext);
-
+    const data = useContext(DataContext)
     const cancelarCadastros = () => {
-        setTabsEntrada("tabela");
+        gerenciarControle("tabela", "tabsEntrada", false);
         setFormularioEntrada(initFormularioEntrada);
     };
 
@@ -115,6 +116,8 @@ const CadastroNovaEntrada = () => {
                 spacing={4}
             >
                 <Stack>
+
+                    {JSON.stringify(data.controle)}
                     <CampoComBotao label="Fornecedor" value={formularioEntrada.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
                     <CampoComBotao label="Insumo" value={formularioEntrada.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
