@@ -120,7 +120,8 @@ export const EstoqueProvider = ({ children }) => {
         gerenciarControle,
         controle,
         formularioFornecedor,
-        formularioEntrada
+        formularioEntrada,
+        setFormularioEntrada
     }
 
 

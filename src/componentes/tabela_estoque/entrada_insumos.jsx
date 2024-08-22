@@ -1,7 +1,6 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { TabelaEntradaInsumos } from "./tabela_entrada_insumos";
-import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/user_context/user_context";
+import { useContext } from "react";
 import { ButtonSearch } from "./botoes/botao_busca";
 import { Calendario } from "../calendario";
 import { Selector } from "../select";
@@ -51,7 +50,7 @@ const CadastroNovaEntrada = () => {
     const { controle, gerenciarControle, formularioEntrada, setFormularioEntrada, funcoes, initFormularioEntrada } = useContext(EstoqueContext);
 
     const cancelarCadastros = () => {
-        setTabsEntrada("tabela");
+        gerenciarControle("tabela", "tabsEntrada", false);
         setFormularioEntrada(initFormularioEntrada);
     };
 
