@@ -8,20 +8,20 @@ import { botoesNavegacao, insumos } from '../../componentes/tabela_estoque/data'
 import { TabsInsumos } from '../../componentes/tabela_estoque/tabs';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { EstoqueContext } from '../../contexts/components_context/estoque_context';
+import { DataContext } from '../../contexts/data_context/data_context';
 
 
 
 const Page = () => {
 
-  const [insumo, setInsumo] = useState("")
   const { controle, gerenciarControle } = useContext(EstoqueContext)
-  const [idUsuario, setIdUsuario] = useState("")
+  const { loadLocalStorage } = useContext(DataContext)
   const [load, setLoad] = useState(false)
   let e = { target: { value: "" } }
 
 
   useEffect(() => {
-
+    loadLocalStorage()
   }, [])
 
   return (

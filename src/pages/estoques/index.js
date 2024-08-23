@@ -121,7 +121,7 @@ const Page = () => {
                             sx={{ padding: "50px 220px 0px 220px" }}
                         >
                             {estoques.map((estoque, index) => (
-                                <Grid xs={2} sm={3} md={3} key={index}
+                                <Grid key={index}
                                     sx={{ marginBottom: "20px" }}
                                 >
                                     <Button

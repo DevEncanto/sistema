@@ -1,59 +1,44 @@
-import { useCallback, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import Head from 'next/head';
-import NextLink from 'next/link';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Box, Button, Link, Stack, Tab, Tabs, TextField, Typography } from '@mui/material';
-import { useAuth } from 'src/hooks/use-auth';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
-import { login } from '../../util/util-login';
 import { useRouter } from 'next/router';
-import { UserContext } from '../../contexts/user_context/user_context';
 import { DataContext } from '../../contexts/data_context/data_context';
+import { loginUsuario } from '../../service/request_autenticacao';
+import delay from "src/utils/delay"
 
-const Page = () => {  
-  const router = useRouter();
-  const auth = useAuth();
-  const [method, setMethod] = useState('email');
-  const { setUser } = useContext(UserContext)
-  const {iniciarControle} = useContext(DataContext)
-  const [load, setLoad] = useState(false)
-  const [usuario, setUsuario] = useState("")
-  const [senha, setSenha] = useState("")
-  const [message, setMessage] = useState("")
-  const [alert, setAlert] = useState("")
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      submit: null
-    },
-    validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Digite um e-mail válido')
-        .max(255)
-        .required('E-mail é obrigatótio'),
-      password: Yup
-        .string()
-        .max(255)
-        .required('Senha obrigatória')
-    }),
-    onSubmit: async (values, helpers) => {
-      try {
-        await auth.signIn(values.email, values.password);
-        router.push('/');
-      } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-      }
-    }
-  });
-  const handleLogin = async () => {
-    await login(usuario, senha, setMessage, setAlert, router, iniciarControle, setLoad)
+
+const Page = () => {
+
+
+  const { iniciarControle, saveLocalStorage } = useContext(DataContext)
+
+  const [controle, setControle] = useState({
+    usuario: "",
+    senha: "",
+    message: "",
+    alert: "",
+    load: false, 
+    router: useRouter()
+  })
+
+  const gerenciarControle = (e, item, target = true) => {
+    setControle((currentState) => {
+      return { ...currentState, [item]: target ? e.target.value : e }
+    })
   }
-  
+  const statusLogin = async (message, type) => {
+    gerenciarControle(type, "alert", false)
+    gerenciarControle(message, "message", false)
+    await delay(4500)
+    gerenciarControle("", "message", false) 
+  }
+
+
+  const handleLogin = async () => {
+    await loginUsuario(iniciarControle, saveLocalStorage, controle, gerenciarControle, statusLogin)
+  }
+
   return (
     <>
       <Head>
@@ -90,108 +75,61 @@ const Page = () => {
                 <Typography variant="h4">
                   Login
                 </Typography>
-                {load ?
+                {controle.load ?
                   <img src="/assets/loading.svg" width={38} height={38} /> : <></>
                 }
+                
               </Stack>
-              {!!(!message) ?
-                // <Typography
-                //   color="text.secondary"
-                //   variant="body2"
-                // >
-                //   Ainda não possui uma conta?
-                //   &nbsp;
-                //   <Link
-                //     component={NextLink}
-                //     href="/auth/register"
-                //     underline="hover"
-                //     variant="subtitle2"
-                //     color="cereja.100"
-                //   >
-                //     Faça o seu cadastro aqui!
-                //   </Link>
-                // </Typography>
-                <></> 
-                :
+            </Stack>
+            <Stack
+              sx={{
+                height: "10px",
+                margin: "-15px 0 20px 0"
+              }}
+            >
+              {!!(controle.message) ?
                 <Typography
-                  color={alert}
+                  color={controle.alert}
                   variant="body2"
                   fontWeight={600}
                 >
-                  {message}
-                </Typography>
+                  {controle.message}
+                </Typography> :
+                <></>
               }
             </Stack>
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-            >
-              <Stack spacing={3}>
-                <TextField
-                  fullWidth
-                  label="Usuário ou E-mail"
-                  name="usuario"
-                  onBlur={formik.handleBlur}
-                  onChange={(e) => { setUsuario(e.target.value) }}
-                  type="text"
-                  value={usuario}
-                  autoComplete=''
-                />
-                <TextField
-                  fullWidth
-                  label="Senha"
-                  name="password"
-                  onBlur={formik.handleBlur}
-                  onChange={(e) => { setSenha(e.target.value) }}
-                  type="password"
-                  value={senha}
-                  autoComplete='on'
-                />
-              </Stack>
-              <Stack>
-                {/* <Button onClick={handleTrocarSenha}
-                  sx={{
-                    background: "none",
-                    "&:hover": {
-                      background: "none"
-                    }
-                  }}
-                >
-                  <Typography variant='h5'
-                    sx={{
-                      fontSize: "10pt",
-                      margin: "5px 10px",
-                      textDecoration: "underline",
-                      cursor: "pointer",
-                      color: "cereja.100"
-                    }}>
-                    Esqueceu sua senha?
-                  </Typography>
-                </Button> */}
-              </Stack>
-              {formik.errors.submit && (
-                <Typography
-                  color="error"
-                  sx={{ mt: 3 }}
-                  variant="body2"
-                >
-                  {formik.errors.submit}
-                </Typography>
-              )}
-              <Button
+            <Stack spacing={3}>
+              <TextField
                 fullWidth
-                size="large"
-                sx={{ mt: 3 }}
-                type="submit"
-                variant="contained"
-                onClick={handleLogin}
-              >
-                Logar
-              </Button>
-            </form>
+                label="Usuário ou E-mail"
+                name="usuario"
+                onChange={(e) => { gerenciarControle(e, "usuario") }}
+                type="text"
+                value={controle.usuario}
+              />
+              <TextField
+                fullWidth
+                label="Senha"
+                name="password"
+                onChange={(e) => { gerenciarControle(e, "senha") }}
+                value={controle.senha}
+                type="password"
+              />
+            </Stack>
+            <Button
+              fullWidth
+              size="large"
+              sx={{ mt: 3 }}
+              type="submit"
+              variant="contained"
+              onClick={handleLogin}
+            >
+              Logar
+            </Button>
+
           </div>
         </Box>
-      </Box>
+      </Box >
     </>
   );
 };

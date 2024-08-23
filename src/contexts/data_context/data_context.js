@@ -15,19 +15,32 @@ export const DataProvider = ({ children }) => {
         })
     }
 
+    const saveLocalStorage = (data) => {
+        window.localStorage.setItem("dados", JSON.stringify(data))
+    }
+
+    const loadLocalStorage = async () => {
+        const localData = JSON.parse(window.localStorage.getItem("dados"))
+        if (localData) {
+            await iniciarControle(localData)
+        }
+    }
+
     const iniciarControle = async (dados) => {
-        const listaDados = Object.keys(dados) || []
-
-        listaDados.forEach((key) => {
-            gerenciarControle(dados[key], key)
-        })
-
+        if (dados) {
+            const listaDados = Object.keys(dados) || []
+            listaDados.forEach((key) => {
+                gerenciarControle(dados[key], key)
+            })
+        }
     }
 
     const value = {
         controle,
         gerenciarControle,
-        iniciarControle
+        iniciarControle,
+        loadLocalStorage,
+        saveLocalStorage
     }
 
     //Agrupamento das funções e states

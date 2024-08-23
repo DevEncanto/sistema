@@ -83,7 +83,7 @@ const CadastroNovaEntrada = () => {
             sx={{
                 padding: "-40px 20px"
             }}
-        >
+        > 
             <Stack
                 direction="row"
                 sx={{ justifyContent: "center", marginTop: "-5px" }}
@@ -116,7 +116,7 @@ const CadastroNovaEntrada = () => {
             >
                 <Stack>
 
-                    {JSON.stringify(data.controle)}
+                   
                     <CampoComBotao label="Fornecedor" value={formularioEntrada.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
                     <CampoComBotao label="Insumo" value={formularioEntrada.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>

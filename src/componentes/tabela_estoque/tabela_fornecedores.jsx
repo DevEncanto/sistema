@@ -14,22 +14,23 @@ import { celulasFornecedores } from './data';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/user_context/user_context';
 import { DataContext } from '../../contexts/data_context/data_context';
+import { EstoqueContext } from '../../contexts/components_context/estoque_context';
 
 
 
 export const TabelaFornecedores = (props) => {
 
-    const { alterarDados, setTabsEntrada } = useContext(UserContext)
+    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
     const { controle } = useContext(DataContext)
     const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
     const selecionarFornecedor = (fornecedor) => {
         let e = { target: { value: fornecedor } }
-        alterarDados(e, "fornecedor")
-        setTabsEntrada("form")
+        funcoes.alterarDados(e, "fornecedor")
+        gerenciarControle("form", "tabsEntrada", false)
     }
-
+    
     return (
         <Paper sx={{ width: '100%' }}>
             <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
@@ -67,7 +68,7 @@ export const TabelaFornecedores = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarFornecedor(fornecedor.fornecedor) }}
+                                            onClick={() => { selecionarFornecedor(fornecedor.fantasia) }}
                                         >
                                             Selecionar
                                         </Button>
