@@ -16,7 +16,11 @@ export const DataProvider = ({ children }) => {
     }
 
     const saveLocalStorage = (data) => {
-        window.localStorage.setItem("dados", JSON.stringify(data))
+        if(data){
+            window.localStorage.setItem("dados", JSON.stringify(data))
+            return
+        }
+        window.localStorage.setItem("dados", JSON.stringify(controle))
     }
 
     const loadLocalStorage = async () => {

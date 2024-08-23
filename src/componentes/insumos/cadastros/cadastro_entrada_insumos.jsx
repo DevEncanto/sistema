@@ -1,53 +1,15 @@
-import { Stack, TextField, Button, Typography } from "@mui/material";
-import { TabelaEntradaInsumos } from "./tabela_entrada_insumos";
+import { Button, Stack, TextField, Typography } from "@mui/material";
+import { PopupAlerta } from "../popups/popup_status";
+import { TabelaParcelas } from "../tabelas/tabela_entrada_parcela";
+import { DataContext } from "../../../contexts/data_context/data_context";
 import { useContext } from "react";
-import { ButtonSearch } from "./botoes/botao_busca";
-import { Calendario } from "../calendario";
-import { Selector } from "../select";
-import { TabelaParcelas } from "./tabela_entrada_parcela";
-import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } from "./data";
-import { PopupAlerta } from "./popups/popup_status";
-import { ModalTabelaFornecedores } from "./modais/modalFornecedores";
-import { ModalTabelaInsumos } from "./modais/modalInsumos";
-import { CadastroFornecedor } from "./cadastroFornecedor";
-import { EstoqueContext } from "../../contexts/components_context/estoque_context";
-import { DataContext } from "../../contexts/data_context/data_context";
+import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
+import { Calendario } from "../componentes/calendario";
+import { valoresFormasPagamento, valoresStatusFinanceiro } from "../data";
+import { ButtonSearch } from "../botoes/botao_busca";
+import { Selector } from "../componentes/select";
 
-export const EntradaInsumos = () => {
-    const { controle } = useContext(EstoqueContext);
-
-    const renderContent = () => {
-        switch (controle.tabsEntrada) {
-            case "tabela":
-                return <TabelaEntradaInsumos />;
-            case "form":
-                return <CadastroNovaEntrada />;
-            case "modalFornecedor":
-                return <ModalTabelaFornecedores />;
-            case "modalInsumos":
-                return <ModalTabelaInsumos />;
-            case "cadastroFornecedor":
-                return <CadastroFornecedor />;
-            default:
-                return null;
-        }
-    };
-
-    return (
-        <Stack
-            sx={{
-                display: "flex",
-                height: "100%",
-                padding: "-50px 0",
-                alignItems: "center"
-            }}
-        >
-            {renderContent()}
-        </Stack>
-    );
-};
-
-const CadastroNovaEntrada = () => {
+export const CadastroNovaEntrada = () => {
     const { controle, gerenciarControle, formularioEntrada, setFormularioEntrada, funcoes, initFormularioEntrada } = useContext(EstoqueContext);
     const data = useContext(DataContext)
     const cancelarCadastros = () => {

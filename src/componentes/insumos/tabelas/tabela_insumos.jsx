@@ -8,36 +8,33 @@ import {
     TableRow,
     Button
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasFornecedores } from './data';
+import { celulasInsumos, insumos } from '../data';
 import { useContext } from 'react';
-import { UserContext } from '../../contexts/user_context/user_context';
-import { DataContext } from '../../contexts/data_context/data_context';
-import { EstoqueContext } from '../../contexts/components_context/estoque_context';
+import { UserContext } from '../../../contexts/user_context/user_context';
 
 
 
-export const TabelaFornecedores = (props) => {
+export const TabelaInsumos = (props) => {
 
-    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
-    const { controle } = useContext(DataContext)
-    const { maxHeight = 350 } = props
+    const { alterarDados, setTabsEntrada } = useContext(UserContext)
+
     const sx = { textAlign: "center" }
 
-    const selecionarFornecedor = (fornecedor) => {
-        let e = { target: { value: fornecedor } }
-        funcoes.alterarDados(e, "fornecedor")
-        gerenciarControle("form", "tabsEntrada", false)
+    const selecionarInsumo = (insumo) => {
+        let e = { target: { value: insumo } }
+        alterarDados(e, "insumo")
+        setTabsEntrada("form")
     }
-    
+
     return (
         <Paper sx={{ width: '100%' }}>
-            <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
+            <TableContainer sx={{ maxHeight: 350, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasFornecedores.map((celula, index) => {
+                            {celulasInsumos.map((celula, index) => {
                                 return <TableCell sx={sx} key={index}>
                                     {celula}
                                 </TableCell>
@@ -45,30 +42,27 @@ export const TabelaFornecedores = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {controle.fornecedores.map((fornecedor, index) => {
+                        {insumos.map((insumo, index) => {
                             return (
                                 <TableRow
                                     hover
                                     key={`insumo${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {fornecedor.id_fornecedor}
+                                        {insumo.id_insumo}
                                     </TableCell>
                                     <TableCell sx={sx}>
-
-                                        {fornecedor.fantasia}
-
+                                        {insumo.insumo}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
                                         <Button
                                             sx={{
-                                                fontSize: "12px",
-                                                padding: 1
+                                                fontSize: "13px"
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarFornecedor(fornecedor.fantasia) }}
+                                            onClick={() => { selecionarInsumo(insumo.insumo) }}
                                         >
                                             Selecionar
                                         </Button>

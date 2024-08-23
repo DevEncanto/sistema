@@ -6,32 +6,26 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Button,
-    Stack
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
+import { useContext, useMemo } from 'react';
+import { celulasEstoque, insumos } from '../data';
+import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import NoSymbolIcon from '@heroicons/react/24/solid/NoSymbolIcon'
-import CheckCircleIcon from '@heroicons/react/24/solid/CheckCircleIcon'
-import { SeverityPill } from 'src/components/severity-pill';
-import { alterarStatus } from 'src/util/util-admin';
-import { useMemo } from 'react';
-import { celulasEstoque } from './data';
+export const TabelaEstoqueInsumos = () => {
 
+    const { controle } = useContext(EstoqueContext);
 
-export const TabelaInsumos = (props) => {
-    const { insumos = [], insumo = "", count = 0 } = props;
     const sx = { textAlign: "center" }
 
     const insumosFiltrados = useMemo(() => {
-        const buscaInsumo = insumo.toLowerCase()
-        const filter = insumos.filter((item) => 
+        const buscaInsumo = controle.insumo.toLowerCase()
+        const filter = insumos.filter((item) =>
             item.insumo.toLowerCase().includes(buscaInsumo)
         )
 
         return buscaInsumo === "" ? insumos : filter
-    }, [insumos, insumo])
+    }, [insumos, controle.insumo])
 
     return (
         <Paper sx={{ width: '100%' }}>

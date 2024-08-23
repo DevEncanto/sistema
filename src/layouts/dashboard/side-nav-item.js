@@ -1,9 +1,14 @@
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import { Box, ButtonBase } from '@mui/material';
+import { usePathname } from 'next/navigation';
 
 export const SideNavItem = (props) => {
-  const { active = false, disabled, external, icon, path, title, close} = props;
+  const { disabled, external, icon, path, title, close } = props;
+
+  const pathname = usePathname();
+
+  const active = pathname.indexOf(path) == -1 ? false : true
 
   const linkProps = path
     ? external
@@ -21,7 +26,7 @@ export const SideNavItem = (props) => {
   return (
     <li>
       <ButtonBase
-      onClick={close}
+        onClick={close}
         sx={{
           alignItems: 'center',
           borderRadius: 1,
@@ -77,6 +82,7 @@ export const SideNavItem = (props) => {
           }}
         >
           {title}
+
         </Box>
       </ButtonBase>
     </li>

@@ -20,6 +20,7 @@ export const EstoqueProvider = ({ children }) => {
         })
     }
 
+
     const exibirAlerta = (mensagem, tipo) => {
         gerenciarControle(mensagem, "alert", false)
         gerenciarControle(tipo, "type", false)
@@ -39,6 +40,10 @@ export const EstoqueProvider = ({ children }) => {
 
 
     const funcoes = {
+
+        resetFormularioFornecedor: () => {
+            setFormularioFornecedor(initFormularioFornecedor)
+        },
         calculoValores: (e, item) => {
             let total = 0
             let eParsed = e.target.value == "" ? 0 : parseFloat(e.target.value)

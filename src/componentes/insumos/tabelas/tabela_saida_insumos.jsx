@@ -6,28 +6,26 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    Button,
+    Stack
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
-import { useContext, useMemo } from 'react';
-import { celulasEstoque, insumos } from './data';
-import { UserContext } from '../../contexts/user_context/user_context';
-import { EstoqueContext } from '../../contexts/components_context/estoque_context';
+import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
+import { useMemo } from 'react';
+import { celulasEstoque } from '../data';
 
 
-export const TabelaInsumos = () => {
-
-    const { controle } = useContext(EstoqueContext);
-
+export const TabelaSaidaInsumos = (props) => {
+    const { insumos = [], insumo = "", count = 0 } = props;
     const sx = { textAlign: "center" }
 
     const insumosFiltrados = useMemo(() => {
-        const buscaInsumo = controle.insumo.toLowerCase()
-        const filter = insumos.filter((item) =>
+        const buscaInsumo = insumo.toLowerCase()
+        const filter = insumos.filter((item) => 
             item.insumo.toLowerCase().includes(buscaInsumo)
         )
 
         return buscaInsumo === "" ? insumos : filter
-    }, [insumos, controle.insumo])
+    }, [insumos, insumo])
 
     return (
         <Paper sx={{ width: '100%' }}>

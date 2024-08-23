@@ -9,11 +9,9 @@ import {
     Button,
     Stack
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasEntradas, entradaInsumos, insumos } from './data';
-import { UserContext } from '../../contexts/user_context/user_context';
-
+import { celulasEntradas, entradaInsumos, insumos } from '../data';
 
 export const TabelaEntradaInsumos = (props) => {
 

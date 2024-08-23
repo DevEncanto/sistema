@@ -95,10 +95,9 @@ export const SideNav = (props) => {
               ?
               <>
                 {items["USER"].map((item, index) => {
-                  const active = item.path ? (pathname === item.path) : false;
                   return (
                     <SideNavItem
-                      active={active}
+                      pathname={pathname}
                       disabled={item.disabled}
                       external={item.external}
                       icon={item.icon}

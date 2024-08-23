@@ -4,11 +4,11 @@ import { Box, Divider, Container, Stack, Typography, Fab, Button, TextField } fr
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { UserContext } from '../../contexts/user_context/user_context';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
-import { botoesNavegacao, insumos } from '../../componentes/tabela_estoque/data';
-import { TabsInsumos } from '../../componentes/tabela_estoque/tabs';
+import { botoesNavegacao, insumos } from '../../componentes/insumos/data';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { EstoqueContext } from '../../contexts/components_context/estoque_context';
 import { DataContext } from '../../contexts/data_context/data_context';
+import { TabsInsumos } from '../../componentes/insumos/componentes/tabs';
 
 
 

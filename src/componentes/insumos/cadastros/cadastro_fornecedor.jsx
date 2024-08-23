@@ -1,26 +1,22 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { UserContext } from "../../contexts/user_context/user_context";
-import { ButtonSearch } from "./botoes/botao_busca";
-import { Calendario } from "../calendario";
-import { Selector } from "../select";
-import { TabelaParcelas } from "./tabela_entrada_parcela";
-import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } from "./data";
-import { PopupAlerta } from "./popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../contexts/data";
-import { EstoqueContext } from "../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor } from "../../service/request_cadastro";
-import { DataContext } from "../../contexts/data_context/data_context";
+import { ButtonSearch } from "../botoes/botao_busca";
+import { PopupAlerta } from "../popups/popup_status";
+import { camposObrigatoriosFornecedor } from "../../../contexts/data";
+import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
+import { cadastrarFornecedor } from "../../../service/request_cadastro";
+import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const CadastroFornecedor = () => {
     const { funcoes, gerenciarControle, formularioFornecedor } = useContext(EstoqueContext);
-    const { controle } = useContext(DataContext)
+    const dataContext = useContext(DataContext)
 
     const [alert, setAlert] = useState("");
     const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
         gerenciarControle("modalFornecedor", "tabsEntrada", false);
+        funcoes.resetFormularioFornecedor()
     };
 
     const validarDados = async () => {
@@ -31,23 +27,30 @@ export const CadastroFornecedor = () => {
             }
         }
         const response = await cadastrarFornecedor(formularioFornecedor)
+        const type = response.status === 200 ? "success" : "error"
 
-        exibirAlerta(response.alert, response.type)
+        exibirAlerta(response.message, type)
 
-        if (response.type) {
+        if (response.status === 200) {
+            const dadosFornecedor = [...dataContext.controle.fornecedores, response.fornecedor]
+
+            dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
+    
             setTimeout(() => {
+                dataContext.saveLocalStorage()
                 gerenciarControle("modalFornecedor", "tabsEntrada", false);
+                funcoes.resetFormularioFornecedor()
             }, 2500)
         }
     };
 
-    const exibirAlerta = (mensagem, tipo) => {
+    const exibirAlerta = async (mensagem, tipo) => {
         setAlert(mensagem);
         setType(tipo);
-        setTimeout(() => {
+        setTimeout(async () => {
             setAlert("");
             setType("");
-        }, 2500);
+        }, 4000);
     };
 
     const renderAlert = () => (
@@ -79,7 +82,7 @@ export const CadastroFornecedor = () => {
                     direction="row"
                     spacing={2}
                     sx={{
-                        width: "40%",
+                        width: "50%",
                         alignItems: "center",
                         justifyContent: "center",
                     }}
@@ -92,7 +95,6 @@ export const CadastroFornecedor = () => {
                 spacing={4}
             >
                 <Stack>
-                    {JSON.stringify(controle)}
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Nome" onChange={e => funcoes.alterarDadosFornecedor(e, "nome")} value={formularioFornecedor.nome} />
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.alterarDadosFornecedor(e, "fantasia")} value={formularioFornecedor.fantasia} />

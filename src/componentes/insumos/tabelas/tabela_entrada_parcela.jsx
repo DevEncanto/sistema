@@ -9,7 +9,7 @@ import {
     Fab,
     Stack
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
 import ArrowPathIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import NoSymbolIcon from '@heroicons/react/24/solid/NoSymbolIcon'
@@ -17,10 +17,10 @@ import CheckCircleIcon from '@heroicons/react/24/solid/CheckCircleIcon'
 import { SeverityPill } from 'src/components/severity-pill';
 import { alterarStatus } from 'src/util/util-admin';
 import { useContext, useMemo } from 'react';
-import { celulasEntradas, celulasParcelas, entradaInsumos, insumos } from './data';
-import { UserContext } from '../../contexts/user_context/user_context';
-import formatSaldo from '../../utils/formatarSaldos';
-import { EstoqueContext } from '../../contexts/components_context/estoque_context';
+import { celulasEntradas, celulasParcelas, entradaInsumos, insumos } from '../data';
+import { UserContext } from '../../../contexts/user_context/user_context';
+import formatSaldo from '../../../utils/formatarSaldos';
+import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
 
 export const TabelaParcelas = (props) => {

@@ -1,10 +1,9 @@
 import { Stack } from "@mui/material"
-import { TabelaInsumos } from "./estoque_insumos"
-import { entradaInsumos, insumos } from "./data"
-import { EntradaInsumos, TabelaEntradaInsumos } from "./entrada_insumos"
 import { useContext } from "react"
-import { UserContext } from "../../contexts/user_context/user_context"
-import { EstoqueContext } from "../../contexts/components_context/estoque_context"
+import { TabelaInsumos } from "../tabelas/tabela_insumos"
+import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
+import { EntradaInsumos } from "../pages/entrada_insumos"
+import { TabelaEstoqueInsumos } from "../tabelas/tabela_estoque_insumos"
 
 export const TabsInsumos = () => {
 
@@ -19,7 +18,7 @@ export const TabsInsumos = () => {
 
     return (
         <Stack sx={sx}>
-            {controle.tab === "resumo" ? <TabelaInsumos /> : <></>}
+            {controle.tab === "resumo" ? <TabelaEstoqueInsumos /> : <></>}
             {controle.tab === "entradas" ? <EntradaInsumos /> : <></>}
             {controle.tab === "saidas" ? <TabelaInsumos /> : <></>}
         </Stack>
