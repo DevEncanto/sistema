@@ -1,7 +1,6 @@
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon"
 import { Button } from "@mui/material"
 import { useContext } from "react"
-import { UserContext } from "../../../contexts/user_context/user_context"
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
 
 export const BotaoNovoCadastro = (props) => {

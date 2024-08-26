@@ -14,18 +14,18 @@ import { EstoqueContext } from '../../../contexts/components_context/estoque_con
 
 export const TabelaEstoqueInsumos = () => {
 
-    const { controle } = useContext(EstoqueContext);
+    const { controleEstoque } = useContext(EstoqueContext);
 
     const sx = { textAlign: "center" }
 
     const insumosFiltrados = useMemo(() => {
-        const buscaInsumo = controle.insumo.toLowerCase()
+        const buscaInsumo = controleEstoque.insumo.toLowerCase()
         const filter = insumos.filter((item) =>
             item.insumo.toLowerCase().includes(buscaInsumo)
         )
 
         return buscaInsumo === "" ? insumos : filter
-    }, [insumos, controle.insumo])
+    }, [insumos, controleEstoque.insumo])
 
     return (
         <Paper sx={{ width: '100%' }}>

@@ -28,7 +28,7 @@ export const TabelaParcelas = (props) => {
     const sx = { textAlign: "center" }
 
     const {maxHeight = 200, minHeight = 200} = props
-    const { formularioEntrada } = useContext(EstoqueContext)
+    const { dados } = useContext(EstoqueContext)
 
 
     return (
@@ -45,7 +45,7 @@ export const TabelaParcelas = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {formularioEntrada.parcelamentos.map((parcela, index) => {
+                        {dados.entrada_insumo.parcelamentos.map((parcela, index) => {
                             return (
                                 <TableRow
                                     hover

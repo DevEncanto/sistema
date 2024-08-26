@@ -12,7 +12,7 @@ export const Calendario = (props) => {
 
     const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText;
     const { width, label, item } = props
-    const { formularioEntrada, funcoes } = useContext(EstoqueContext)
+    const { dados, funcoes } = useContext(EstoqueContext)
 
     const sx = {
         width: width,
@@ -33,7 +33,7 @@ export const Calendario = (props) => {
                 label={label}
                 color="blue"
                 format="DD/MM/YYYY"
-                value={formularioEntrada[item]}
+                value={dados.entrada_insumo[item]}
                 onChange={e => funcoes.alterarDados(e, item)}
                 renderInput={(params) => <TextField sx={sx} {...params} error={false} placeholder={"DD/MM/YYYY"} />}
             />

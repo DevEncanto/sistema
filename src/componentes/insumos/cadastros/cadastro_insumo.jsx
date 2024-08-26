@@ -6,27 +6,32 @@ import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import { cadastrarFornecedor } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
+import { Selector } from "../componentes/select";
+import { valoresUnidades } from "../data";
 
-export const CadastroFornecedor = () => {
-    const { controle, funcoes, gerenciarControle, formularioFornecedor } = useContext(EstoqueContext);
+export const CadastroInsumo = () => {
+    const {dados, gerenciarDados, funcoes, gerenciarControle, formularioInsumo } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
+
+    const [alert, setAlert] = useState("");
+    const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
         gerenciarControle("modalFornecedor", "tabsEntrada", false);
-        funcoes.resetFormularios()
+        funcoes.resetFormularioFornecedor()
     };
 
     const validarDados = async () => {
         for (const campo of camposObrigatoriosFornecedor) {
             if (!formularioFornecedor[campo]) {
-                funcoes.exibirAlerta("Preencha todos os campos", "warning");
+                exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
         const response = await cadastrarFornecedor(formularioFornecedor)
         const type = response.status === 200 ? "success" : "error"
 
-        funcoes.exibirAlerta(response.message, type)
+        exibirAlerta(response.message, type)
 
         if (response.status === 200) {
             const dadosFornecedor = [...dataContext.controle.fornecedores, response.fornecedor]
@@ -41,10 +46,17 @@ export const CadastroFornecedor = () => {
         }
     };
 
-
+    const exibirAlerta = async (mensagem, tipo) => {
+        setAlert(mensagem);
+        setType(tipo);
+        setTimeout(async () => {
+            setAlert("");
+            setType("");
+        }, 4000);
+    };
 
     const renderAlert = () => (
-        controle.alert && <PopupAlerta type={controle.type} title={controle.alert} />
+        alert && <PopupAlerta type={type} title={alert} />
     );
 
     return (
@@ -66,7 +78,7 @@ export const CadastroFornecedor = () => {
                         width: "60%",
                     }}
                 >
-                    Novo Fornecedor
+                    Novo Insumo
                 </Typography>
                 <Stack
                     direction="row"
@@ -86,39 +98,23 @@ export const CadastroFornecedor = () => {
             >
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Nome" onChange={e => funcoes.alterarDadosFornecedor(e, "nome")} value={formularioFornecedor.nome} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.alterarDadosFornecedor(e, "fantasia")} value={formularioFornecedor.fantasia} />
+                    <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Insumo" onChange={e => funcoes.gerenciarDados("insumo", "nome", e)} value={dados.insumo.nome} />
                     </Stack>
-                    <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.alterarDadosFornecedor(e, "cpf_cnpj")} value={formularioFornecedor.cpf_cnpj} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Inscrição Estadual" onChange={e => funcoes.alterarDadosFornecedor(e, "inscricao")} value={formularioFornecedor.inscricao} />
+                    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
+                        <TextField sx={sxTexfield} label={"Categoria do Insumo"} value={formularioInsumo.categoria} />
+                        <ButtonSearch onClick={() => gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false)} />
                     </Stack>
 
-                    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Endereço" onChange={e => funcoes.alterarDadosFornecedor(e, "endereco")} value={formularioFornecedor.endereco} />
+                    <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "5px", justifyContent: "center", display: "flex" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "px" }} label="Composição" onChange={e => funcoes.alterarDadosInsumo(e, "minimo")} value={formularioInsumo.minimo} />
+                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "8px" }} label="Estoque Mínimo" onChange={e => funcoes.alterarDadosInsumo(e, "minimo")} value={formularioInsumo.minimo} />
                     </Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CEP" onChange={e => funcoes.alterarDadosFornecedor(e, "cep")} value={formularioFornecedor.cep} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Bairro" onChange={e => funcoes.alterarDadosFornecedor(e, "bairro")} value={formularioFornecedor.bairro} />
-                    </Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Cidade" onChange={e => funcoes.alterarDadosFornecedor(e, "cidade")} value={formularioFornecedor.cidade} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Estado" onChange={e => funcoes.alterarDadosFornecedor(e, "estado")} value={formularioFornecedor.estado} />
+                    <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "-5px", justifyContent: "center", display: "flex" }}>
+                        <Selector item="unidade" value={formularioInsumo.unidade} valores={valoresUnidades} label="Unidade" width="199px" />
                     </Stack>
                 </Stack>
                 <Stack>
-                    <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "276px", marginTop: "px" }} label="E-mail" onChange={e => funcoes.alterarDadosFornecedor(e, "email")} value={formularioFornecedor.email} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "120px", marginTop: "8px" }} label="Telefone" onChange={e => funcoes.alterarDadosFornecedor(e, "telefone")} value={formularioFornecedor.telefone} />
-                    </Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Pix" onChange={e => funcoes.alterarDadosFornecedor(e, "pix")} value={formularioFornecedor.pix} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Banco" onChange={e => funcoes.alterarDadosFornecedor(e, "banco")} value={formularioFornecedor.banco} />
-                    </Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Agência" onChange={e => funcoes.alterarDadosFornecedor(e, "agencia")} value={formularioFornecedor.agencia} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Conta" onChange={e => funcoes.alterarDadosFornecedor(e, "conta")} value={formularioFornecedor.conta} />
-                    </Stack>
+
                 </Stack>
             </Stack>
             <Stack

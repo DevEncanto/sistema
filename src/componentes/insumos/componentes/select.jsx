@@ -8,19 +8,20 @@ import { Stack, TextField } from "@mui/material"
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
 export const Selector = (props) => {
-  const { formularioEntrada, funcoes} = useContext(EstoqueContext)
+  const { funcoes, dados } = useContext(EstoqueContext)
 
-  const { defaultValue, label, width = "170px", item, valores = [] } = props
+  const { defaultValue, label, width = "170px", item, valores = [], object } = props
 
   return (
-    <Box sx={{ width, height: "60px" }}>
+    <Box sx={{ width: width }}>
       <FormControl fullWidth>
         <TextField
+          sx={{ height: "60px" }}
           label={label}
           select
           defaultValue={defaultValue}
-          value={formularioEntrada[item]}
-          onChange={e => funcoes.alterarDados(e, item)}
+          value={dados[object][item]}
+          onChange={e => funcoes.gerenciarDadosEstoque(object, e, item)}
         >
           {
             valores.map((item, index) => {

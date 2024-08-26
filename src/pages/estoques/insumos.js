@@ -14,7 +14,7 @@ import { TabsInsumos } from '../../componentes/insumos/componentes/tabs';
 
 const Page = () => {
 
-  const { controle, gerenciarControle } = useContext(EstoqueContext)
+  const { controleEstoque, funcoes } = useContext(EstoqueContext)
   const { loadLocalStorage } = useContext(DataContext)
   const [load, setLoad] = useState(false)
   let e = { target: { value: "" } }
@@ -46,9 +46,9 @@ const Page = () => {
               <Stack spacing={1}>
                 <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
                   <Typography variant="h4">
-                    {controle.tab === "resumo" ? "Estoque de Insumos" : ""}
-                    {controle.tab === "entradas" ? "Entrada de Insumos" : ""}
-                    {controle.tab === "saidas" ? "Saída de Insumos" : ""}
+                    {controleEstoque.tab === "resumo" ? "Estoque de Insumos" : ""}
+                    {controleEstoque.tab === "entradas" ? "Entrada de Insumos" : ""}
+                    {controleEstoque.tab === "saidas" ? "Saída de Insumos" : ""}
                   </Typography>
                   {load ?
                     <img src="/assets/loading.svg" width={40} height={40} />
@@ -83,9 +83,9 @@ const Page = () => {
                     return <Button
                       key={`btn_nav${index}`}
                       variant='contained'
-                      onClick={() => { gerenciarControle(botao.tab, "tab", false) }}
+                      onClick={() => { funcoes.gerenciarControle(botao.tab, "tab", false) }}
                       sx={{
-                        backgroundColor: controle.tab === botao.tab ? "primary.dark" : "grey"
+                        backgroundColor: controleEstoque.tab === botao.tab ? "primary.dark" : "grey"
                       }}
                     >
                       {botao.label}
@@ -98,10 +98,10 @@ const Page = () => {
                 direction="row-reverse"
                 width="50%"
               >
-                {controle.tab === "entradas" && controle.tabsEntrada == "tabela" ? <Button
+                {controleEstoque.tab === "entradas" && controleEstoque.tabsEntrada == "tabela" ? <Button
                   key={`btn_entrada`}
                   variant='contained'
-                  onClick={() => { gerenciarControle("form", "tabsEntrada", false) }}
+                  onClick={() => { funcoes.gerenciarControle("form", "tabsEntrada", false) }}
                   startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
                 >
                   Nova Entrada

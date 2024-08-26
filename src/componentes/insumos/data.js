@@ -1,7 +1,14 @@
-import { Button } from "@mui/material"
 import { FabClick } from "./botoes/FabFunction"
-import PlusIcon from "@heroicons/react/24/solid/PlusIcon"
 import { BotaoNovoCadastro } from "./botoes/botao_novo_cadastro"
+
+
+export const categoriasInsumos = [
+    { id_categoria_insumo: 1, categoria: "Herbicida" },
+    { id_categoria_insumo: 2, categoria: "Fertilizante" },
+    { id_categoria_insumo: 3, categoria: "Redutor de Ph" },
+    { id_categoria_insumo: 4, categoria: "Óleo Mineral" },
+    { id_categoria_insumo: 5, categoria: "Fungicida" }
+]
 
 
 export const celulasEstoque = [
@@ -41,6 +48,12 @@ export const valoresFormasPagamento = [
     "Boleto"
 ]
 
+export const valoresUnidades = [
+    "KG",
+    "L",
+    "UNI"
+]
+
 export const celulasEntradas = [
     "ID INSUMO",
     "INSUMO",
@@ -50,6 +63,8 @@ export const celulasEntradas = [
     "FORNECEDOR",
     "TOTAL",
 ]
+
+
 
 export const celulasParcelas = [
     "ID PARCELA",
@@ -64,10 +79,16 @@ export const celulasFornecedores = [
     <BotaoNovoCadastro title="Novo Fornecedor" cadastro="cadastroFornecedor" />
 ]
 
+export const celulasCategoriaInsumos = [
+    "ID CATEGORIA",
+    "CATEGORIA",
+    <BotaoNovoCadastro title="Nova Categoria" cadastro="cadastroCategoriaInsumo" />
+]
+
 export const celulasInsumos = [
     "ID INSUMO",
     "INSUMO",
-    ""
+    <BotaoNovoCadastro title="Novo Insumo" cadastro="cadastroInsumo" />
 ]
 
 export const fornecedores = [

@@ -7,7 +7,7 @@ import { TabelaEstoqueInsumos } from "../tabelas/tabela_estoque_insumos"
 
 export const TabsInsumos = () => {
 
-    const { controle } = useContext(EstoqueContext)
+    const { controleEstoque } = useContext(EstoqueContext)
     const sx = {
         width: "100%",
         heigth: "100%",
@@ -18,9 +18,9 @@ export const TabsInsumos = () => {
 
     return (
         <Stack sx={sx}>
-            {controle.tab === "resumo" ? <TabelaEstoqueInsumos /> : <></>}
-            {controle.tab === "entradas" ? <EntradaInsumos /> : <></>}
-            {controle.tab === "saidas" ? <TabelaInsumos /> : <></>}
+            {controleEstoque.tab === "resumo" ? <TabelaEstoqueInsumos /> : <></>}
+            {controleEstoque.tab === "entradas" ? <EntradaInsumos /> : <></>}
+            {controleEstoque.tab === "saidas" ? <TabelaInsumos /> : <></>}
         </Stack>
     )
 }

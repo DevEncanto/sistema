@@ -3,14 +3,14 @@ import { TabelaInsumos } from "../tabelas/tabela_insumos"
 
 const { ModalEstoque } = require("./modal")
 
-export const ModalTabelaInsumos = () => {
+export const ModalCategoriaInsumo = () => {
     return (
         <ModalEstoque
-            title={"Insumos"}
+            title={"Categoria dos Insumos"}
             destino={"form"}
             width="520px"
         >
-            <TabelaInsumos maxHeight={380}/>
+            <TabelaCategoriaInsumos maxHeight={380}/>
         </ModalEstoque>
     )
 }

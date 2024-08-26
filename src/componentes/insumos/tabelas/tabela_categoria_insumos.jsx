@@ -6,42 +6,29 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Button
+    Button,
+    Stack
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasInsumos, insumos } from '../data';
-import { useContext, useEffect } from 'react';
-import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
+import { categoriasInsumos, celulasCategoriaInsumos } from '../data';
 import { DataContext } from '../../../contexts/data_context/data_context';
+import { useContext } from 'react';
 
+export const TabelaCategoriaInsumos = (props) => {
 
-
-export const TabelaInsumos = (props) => {
-
-    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
-    const { controle, saveLocalStorage } = useContext(DataContext)
-    const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
-    useEffect(() => {
-        saveLocalStorage()
-    }, [])
+    const { controle } = useContext(DataContext)
 
-    
-    const selecionarInsumo = (insumo) => {
-        let e = { target: { value: insumo } }
-        funcoes.alterarDados(e, "insumo")
-        gerenciarControle("form", "tabsEntrada", false)
-    }
 
     return (
         <Paper sx={{ width: '100%' }}>
-            <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
+            <TableContainer sx={{ maxHeight: 350, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasInsumos.map((celula, index) => {
+                            {celulasCategoriaInsumos.map((celula, index) => {
                                 return <TableCell sx={sx} key={index}>
                                     {celula}
                                 </TableCell>
@@ -49,31 +36,34 @@ export const TabelaInsumos = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {insumos.map((insumo, index) => {
+                        {controle.categorias_insumos.map((categoria, index) => {
                             return (
                                 <TableRow
                                     hover
-                                    key={`insumo${index}`}
+                                    key={`categoria${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {insumo.id_insumo}
-                                    </TableCell>
-                                    <TableCell sx={sx}>
-                                        {insumo.insumo}
+                                        {categoria.id_categoria_insumo}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
+                                        {categoria.nome}
+
+                                    </TableCell>
+                                    <TableCell
+                                        sx={sx}
+                                    >
                                         <Button
                                             sx={{
-                                                fontSize: "13px"
+                                                fontSize: "12px",
+                                                padding: 1
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarInsumo(insumo.insumo) }}
+                                            onClick={() => { }}
                                         >
                                             Selecionar
                                         </Button>
-
                                     </TableCell>
                                 </TableRow>
                             );
@@ -81,6 +71,6 @@ export const TabelaInsumos = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Paper>
+        </Paper >
     );
 };

@@ -42,14 +42,15 @@ export const TabelaFornecedores = (props) => {
                     <TableHead>
                         <TableRow key={`header`}>
                             {celulasFornecedores.map((celula, index) => {
-                                return <TableCell sx={sx} key={index}>
-                                    {celula}
-                                </TableCell>
+                                return (
+                                    <TableCell sx={sx} key={index}>
+                                        {celula}
+                                    </TableCell>
+                                )
                             })}
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {JSON.stringify(controle.fornecedores)}
                         {controle.fornecedores.map((fornecedor, index) => {
                             return (
                                 <TableRow

@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { initControle } from "./data";
+import { initControle, initDados, initFormularioInsumo } from "./data";
 import { initFormularioEntrada, initFormularioFornecedor } from "../data";
 import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
 import { calcularDatas } from "../../utils/gerador-datas";
@@ -10,9 +10,7 @@ export const EstoqueProvider = ({ children }) => {
 
     //Estados de controle do estoque
 
-    const [controle, setControle] = useState(initControle)
-    const [formularioEntrada, setFormularioEntrada] = useState(initFormularioEntrada)
-    const [formularioFornecedor, setFormularioFornecedor] = useState(initFormularioFornecedor)
+    const [controleEstoque, setControle] = useState(initControle)
 
     const gerenciarControle = (e, item, target = true) => {
         setControle((currentState) => {
@@ -20,6 +18,8 @@ export const EstoqueProvider = ({ children }) => {
         })
     }
 
+
+    const [dados, setDados] = useState(initDados)
 
     const exibirAlerta = (mensagem, tipo) => {
         gerenciarControle(mensagem, "alert", false)
@@ -41,8 +41,10 @@ export const EstoqueProvider = ({ children }) => {
 
     const funcoes = {
 
-        resetFormularioFornecedor: () => {
-            setFormularioFornecedor(initFormularioFornecedor)
+        resetFormularios: (formulario) => {
+            setDados((currentState) => {
+                return { ...currentState, [formulario]: initControle[formulario] }
+            })
         },
         calculoValores: (e, item) => {
             let total = 0
@@ -83,6 +85,11 @@ export const EstoqueProvider = ({ children }) => {
                 return { ...currentState, [item]: e.target.value }
             })
         },
+        alterarDadosInsumos: (e, item) => {
+            setFormularioInsumo((currentState) => {
+                return { ...currentState, [item]: e.target.value }
+            })
+        },
         parcelar: () => {
 
             let parcelamentos = []
@@ -113,19 +120,28 @@ export const EstoqueProvider = ({ children }) => {
             })
 
         },
-        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) }
+        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },
+        gerenciarDadosEstoque: (object, item, e, target = true) => {
+            setDados((currentState) => {
+                return {
+                    ...currentState, [object]: {
+                        ...currentState[object], [item]: target ? e.target.value : e
+                    }
+                }
+            })
+        },
+        gerenciarControle: (e, item, target = true) => {
+            setControle((currentState) => {
+                return { ...currentState, [item]: target ? e.target.value : e }
+            })
+        }
     }
 
     const value = {
         funcoes,
         gerenciarControle,
-        controle,
-        formularioFornecedor,
-        setFormularioEntrada,
-        setFormularioFornecedor,
-        formularioEntrada,
-        initFormularioEntrada,
-        initFormularioFornecedor
+        controleEstoque,
+        dados
     }
 
 
