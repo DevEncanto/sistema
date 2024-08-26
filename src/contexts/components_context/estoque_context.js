@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { initControle, initDados, initFormularioInsumo } from "./data";
-import { initFormularioEntrada, initFormularioFornecedor } from "../data";
 import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
 import { calcularDatas } from "../../utils/gerador-datas";
 
@@ -43,7 +42,7 @@ export const EstoqueProvider = ({ children }) => {
 
         resetFormularios: (formulario) => {
             setDados((currentState) => {
-                return { ...currentState, [formulario]: initControle[formulario] }
+                return { ...currentState, [formulario]: initDados[formulario] }
             })
         },
         calculoValores: (e, item) => {

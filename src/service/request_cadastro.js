@@ -6,6 +6,12 @@ const cadastrarFornecedor = async (fornecedor) => {
     return data
 }
 
+const cadastrarInsumo = async (insumo) => {
+    const { data } = await api.post("/novo_insumo", insumo)
+
+    return data
+}
+
 const cadastrarCategoriaInsumo = async (categoria) => {
     const { data } = await api.post("/nova_categoria_insumo", categoria)
 
@@ -14,5 +20,6 @@ const cadastrarCategoriaInsumo = async (categoria) => {
 
 export {
     cadastrarFornecedor,
-    cadastrarCategoriaInsumo
+    cadastrarCategoriaInsumo,
+    cadastrarInsumo
 }

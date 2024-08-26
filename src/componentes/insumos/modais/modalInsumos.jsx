@@ -7,7 +7,7 @@ export const ModalTabelaInsumos = () => {
     return (
         <ModalEstoque
             title={"Insumos"}
-            destino={"form"}
+            destino={"cadastroEntradaInsumo"}
             width="520px"
         >
             <TabelaInsumos maxHeight={380}/>

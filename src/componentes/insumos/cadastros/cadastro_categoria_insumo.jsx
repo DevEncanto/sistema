@@ -8,7 +8,7 @@ import { cadastrarCategoriaInsumo, cadastrarFornecedor } from "../../../service/
 import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const CadastroCategoriaInsumo = () => {
-    const { dados, funcoes, gerenciarControle } = useContext(EstoqueContext);
+    const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const [alert, setAlert] = useState("");
@@ -22,13 +22,13 @@ export const CadastroCategoriaInsumo = () => {
     const validarDados = async () => {
 
         if (!dados.categoria.nome) {
-            exibirAlerta("Informe o nome da categoria!", "warning");
+            funcoes.exibirAlerta("Informe o nome da categoria!", "warning");
             return;
         }
         const response = await cadastrarCategoriaInsumo(dados.categoria)
         const type = response.status === 200 ? "success" : "error"
 
-        exibirAlerta(response.message, type)
+        funcoes.exibirAlerta(response.message, type)
 
         if (response.status === 200) {
             const dadosCategorias = [...dataContext.controle.categorias_insumos, response.categoria]
@@ -42,17 +42,8 @@ export const CadastroCategoriaInsumo = () => {
         }
     };
 
-    const exibirAlerta = async (mensagem, tipo) => {
-        setAlert(mensagem);
-        setType(tipo);
-        setTimeout(async () => {
-            setAlert("");
-            setType("");
-        }, 4000);
-    };
-
     const renderAlert = () => (
-        alert && <PopupAlerta type={type} title={alert} />
+        controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
 
     return (
@@ -98,10 +89,10 @@ export const CadastroCategoriaInsumo = () => {
             >
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "40px" }}>
-                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Categoria de Insumos" onChange={e => funcoes.gerenciarDados("categoria", "nome", e)} value={dados.categoria.nome} />
+                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Categoria de Insumos" onChange={e => funcoes.gerenciarDadosEstoque("categoria", "nome", e)} value={dados.categoria.nome} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField multiline rows={4} sx={{ ...sxTexfield, width: "405px", height: "150px" }} label="Descrição" onChange={e => funcoes.gerenciarDados("categoria", "descricao", e)} value={dados.categoria.descricao} />
+                        <TextField multiline rows={4} sx={{ ...sxTexfield, width: "405px", height: "150px" }} label="Descrição" onChange={e => funcoes.gerenciarDadosEstoque("categoria", "descricao", e)} value={dados.categoria.descricao} />
                     </Stack>
                 </Stack>
             </Stack>

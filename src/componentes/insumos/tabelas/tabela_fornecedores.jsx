@@ -25,10 +25,6 @@ export const TabelaFornecedores = (props) => {
     const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
-    useEffect(() => {
-        saveLocalStorage()
-    }, [])
-
     const selecionarFornecedor = (fornecedor) => {
         let e = { target: { value: fornecedor } }
         funcoes.alterarDados(e, "fornecedor")

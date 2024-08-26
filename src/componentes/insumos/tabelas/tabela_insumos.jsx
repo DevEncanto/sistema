@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasInsumos, insumos } from '../data';
+import { celulasInsumos } from '../data';
 import { useContext, useEffect } from 'react';
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 import { DataContext } from '../../../contexts/data_context/data_context';
@@ -28,12 +28,18 @@ export const TabelaInsumos = (props) => {
         saveLocalStorage()
     }, [])
 
-    
-    const selecionarInsumo = (insumo) => {
-        let e = { target: { value: insumo } }
-        funcoes.alterarDados(e, "insumo")
-        gerenciarControle("form", "tabsEntrada", false)
+
+    const selecionarInsumo = (insumo, id_insumo) => {
+
+
+        console.log(insumo, id_)
+        let eInsumo = { target: { value: insumo } }
+        let eIndex = { target: { value: id_insumo } }
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "insumo", eInsumo)
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "id_insumo", eIndex)
+        gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
     }
+
 
     return (
         <Paper sx={{ width: '100%' }}>
@@ -49,7 +55,7 @@ export const TabelaInsumos = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {insumos.map((insumo, index) => {
+                        {controle.insumos.map((insumo, index) => {
                             return (
                                 <TableRow
                                     hover
@@ -59,7 +65,7 @@ export const TabelaInsumos = (props) => {
                                         {insumo.id_insumo}
                                     </TableCell>
                                     <TableCell sx={sx}>
-                                        {insumo.insumo}
+                                        {insumo.nome}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
@@ -69,7 +75,7 @@ export const TabelaInsumos = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarInsumo(insumo.insumo) }}
+                                            onClick={() => { selecionarInsumo(insumo.nome, insumo.id_insumo) }}
                                         >
                                             Selecionar
                                         </Button>

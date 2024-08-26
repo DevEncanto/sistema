@@ -11,13 +11,13 @@ import { ModalCategoriaInsumo } from "../modais/modalCategoriaInsumo";
 import { CadastroCategoriaInsumo } from "../cadastros/cadastro_categoria_insumo";
 
 export const EntradaInsumos = () => {
-    const { controleEstoque } = useContext(EstoqueContext);
+    const { controleEstoque, dados } = useContext(EstoqueContext);
 
     const renderContent = () => {
         switch (controleEstoque.tabsEntrada) {
             case "tabela":
                 return <TabelaEntradaInsumos />;
-            case "form":
+            case "cadastroEntradaInsumo":
                 return <CadastroNovaEntrada />;
             case "modalFornecedor":
                 return <ModalTabelaFornecedores />;

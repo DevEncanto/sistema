@@ -4,78 +4,70 @@ import { ButtonSearch } from "../botoes/botao_busca";
 import { PopupAlerta } from "../popups/popup_status";
 import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor } from "../../../service/request_cadastro";
+import { cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { Selector } from "../componentes/select";
-import { valoresUnidades } from "../data";
+import { camposObrigatoriosInsumos, valoresUnidades } from "../data";
 
 export const CadastroInsumo = () => {
-    const {dados, gerenciarDados, funcoes, gerenciarControle, formularioInsumo } = useContext(EstoqueContext);
+    const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const [alert, setAlert] = useState("");
     const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
-        gerenciarControle("modalFornecedor", "tabsEntrada", false);
-        funcoes.resetFormularioFornecedor()
+        gerenciarControle("modalInsumos", "tabsEntrada", false);
+        funcoes.resetFormularios("insumo")
     };
 
     const validarDados = async () => {
-        for (const campo of camposObrigatoriosFornecedor) {
-            if (!formularioFornecedor[campo]) {
-                exibirAlerta("Preencha todos os campos", "warning");
+        for (const campo of camposObrigatoriosInsumos) {
+            if (!dados.insumo[campo]) {
+                funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
-        const response = await cadastrarFornecedor(formularioFornecedor)
+    
+        const response = await cadastrarInsumo(dados.insumo)
         const type = response.status === 200 ? "success" : "error"
 
-        exibirAlerta(response.message, type)
+        funcoes.exibirAlerta(response.message, type)
 
         if (response.status === 200) {
-            const dadosFornecedor = [...dataContext.controle.fornecedores, response.fornecedor]
+            const dadosInsumos = [...dataContext.controle.insumos, response.insumo]
 
-            dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
+            dataContext.gerenciarControle(dadosInsumos, "insumos")
 
             setTimeout(() => {
-                dataContext.saveLocalStorage()
-                gerenciarControle("modalFornecedor", "tabsEntrada", false);
-                funcoes.resetFormularioFornecedor()
+                gerenciarControle("modalInsumos", "tabsEntrada", false);
+                funcoes.resetFormularios("insumo")
             }, 2500)
         }
     };
 
-    const exibirAlerta = async (mensagem, tipo) => {
-        setAlert(mensagem);
-        setType(tipo);
-        setTimeout(async () => {
-            setAlert("");
-            setType("");
-        }, 4000);
-    };
-
     const renderAlert = () => (
-        alert && <PopupAlerta type={type} title={alert} />
+        controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
 
     return (
         <Stack
             spacing={1}
             sx={{
-                padding: "-40px 20px"
+                padding: "-40px 20px",
+                width: "60%"
             }}
         >
             <Stack
                 direction="row"
-                sx={{ justifyContent: "center", marginTop: "-5px" }}
+                sx={{ justifyContent: "center", marginTop: "-5px", width: "100%" }}
             >
                 <Typography
                     variant="h5"
                     sx={{
                         fontSize: "20px",
                         margin: "6px 0 15px 0",
-                        width: "60%",
+                        width: "50%",
                     }}
                 >
                     Novo Insumo
@@ -95,26 +87,26 @@ export const CadastroInsumo = () => {
             <Stack
                 direction="row"
                 spacing={4}
+                sx={{
+                    justifyContent: "center",
+                }}
             >
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                    <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Insumo" onChange={e => funcoes.gerenciarDados("insumo", "nome", e)} value={dados.insumo.nome} />
+                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Insumo" onChange={e => funcoes.gerenciarDadosEstoque("insumo", "nome", e)} value={dados.insumo.nome} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={sxTexfield} label={"Categoria do Insumo"} value={formularioInsumo.categoria} />
+                        <TextField sx={sxTexfield} label={"Categoria do Insumo"} value={dados.insumo.categoria} />
                         <ButtonSearch onClick={() => gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false)} />
                     </Stack>
 
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "5px", justifyContent: "center", display: "flex" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "px" }} label="Composição" onChange={e => funcoes.alterarDadosInsumo(e, "minimo")} value={formularioInsumo.minimo} />
-                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "8px" }} label="Estoque Mínimo" onChange={e => funcoes.alterarDadosInsumo(e, "minimo")} value={formularioInsumo.minimo} />
+                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "px" }} label="Composição" onChange={e => funcoes.gerenciarDadosEstoque("insumo", "composicao", e)} value={dados.insumo.composicao} />
+                        <TextField sx={{ ...sxTexfieldMenor, height: "70px", width: "198px", marginTop: "8px" }} label="Estoque Mínimo" onChange={e => funcoes.gerenciarDadosEstoque("insumo", "minimo", e)} value={dados.insumo.minimo} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "-5px", justifyContent: "center", display: "flex" }}>
-                        <Selector item="unidade" value={formularioInsumo.unidade} valores={valoresUnidades} label="Unidade" width="199px" />
+                        <Selector object="insumo" item="unidade" value={dados.insumo.unidade} valores={valoresUnidades} label="Unidade" width="199px" />
                     </Stack>
-                </Stack>
-                <Stack>
-
                 </Stack>
             </Stack>
             <Stack

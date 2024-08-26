@@ -21,7 +21,7 @@ export const Selector = (props) => {
           select
           defaultValue={defaultValue}
           value={dados[object][item]}
-          onChange={e => funcoes.gerenciarDadosEstoque(object, e, item)}
+          onChange={e => funcoes.gerenciarDadosEstoque(object, item, e)}
         >
           {
             valores.map((item, index) => {

@@ -12,25 +12,26 @@ import { Selector } from "../componentes/select";
 export const CadastroNovaEntrada = () => {
     const { controleEstoque, gerenciarControle, dados, funcoes } = useContext(EstoqueContext);
     const data = useContext(DataContext)
+
     const cancelarCadastros = () => {
         gerenciarControle("tabela", "tabsEntrada", false);
-        setFormularioEntrada(initFormularioEntrada);
+        funcoes.resetFormularios("entrada_insumo")
     };
 
     const validarDados = async () => {
         for (const campo of camposObrigatorios) {
-            if (!formularioEntrada[campo]) {
+            if (!dados.entrada_insumo[campo]) {
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
 
-        if (parseInt(formularioEntrada.parcelamento) !== formularioEntrada.parcelamentos.length) {
+        if (parseInt(dados.entrada_insumo.parcelamento) !== dados.entrada_insumo.parcelamentos.length) {
             funcoes.exibirAlerta("Atualize os parcelamentos", "error");
             return;
         }
 
-        console.log(JSON.stringify(formularioEntrada));
+        console.log(JSON.stringify(dados.entrada_insumo));
     };
 
 
@@ -69,6 +70,7 @@ export const CadastroNovaEntrada = () => {
                         justifyContent: "center",
                     }}
                 >
+                    
                     {renderAlert()}
                 </Stack>
             </Stack>
@@ -76,8 +78,8 @@ export const CadastroNovaEntrada = () => {
                 direction="row"
                 spacing={4}
             >
-                <Stack>
 
+                <Stack>
 
                     <CampoComBotao label="Fornecedor" value={dados.entrada_insumo.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
                     <CampoComBotao label="Insumo" value={dados.entrada_insumo.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />

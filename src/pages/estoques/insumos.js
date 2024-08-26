@@ -101,7 +101,7 @@ const Page = () => {
                 {controleEstoque.tab === "entradas" && controleEstoque.tabsEntrada == "tabela" ? <Button
                   key={`btn_entrada`}
                   variant='contained'
-                  onClick={() => { funcoes.gerenciarControle("form", "tabsEntrada", false) }}
+                  onClick={() => { funcoes.gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false) }}
                   startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
                 >
                   Nova Entrada

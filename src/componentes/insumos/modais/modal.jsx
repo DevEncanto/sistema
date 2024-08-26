@@ -1,13 +1,20 @@
 import { Stack, SvgIcon, Typography } from "@mui/material"
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { UserContext } from "../../../contexts/user_context/user_context";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
+import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const ModalEstoque = (props) => {
 
     const { gerenciarControle } = useContext(EstoqueContext)
+    const { saveLocalStorage } = useContext(DataContext)
     const { destino, children, title, width = "450px", height = "460px" } = props
+
+    useEffect(() => {
+        saveLocalStorage()
+    }, [])
+
 
     return (
 

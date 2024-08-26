@@ -10,6 +10,13 @@ export const categoriasInsumos = [
     { id_categoria_insumo: 5, categoria: "Fungicida" }
 ]
 
+export const camposObrigatoriosInsumos = [
+    "unidade",
+    "minimo",
+    "categoria",
+    "nome"
+]
+
 
 export const celulasEstoque = [
     "ID INSUMO",

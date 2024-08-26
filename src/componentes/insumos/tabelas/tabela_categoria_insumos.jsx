@@ -14,13 +14,22 @@ import { sxCardScrollPersonalizada } from '../../../components/config-componente
 import { categoriasInsumos, celulasCategoriaInsumos } from '../data';
 import { DataContext } from '../../../contexts/data_context/data_context';
 import { useContext } from 'react';
+import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
 export const TabelaCategoriaInsumos = (props) => {
 
     const sx = { textAlign: "center" }
 
     const { controle } = useContext(DataContext)
+    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
 
+    const selecionarCategoria = (categoria, id_categoria_insumo) => {
+        let eCategoria = { target: { value: categoria } }
+        let eIndex = { target: { value: id_categoria_insumo } }
+        funcoes.gerenciarDadosEstoque("insumo", "categoria", eCategoria)
+        funcoes.gerenciarDadosEstoque("insumo", "id_categoria_insumo    ", eIndex)
+        gerenciarControle("cadastroInsumo", "tabsEntrada", false)
+    }
 
     return (
         <Paper sx={{ width: '100%' }}>
@@ -60,7 +69,7 @@ export const TabelaCategoriaInsumos = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { }}
+                                            onClick={() => { selecionarCategoria(categoria.nome, categoria.id_categoria_insumo) }}
                                         >
                                             Selecionar
                                         </Button>
