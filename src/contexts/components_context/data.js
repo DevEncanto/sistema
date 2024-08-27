@@ -4,7 +4,8 @@ export const initControle = {
     tabsSaida: "tabela",
     insumo: "",
     type: "",
-    alert: ""
+    alert: "",
+    navigate: true
 }
 
 export const initFormularioEntrada = {
@@ -69,12 +70,21 @@ export const initDados = {
         valor_total: "",
         parcelamento: "",
         nf_boleto: "",
+        id_estoque: "",
+        estoque: "",
         parcelamentos: [
 
         ]
     },
     categoria: {
         nome: "",
+        descricao: ""
+    },
+    estoque: {
+        nome: "",
+        id_lote:  "",
+        lote: "", 
+        tipo_estoque: "",
         descricao: ""
     }
 }

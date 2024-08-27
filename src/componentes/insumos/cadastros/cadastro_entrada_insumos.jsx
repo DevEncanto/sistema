@@ -2,7 +2,7 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import { PopupAlerta } from "../popups/popup_status";
 import { TabelaParcelas } from "../tabelas/tabela_entrada_parcela";
 import { DataContext } from "../../../contexts/data_context/data_context";
-import { useContext } from "react";
+import { useContext, useEffect, useLayoutEffect } from "react";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import { Calendario } from "../componentes/calendario";
 import { valoresFormasPagamento, valoresStatusFinanceiro } from "../data";
@@ -13,8 +13,13 @@ export const CadastroNovaEntrada = () => {
     const { controleEstoque, gerenciarControle, dados, funcoes } = useContext(EstoqueContext);
     const data = useContext(DataContext)
 
+    useLayoutEffect(() => {
+        gerenciarControle(false, "navigate", false)
+    }, [])
+
     const cancelarCadastros = () => {
         gerenciarControle("tabela", "tabsEntrada", false);
+        gerenciarControle(true, "navigate", false)
         funcoes.resetFormularios("entrada_insumo")
     };
 
@@ -34,8 +39,6 @@ export const CadastroNovaEntrada = () => {
         console.log(JSON.stringify(dados.entrada_insumo));
     };
 
-
-
     const renderAlert = () => (
         controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
@@ -44,7 +47,7 @@ export const CadastroNovaEntrada = () => {
         <Stack
             spacing={1}
             sx={{
-                padding: "-40px 20px"
+                padding: "-50px 20px"
             }}
         >
             <Stack
@@ -55,7 +58,7 @@ export const CadastroNovaEntrada = () => {
                     variant="h5"
                     sx={{
                         fontSize: "20px",
-                        margin: "6px 0 15px 0",
+                        margin: "6px 0 0 0",
                         width: "60%",
                     }}
                 >
@@ -70,7 +73,6 @@ export const CadastroNovaEntrada = () => {
                         justifyContent: "center",
                     }}
                 >
-                    
                     {renderAlert()}
                 </Stack>
             </Stack>
@@ -78,11 +80,10 @@ export const CadastroNovaEntrada = () => {
                 direction="row"
                 spacing={4}
             >
-
                 <Stack>
-
                     <CampoComBotao label="Fornecedor" value={dados.entrada_insumo.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
                     <CampoComBotao label="Insumo" value={dados.entrada_insumo.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />
+                    <CampoComBotao label="Estoque" value={dados.entrada_insumo.insumo} onClick={() => gerenciarControle("modalEstoques", "tabsEntrada", false)} />
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
                         <Calendario item="data_emissao" value={dados.entrada_insumo.data_emissao} setValue={funcoes.alterarDados} width="180px" label="Data de Emissão" />
                         <Calendario item="data_recebimento" value={dados.entrada_insumo.data_recebimento} setValue={funcoes.alterarDados} width="218px" label="Data de Recebimento" />
@@ -96,7 +97,7 @@ export const CadastroNovaEntrada = () => {
                             </>
                         )}
                     </Stack>
-                    <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
+                    <Stack direction="row" spacing={1} sx={{ marginTop: "5px", marginBottom: "5px" }}>
                         <Selector object="entrada_insumo" item="status_financeiro" value={dados.entrada_insumo.status_financeiro} valores={valoresStatusFinanceiro} label="Status Financeiro" width="199px" />
                         <Selector object="entrada_insumo" item="forma_pagamento" value={dados.entrada_insumo.forma_pagamento} valores={valoresFormasPagamento} label="Forma de Pagamento" width="199px" />
                     </Stack>

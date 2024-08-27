@@ -9,9 +9,13 @@ import { ModalTabelaFornecedores } from "../modais/modalFornecedores";
 import { CadastroInsumo } from "../cadastros/cadastro_insumo";
 import { ModalCategoriaInsumo } from "../modais/modalCategoriaInsumo";
 import { CadastroCategoriaInsumo } from "../cadastros/cadastro_categoria_insumo";
+import { ModalEstoque } from "../modais/modal";
+import { ModalTabelaEstoques } from "../modais/modalEstoques";
+import { CadastroEstoque } from "../cadastros/cadastro_estoque";
+import { ModalTabelaLotes } from "../modais/modalLotes";
 
 export const EntradaInsumos = () => {
-    const { controleEstoque, dados } = useContext(EstoqueContext);
+    const { controleEstoque } = useContext(EstoqueContext);
 
     const renderContent = () => {
         switch (controleEstoque.tabsEntrada) {
@@ -23,12 +27,18 @@ export const EntradaInsumos = () => {
                 return <ModalTabelaFornecedores />;
             case "modalInsumos":
                 return <ModalTabelaInsumos />;
+            case "modalEstoques":
+                return <ModalTabelaEstoques />;
+            case "modalLotes":
+                return <ModalTabelaLotes />;
             case "modalCategoriaInsumo":
                 return <ModalCategoriaInsumo />;
             case "cadastroFornecedor":
                 return <CadastroFornecedor />;
             case "cadastroInsumo":
                 return <CadastroInsumo />;
+            case "cadastroEstoque":
+                return <CadastroEstoque />;
             case "cadastroCategoriaInsumo":
                 return <CadastroCategoriaInsumo />;
             default:

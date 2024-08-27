@@ -99,7 +99,7 @@ const Page = () => {
                 direction={"row"}
                 width="50%"
               >
-                {
+                {controleEstoque.navigate ?
                   botoesNavegacao.map((botao, index) => {
                     return <Button
                       key={`btn_nav${index}`}
@@ -111,7 +111,9 @@ const Page = () => {
                     >
                       {botao.label}
                     </Button>
-                  })
+                  }) :
+                  <></>
+
                 }
               </Stack>
               <Stack

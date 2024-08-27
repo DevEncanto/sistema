@@ -17,6 +17,11 @@ export const camposObrigatoriosInsumos = [
     "nome"
 ]
 
+export const camposObrigatoriosEstoque = [
+    "nome",
+    "lote",
+    "tipo_estoque"
+]
 
 export const celulasEstoque = [
     "ID INSUMO",
@@ -85,6 +90,12 @@ export const celulasFornecedores = [
     "FORNECEDOR",
     <BotaoNovoCadastro title="Novo Fornecedor" cadastro="cadastroFornecedor" />
 ]
+export const celulasEstoques = [
+    "ID ESTOQUE",
+    "ESTOQUE",
+    <BotaoNovoCadastro title="Novo Estoque" cadastro="cadastroEstoque" />
+]
+
 
 export const celulasCategoriaInsumos = [
     "ID CATEGORIA",
