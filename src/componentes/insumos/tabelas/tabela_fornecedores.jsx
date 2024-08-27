@@ -25,10 +25,12 @@ export const TabelaFornecedores = (props) => {
     const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
-    const selecionarFornecedor = (fornecedor) => {
-        let e = { target: { value: fornecedor } }
-        funcoes.alterarDados(e, "fornecedor")
-        gerenciarControle("form", "tabsEntrada", false)
+    const selecionarFornecedor = (fornecedor, id_fornecedor) => {
+        let eFornecedor = { target: { value: fornecedor } }
+        let eIndex = { target: { value: id_fornecedor } }
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "fornecedor", eFornecedor)
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "id_fornecedor", eIndex)
+        gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
     }
 
     return (
@@ -70,7 +72,7 @@ export const TabelaFornecedores = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarFornecedor(fornecedor.fantasia) }}
+                                            onClick={() => { selecionarFornecedor(fornecedor.fantasia, fornecedor.id_fornecedor) }}
                                         >
                                             Selecionar
                                         </Button>

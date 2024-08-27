@@ -8,22 +8,22 @@ import { cadastrarFornecedor } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const CadastroFornecedor = () => {
-    const { controle, funcoes, gerenciarControle, formularioFornecedor } = useContext(EstoqueContext);
+    const { controleEstoque, funcoes, gerenciarControle, dados } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
         gerenciarControle("modalFornecedor", "tabsEntrada", false);
-        funcoes.resetFormularios()
+        funcoes.resetFormularios("fornecedor")
     };
 
     const validarDados = async () => {
         for (const campo of camposObrigatoriosFornecedor) {
-            if (!formularioFornecedor[campo]) {
+            if (!dados.fornecedor[campo]) {
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
-        const response = await cadastrarFornecedor(formularioFornecedor)
+        const response = await cadastrarFornecedor(dados.fornecedor)
         const type = response.status === 200 ? "success" : "error"
 
         funcoes.exibirAlerta(response.message, type)
@@ -34,9 +34,8 @@ export const CadastroFornecedor = () => {
             dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
 
             setTimeout(() => {
-                dataContext.saveLocalStorage()
                 gerenciarControle("modalFornecedor", "tabsEntrada", false);
-                funcoes.resetFormularioFornecedor()
+                funcoes.resetFormularios("fornecedor")
             }, 2500)
         }
     };
@@ -44,7 +43,7 @@ export const CadastroFornecedor = () => {
 
 
     const renderAlert = () => (
-        controle.alert && <PopupAlerta type={controle.type} title={controle.alert} />
+        controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
 
     return (
@@ -86,38 +85,38 @@ export const CadastroFornecedor = () => {
             >
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Nome" onChange={e => funcoes.alterarDadosFornecedor(e, "nome")} value={formularioFornecedor.nome} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.alterarDadosFornecedor(e, "fantasia")} value={formularioFornecedor.fantasia} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Nome" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "nome", e)} value={dados.fornecedor.nome} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "fantasia", e)} value={dados.fornecedor.fantasia} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.alterarDadosFornecedor(e, "cpf_cnpj")} value={formularioFornecedor.cpf_cnpj} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Inscrição Estadual" onChange={e => funcoes.alterarDadosFornecedor(e, "inscricao")} value={formularioFornecedor.inscricao} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "cpf_cnpj", e)} value={dados.fornecedor.cpf_cnpj} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Inscrição Estadual" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "inscricao", e)} value={dados.fornecedor.inscricao} />
                     </Stack>
 
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Endereço" onChange={e => funcoes.alterarDadosFornecedor(e, "endereco")} value={formularioFornecedor.endereco} />
+                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Endereço" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "endereco", e)} value={dados.fornecedor.endereco} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CEP" onChange={e => funcoes.alterarDadosFornecedor(e, "cep")} value={formularioFornecedor.cep} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Bairro" onChange={e => funcoes.alterarDadosFornecedor(e, "bairro")} value={formularioFornecedor.bairro} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CEP" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "cep", e)} value={dados.fornecedor.cep} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Bairro" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "bairro", e)} value={dados.fornecedor.bairro} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Cidade" onChange={e => funcoes.alterarDadosFornecedor(e, "cidade")} value={formularioFornecedor.cidade} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Estado" onChange={e => funcoes.alterarDadosFornecedor(e, "estado")} value={formularioFornecedor.estado} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Cidade" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "cidade", e)} value={dados.fornecedor.cidade} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Estado" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "estado", e)} value={dados.fornecedor.estado} />
                     </Stack>
                 </Stack>
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "276px", marginTop: "px" }} label="E-mail" onChange={e => funcoes.alterarDadosFornecedor(e, "email")} value={formularioFornecedor.email} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "120px", marginTop: "8px" }} label="Telefone" onChange={e => funcoes.alterarDadosFornecedor(e, "telefone")} value={formularioFornecedor.telefone} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "276px", marginTop: "px" }} label="E-mail" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "email", e)} value={dados.fornecedor.email} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "120px", marginTop: "8px" }} label="Telefone" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "telefone", e)} value={dados.fornecedor.telefone} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Pix" onChange={e => funcoes.alterarDadosFornecedor(e, "pix")} value={formularioFornecedor.pix} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Banco" onChange={e => funcoes.alterarDadosFornecedor(e, "banco")} value={formularioFornecedor.banco} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Pix" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "pix", e)} value={dados.fornecedor.pix} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Banco" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "banco", e)} value={dados.fornecedor.banco} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Agência" onChange={e => funcoes.alterarDadosFornecedor(e, "agencia")} value={formularioFornecedor.agencia} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Conta" onChange={e => funcoes.alterarDadosFornecedor(e, "conta")} value={formularioFornecedor.conta} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Agência" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "agencia", e)} value={dados.fornecedor.agencia} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Conta" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "conta", e)} value={dados.fornecedor.conta} />
                     </Stack>
                 </Stack>
             </Stack>

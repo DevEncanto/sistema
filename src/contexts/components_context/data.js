@@ -1,6 +1,7 @@
 export const initControle = {
     tab: "resumo",
     tabsEntrada: "tabela",
+    tabsSaida: "tabela",
     insumo: "",
     type: "",
     alert: ""

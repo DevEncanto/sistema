@@ -15,7 +15,7 @@ export const CadastroCategoriaInsumo = () => {
     const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
-        gerenciarControle("modalCategoriaInsumos", "tabsEntrada", false);
+        gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
         funcoes.resetFormularios("categoria")
     };
 
@@ -37,7 +37,7 @@ export const CadastroCategoriaInsumo = () => {
 
             setTimeout(() => {
                 gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
-                funcoes.resetFormularios()
+                funcoes.resetFormularios("categoria")
             }, 2500)
         }
     };

@@ -76,7 +76,7 @@ export const CadastroInsumo = () => {
                     direction="row"
                     spacing={2}
                     sx={{
-                        width: "50%",
+                        width: "70%",
                         alignItems: "center",
                         justifyContent: "center",
                     }}

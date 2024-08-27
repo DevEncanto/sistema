@@ -24,6 +24,27 @@ const Page = () => {
     loadLocalStorage()
   }, [])
 
+
+  const redirecionamento = (tabs, object, targeted) => {
+    const { tabsEntrada, tabsSaida, tab } = controleEstoque
+
+    let navigate = false
+
+    if (tab == "entradas" && tabsEntrada === "tabela") {
+      navigate = true
+    }
+
+    if (tab == "saidas") {
+      navigate = true
+    }
+    if (tab == "resumo") {
+      navigate = true
+    }
+    if (navigate) {
+      funcoes.gerenciarControle(tabs, object, targeted)
+    }
+  }
+
   return (
     <>
       <Head>
@@ -83,7 +104,7 @@ const Page = () => {
                     return <Button
                       key={`btn_nav${index}`}
                       variant='contained'
-                      onClick={() => { funcoes.gerenciarControle(botao.tab, "tab", false) }}
+                      onClick={() => { redirecionamento(botao.tab, "tab", false) }}
                       sx={{
                         backgroundColor: controleEstoque.tab === botao.tab ? "primary.dark" : "grey"
                       }}
