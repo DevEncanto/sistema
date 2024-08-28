@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasEstoques } from '../data';
+import { celulasEstoques, celulasLote } from '../data';
 import { useContext, useEffect } from 'react';
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 import { DataContext } from '../../../contexts/data_context/data_context';
@@ -27,12 +27,12 @@ export const TabelaLotes = (props) => {
     }, [])
 
 
-    const selecionarEstoque = (estoque, id_estoque) => {
-        let eEstoque = { target: { value: estoque } }
-        let eIndex = { target: { value: id_estoque } }
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "estoque", eEstoque)
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "id_estoque", eIndex)
-        gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
+    const selecionarLote = (lote, id_lote) => {
+        let eLote = { target: { value: lote } }
+        let eIndex = { target: { value: id_lote } }
+        funcoes.gerenciarDadosEstoque("estoque", "lote", eLote)
+        funcoes.gerenciarDadosEstoque("estoque", "id_lote", eIndex)
+        gerenciarControle("cadastro", "tabsEntrada", false)
     }
 
     return (
@@ -41,7 +41,7 @@ export const TabelaLotes = (props) => {
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasEstoques.map((celula, index) => {
+                            {celulasLote.map((celula, index) => {
                                 return <TableCell sx={sx} key={index}>
                                     {celula}
                                 </TableCell>
@@ -49,17 +49,17 @@ export const TabelaLotes = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {controle.estoques.map((estoque, index) => {
+                        {controle.lotes.map((lote, index) => {
                             return (
                                 <TableRow
                                     hover
                                     key={`insumo${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {estoque.id_estoque}
+                                        {lote.id_lote}
                                     </TableCell>
                                     <TableCell sx={sx}>
-                                        {estoque.nome}
+                                        {lote.nome}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
@@ -69,7 +69,7 @@ export const TabelaLotes = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarEstoque(estoque.nome, estoque.id_estoque) }}
+                                            onClick={() => { selecionarLote(lote.nome, lote.id_lote) }}
                                         >
                                             Selecionar
                                         </Button>

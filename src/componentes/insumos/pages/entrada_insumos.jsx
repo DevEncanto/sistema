@@ -13,6 +13,7 @@ import { ModalEstoque } from "../modais/modal";
 import { ModalTabelaEstoques } from "../modais/modalEstoques";
 import { CadastroEstoque } from "../cadastros/cadastro_estoque";
 import { ModalTabelaLotes } from "../modais/modalLotes";
+import { CadastroLote } from "../cadastros/cadastro_lote";
 
 export const EntradaInsumos = () => {
     const { controleEstoque } = useContext(EstoqueContext);
@@ -39,6 +40,8 @@ export const EntradaInsumos = () => {
                 return <CadastroInsumo />;
             case "cadastroEstoque":
                 return <CadastroEstoque />;
+            case "cadastroLote":
+                return <CadastroLote />;
             case "cadastroCategoriaInsumo":
                 return <CadastroCategoriaInsumo />;
             default:

@@ -12,6 +12,8 @@ const cadastrarInsumo = async (insumo) => {
     return data
 }
 
+
+
 const cadastrarCategoriaInsumo = async (categoria) => {
     const { data } = await api.post("/nova_categoria_insumo", categoria)
 

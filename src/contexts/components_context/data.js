@@ -82,9 +82,13 @@ export const initDados = {
     },
     estoque: {
         nome: "",
-        id_lote:  "",
-        lote: "", 
+        id_lote: "",
+        lote: "",
         tipo_estoque: "",
+        descricao: ""
+    },
+    lote: {
+        nome: "",
         descricao: ""
     }
 }
