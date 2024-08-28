@@ -34,7 +34,7 @@ export const CadastroFornecedor = () => {
             dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
 
             setTimeout(() => {
-                gerenciarControle("modalFornecedor", "tabsEntrada", false);
+                funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false);
                 funcoes.resetFormularios("fornecedor")
             }, 2500)
         }

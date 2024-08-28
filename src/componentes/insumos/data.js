@@ -93,6 +93,7 @@ export const celulasFornecedores = [
 export const celulasEstoques = [
     "ID ESTOQUE",
     "ESTOQUE",
+    "LOTE",
     <BotaoNovoCadastro title="Novo Estoque" cadastro="cadastroEstoque" />
 ]
 

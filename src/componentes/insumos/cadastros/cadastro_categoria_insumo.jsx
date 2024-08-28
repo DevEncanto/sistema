@@ -2,20 +2,16 @@ import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { ButtonSearch } from "../botoes/botao_busca";
 import { PopupAlerta } from "../popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarCategoriaInsumo, cadastrarFornecedor } from "../../../service/request_cadastro";
+import { cadastrarCategoriaInsumo} from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const CadastroCategoriaInsumo = () => {
-    const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
+    const { dados, funcoes, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
-    const [alert, setAlert] = useState("");
-    const [type, setType] = useState("");
-
     const cancelarCadastros = () => {
-        gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
+        funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
         funcoes.resetFormularios("categoria")
     };
 

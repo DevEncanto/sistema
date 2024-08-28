@@ -11,13 +11,6 @@ export const EstoqueProvider = ({ children }) => {
 
     const [controleEstoque, setControle] = useState(initControle)
 
-    const gerenciarControle = (e, item, target = true) => {
-        setControle((currentState) => {
-            return { ...currentState, [item]: target ? e.target.value : e }
-        })
-    }
-
-
     const [dados, setDados] = useState(initDados)
 
     const exibirAlerta = (mensagem, tipo) => {
@@ -37,6 +30,21 @@ export const EstoqueProvider = ({ children }) => {
         return true;
     }
 
+    const gerenciarDadosEstoque = (object, item, e, target = true) => {
+        setDados((currentState) => {
+            return {
+                ...currentState, [object]: {
+                    ...currentState[object], [item]: target ? e.target.value : e
+                }
+            }
+        })
+    }
+
+    const gerenciarControle = (e, item, target = true) => {
+        setControle((currentState) => {
+            return { ...currentState, [item]: target ? e.target.value : e }
+        })
+    }
 
     const funcoes = {
 
@@ -45,54 +53,31 @@ export const EstoqueProvider = ({ children }) => {
                 return { ...currentState, [formulario]: initDados[formulario] }
             })
         },
-        calculoValores: (e, item) => {
-            let total = 0
-            let eParsed = e.target.value == "" ? 0 : parseFloat(e.target.value)
+        calculoValores: (object, item, e, target = true) => {
+            if (!e.target.value.includes(",")) {
+                let total = 0
+                let eParsed = e.target.value == "" ? 0 : parseFloat(e.target.value.toString().replace(",", "."))
 
-            setFormularioEntrada((currentState) => {
-                return { ...currentState, [item]: e.target.value }
-            })
+                gerenciarDadosEstoque("entrada_insumo", item, e.target.value, false)
 
-            const { qtde_insumo, valor_unitario, descontos, parcelamento } = formularioEntrada
-            const num1 = qtde_insumo == "" ? 0 : parseFloat(qtde_insumo)
-            const num2 = valor_unitario == "" ? 0 : parseFloat(valor_unitario)
-            const num3 = descontos == "" ? 0 : parseFloat(descontos)
+                const { qtde_insumo, valor_unitario, descontos, parcelamento } = dados.entrada_insumo
+                const num1 = qtde_insumo == "" ? 0 : parseFloat(qtde_insumo)
+                const num2 = valor_unitario == "" ? 0 : parseFloat(valor_unitario)
+                const num3 = descontos == "" ? 0 : parseFloat(descontos)
 
-            switch (item) {
-                case "qtde_insumo": total = (eParsed * num2) - num3; break;
-                case "valor_unitario": total = (num1 * eParsed) - num3; break;
-                case "descontos": total = (num1 * num2) - eParsed; break;
-            }
-
-            setFormularioEntrada((currentState) => {
-                return {
-                    ...currentState, valor_total: total
+                switch (item) {
+                    case "qtde_insumo": total = (eParsed * num2) - num3; break;
+                    case "valor_unitario": total = (num1 * eParsed) - num3; break;
+                    case "descontos": total = (num1 * num2) - eParsed; break;
                 }
-            })
-        },
-        alterarDados: (e, item) => {
-            let data = e
-            if (item !== "data_emissao" && item !== "data_recebimento") {
-                data = e.target.value
+                console.log(`Valor Total: R$ ${total}`)
+                gerenciarDadosEstoque("entrada_insumo", "valor_total", total.toFixed(2), false)
             }
-            setFormularioEntrada((currentState) => {
-                return { ...currentState, [item]: data }
-            })
-        },
-        alterarDadosFornecedor: (e, item) => {
-            setFormularioFornecedor((currentState) => {
-                return { ...currentState, [item]: e.target.value }
-            })
-        },
-        alterarDadosInsumos: (e, item) => {
-            setFormularioInsumo((currentState) => {
-                return { ...currentState, [item]: e.target.value }
-            })
         },
         parcelar: () => {
 
             let parcelamentos = []
-            const { valor_total, parcelamento, data_emissao, prazo } = formularioEntrada
+            const { valor_total, parcelamento, data_emissao, prazo } = dados.entrada_insumo
 
 
             if (!validarCampo(data_emissao, "Informe uma data de emissão!")) return;
@@ -113,32 +98,15 @@ export const EstoqueProvider = ({ children }) => {
                     vencimento: calcularDatas(data, num3 * (i + 1))
                 })
             }
-
-            setFormularioEntrada((currentState) => {
-                return { ...currentState, parcelamentos: [...parcelamentos] }
-            })
-
+            gerenciarDadosEstoque("entrada_insumo", "parcelamentos", [...parcelamentos], false)
         },
         exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },
-        gerenciarDadosEstoque: (object, item, e, target = true) => {
-            setDados((currentState) => {
-                return {
-                    ...currentState, [object]: {
-                        ...currentState[object], [item]: target ? e.target.value : e
-                    }
-                }
-            })
-        },
-        gerenciarControle: (e, item, target = true) => {
-            setControle((currentState) => {
-                return { ...currentState, [item]: target ? e.target.value : e }
-            })
-        }
+        gerenciarDadosEstoque: (object, item, e, target = true) => { gerenciarDadosEstoque(object, item, e, target) },
+        gerenciarControle: (e, item, target = true) => { gerenciarControle(e, item, target) }
     }
 
     const value = {
         funcoes,
-        gerenciarControle,
         controleEstoque,
         dados
     }

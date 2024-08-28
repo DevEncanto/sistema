@@ -14,12 +14,12 @@ export const CadastroNovaEntrada = () => {
     const data = useContext(DataContext)
 
     useLayoutEffect(() => {
-        gerenciarControle(false, "navigate", false)
+        funcoes.gerenciarControle(false, "navigate", false)
     }, [])
 
     const cancelarCadastros = () => {
-        gerenciarControle("tabela", "tabsEntrada", false);
-        gerenciarControle(true, "navigate", false)
+        funcoes.gerenciarControle("tabela", "tabsEntrada", false);
+        funcoes.gerenciarControle(true, "navigate", false)
         funcoes.resetFormularios("entrada_insumo")
     };
 
@@ -81,19 +81,19 @@ export const CadastroNovaEntrada = () => {
                 spacing={4}
             >
                 <Stack>
-                    <CampoComBotao label="Fornecedor" value={dados.entrada_insumo.fornecedor} onClick={() => gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
-                    <CampoComBotao label="Insumo" value={dados.entrada_insumo.insumo} onClick={() => gerenciarControle("modalInsumos", "tabsEntrada", false)} />
-                    <CampoComBotao label="Estoque" value={dados.entrada_insumo.insumo} onClick={() => gerenciarControle("modalEstoques", "tabsEntrada", false)} />
+                    <CampoComBotao label="Fornecedor" value={dados.entrada_insumo.fornecedor} onClick={() => funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
+                    <CampoComBotao label="Insumo" value={dados.entrada_insumo.insumo} onClick={() => funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false)} />
+                    <CampoComBotao label="Estoque" value={dados.entrada_insumo.estoque} onClick={() => funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false)} />
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
-                        <Calendario item="data_emissao" value={dados.entrada_insumo.data_emissao} setValue={funcoes.alterarDados} width="180px" label="Data de Emissão" />
-                        <Calendario item="data_recebimento" value={dados.entrada_insumo.data_recebimento} setValue={funcoes.alterarDados} width="218px" label="Data de Recebimento" />
+                        <Calendario object="entrada_insumo" item="data_emissao" value={dados.entrada_insumo.data_emissao} width="180px" label="Data de Emissão" />
+                        <Calendario object="entrada_insumo" item="data_recebimento" value={dados.entrada_insumo.data_recebimento}  width="218px" label="Data de Recebimento" />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ marginTop: "5px", alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "180px", marginTop: "0px" }} label="Nº Nota Fiscal/Boleto" onChange={e => funcoes.alterarDados(e, "nf_boleto")} value={dados.entrada_insumo.nf_boleto} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "180px", marginTop: "0px" }} label="Nº Nota Fiscal/Boleto" onChange={ e => funcoes.gerenciarDadosEstoque("entrada_insumo", "nf_boleto", e)} value={dados.entrada_insumo.nf_boleto} />
                         {dados.entrada_insumo.status_financeiro === "Em Aberto" && (
                             <>
-                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Parcelamento" onChange={e => funcoes.alterarDados(e, "parcelamento")} value={dados.entrada_insumo.parcelamento} />
-                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Prazo" onChange={e => funcoes.alterarDados(e, "prazo")} value={dados.entrada_insumo.prazo} />
+                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Parcelamento" onChange={ e => funcoes.gerenciarDadosEstoque("entrada_insumo", "parcelamento", e)} value={dados.entrada_insumo.parcelamento} />
+                                <TextField sx={{ ...sxTexfieldMenor, width: "105px" }} label="Prazo" onChange={ e => funcoes.gerenciarDadosEstoque("entrada_insumo", "prazo", e)} value={dados.entrada_insumo.prazo} />
                             </>
                         )}
                     </Stack>
@@ -104,11 +104,11 @@ export const CadastroNovaEntrada = () => {
                 </Stack>
                 <Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Qtde do Insumo" onChange={e => funcoes.calculoValores(e, "qtde_insumo")} value={dados.entrada_insumo.qtde_insumo} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Unitário" onChange={e => funcoes.calculoValores(e, "valor_unitario")} value={dados.entrada_insumo.valor_unitario} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Qtde do Insumo" onChange={ e => funcoes.calculoValores("entrada_insumo", "qtde_insumo", e, false)} value={dados.entrada_insumo.qtde_insumo} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Unitário" onChange={ e => funcoes.calculoValores("entrada_insumo", "valor_unitario", e, false)} value={dados.entrada_insumo.valor_unitario} />
                     </Stack>
                     <Stack direction="row" spacing={1} sx={{ alignItems: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Descontos" onChange={e => funcoes.calculoValores(e, "descontos")} value={dados.entrada_insumo.descontos} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Descontos" onChange={ e => funcoes.calculoValores("entrada_insumo", "descontos", e, false)} value={dados.entrada_insumo.descontos} />
                         <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Total" value={dados.entrada_insumo.valor_total} />
                     </Stack>
                     <TabelaParcelas />

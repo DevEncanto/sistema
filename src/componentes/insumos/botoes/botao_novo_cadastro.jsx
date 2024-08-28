@@ -5,7 +5,7 @@ import { EstoqueContext } from "../../../contexts/components_context/estoque_con
 
 export const BotaoNovoCadastro = (props) => {
     const { cadastro, title } = props
-    const { gerenciarControle } = useContext(EstoqueContext)
+    const { funcoes } = useContext(EstoqueContext)
 
     return (
         <Button
@@ -15,7 +15,7 @@ export const BotaoNovoCadastro = (props) => {
             }}
             key={`btn_entrada`}
             variant='contained'
-            onClick={() => { gerenciarControle(cadastro, "tabsEntrada", false) }}
+            onClick={() => { funcoes.gerenciarControle(cadastro, "tabsEntrada", false) }}
             startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
         >
             {title}

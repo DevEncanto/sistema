@@ -30,7 +30,7 @@ export const TabelaFornecedores = (props) => {
         let eIndex = { target: { value: id_fornecedor } }
         funcoes.gerenciarDadosEstoque("entrada_insumo", "fornecedor", eFornecedor)
         funcoes.gerenciarDadosEstoque("entrada_insumo", "id_fornecedor", eIndex)
-        gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
+        funcoes.gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
     }
 
     return (

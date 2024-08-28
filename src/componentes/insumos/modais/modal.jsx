@@ -7,7 +7,7 @@ import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const ModalEstoque = (props) => {
 
-    const { gerenciarControle } = useContext(EstoqueContext)
+    const { funcoes } = useContext(EstoqueContext)
     const { saveLocalStorage } = useContext(DataContext)
     const { destino, children, title, width = "450px", height = "460px" } = props
 
@@ -65,7 +65,7 @@ export const ModalEstoque = (props) => {
                     }}
                 >
                     <SvgIcon
-                        onClick={() => gerenciarControle(destino, "tabsEntrada", false)}
+                        onClick={() => funcoes.gerenciarControle(destino, "tabsEntrada", false)}
                         sx={{
                             cursor: "pointer"
                         }}

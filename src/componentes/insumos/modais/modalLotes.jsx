@@ -6,7 +6,7 @@ export const ModalTabelaLotes = () => {
     return (
         <ModalEstoque
             title={"Estoques"}
-            destino={"cadastroEntradaInsumo"}
+            destino={"cadastroEstoques"}
             width="520px"
         >
             <TabelaLotes maxHeight={380}/>

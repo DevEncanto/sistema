@@ -17,7 +17,7 @@ export const CadastroInsumo = () => {
     const [type, setType] = useState("");
 
     const cancelarCadastros = () => {
-        gerenciarControle("modalInsumos", "tabsEntrada", false);
+        funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false);
         funcoes.resetFormularios("insumo")
     };
 
@@ -40,7 +40,7 @@ export const CadastroInsumo = () => {
             dataContext.gerenciarControle(dadosInsumos, "insumos")
 
             setTimeout(() => {
-                gerenciarControle("modalInsumos", "tabsEntrada", false);
+                funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false);
                 funcoes.resetFormularios("insumo")
             }, 2500)
         }
@@ -97,7 +97,7 @@ export const CadastroInsumo = () => {
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField sx={sxTexfield} label={"Categoria do Insumo"} value={dados.insumo.categoria} />
-                        <ButtonSearch onClick={() => gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false)} />
+                        <ButtonSearch onClick={() => funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false)} />
                     </Stack>
 
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "5px", justifyContent: "center", display: "flex" }}>

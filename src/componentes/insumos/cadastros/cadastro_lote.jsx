@@ -4,7 +4,7 @@ import { ButtonSearch } from "../botoes/botao_busca";
 import { PopupAlerta } from "../popups/popup_status";
 import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
+import { cadastrarFornecedor, cadastrarInsumo, cadastrarLote } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { Selector } from "../componentes/select";
 import { camposObrigatoriosEstoque, camposObrigatoriosInsumos, valoresUnidades } from "../data";
@@ -19,28 +19,29 @@ export const CadastroLote = () => {
     };
 
     const validarDados = async () => {
+        console.log("validando dados...")
 
-        if (!dados.lotes.nome) {
+        if (!dados.lote.nome) {
             funcoes.exibirAlerta("Informe o nome do lote!", "warning");
             return;
         }
 
 
-        const response = await cadastrarInsumo(dados.lote)
+        const response = await cadastrarLote(dados.lote)
         const type = response.status === 200 ? "success" : "error"
 
-        // funcoes.exibirAlerta(response.message, type)
+        funcoes.exibirAlerta(response.message, type)
 
-        // if (response.status === 200) {
-        //     const dadosInsumos = [...dataContext.controle.insumos, response.insumo]
+        if (response.status === 200) {
+            const dadosLotes = [...dataContext.controle.lotes, response.lote]
 
-        //     dataContext.gerenciarControle(dadosInsumos, "insumos")
+            dataContext.gerenciarControle(dadosLotes, "lotes")
 
-        //     setTimeout(() => {
-        //         gerenciarControle("modalInsumos", "tabsEntrada", false);
-        //         funcoes.resetFormularios("insumo")
-        //     }, 2500)
-        // }
+            setTimeout(() => {
+                funcoes.gerenciarControle("modalLotes", "tabsEntrada", false);
+                funcoes.resetFormularios("lotes")
+            }, 2000)
+        }
     };
 
     const renderAlert = () => (

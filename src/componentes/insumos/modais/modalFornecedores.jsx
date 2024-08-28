@@ -6,7 +6,7 @@ export const ModalTabelaFornecedores = () => {
     return (
         <ModalEstoque
             title={"Fornecedores Cadastrados"}
-            destino={"cadastroFornecedores"}
+            destino={"cadastroEntradaInsumo"}
             width="580px"
         >
             <TabelaFornecedores maxHeight={380}/>

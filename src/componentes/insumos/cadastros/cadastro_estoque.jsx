@@ -4,7 +4,7 @@ import { ButtonSearch } from "../botoes/botao_busca";
 import { PopupAlerta } from "../popups/popup_status";
 import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
+import { cadastrarEstoque, cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { Selector } from "../componentes/select";
 import { camposObrigatoriosEstoque, camposObrigatoriosInsumos, valoresUnidades } from "../data";
@@ -13,37 +13,36 @@ export const CadastroEstoque = () => {
     const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
-    const [alert, setAlert] = useState("");
-    const [type, setType] = useState("");
-
     const cancelarCadastros = () => {
-        gerenciarControle("modalInsumos", "tabsEntrada", false);
-        funcoes.resetFormularios("insumo")
+        funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false);
+        funcoes.resetFormularios("estoque")
     };
 
     const validarDados = async () => {
         for (const campo of camposObrigatoriosEstoque) {
             if (!dados.estoque[campo]) {
+                console.log(campo)
+                console.log(dados.estoque[campo])
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return;
             }
         }
 
-        // const response = await cadastrarInsumo(dados.insumo)
-        // const type = response.status === 200 ? "success" : "error"
+        const response = await cadastrarEstoque(dados.estoque)
+        const type = response.status === 200 ? "success" : "error"
 
-        // funcoes.exibirAlerta(response.message, type)
+        funcoes.exibirAlerta(response.message, type)
 
-        // if (response.status === 200) {
-        //     const dadosInsumos = [...dataContext.controle.insumos, response.insumo]
+        if (response.status === 200) {
+            const dadosInsumos = [...dataContext.controle.estoques, response.estoque]
 
-        //     dataContext.gerenciarControle(dadosInsumos, "insumos")
+            dataContext.gerenciarControle(dadosInsumos, "estoques")
 
-        //     setTimeout(() => {
-        //         gerenciarControle("modalInsumos", "tabsEntrada", false);
-        //         funcoes.resetFormularios("insumo")
-        //     }, 2500)
-        // }
+            setTimeout(() => {
+                funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false);
+                funcoes.resetFormularios("insumo")
+            }, 2500)
+        }
     };
 
     const renderAlert = () => (
@@ -96,9 +95,9 @@ export const CadastroEstoque = () => {
                         <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Estoque" onChange={e => funcoes.gerenciarDadosEstoque("estoque", "nome", e)} value={dados.estoque.nome} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "140px", }} label={"Lote"} value={dados.insumo.categoria} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "140px", }} label={"Lote"} value={dados.estoque.lote} />
                         <ButtonSearch onClick={() => gerenciarControle("modalLotes", "tabsEntrada", false)} />
-                        <Selector object="estoque" item="tipo_Estoque" value={dados.estoque.tipo_estoque} valores={dataContext.controle.tipos_estoques} label="Tipo de Estoque" width="199px" />
+                        <Selector object="estoque" item="tipo_estoque" value={dados.estoque.tipo_estoque} valores={dataContext.controle.tipos_estoques} label="Tipo de Estoque" width="199px" />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField multiline rows={4} sx={{ ...sxTexfield, width: "405px", height: "150px" }} label="Descrição" onChange={e => funcoes.gerenciarDadosEstoque("estoque", "descricao", e)} value={dados.estoque.descricao} />

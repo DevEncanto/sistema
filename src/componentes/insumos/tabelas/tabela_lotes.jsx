@@ -32,7 +32,7 @@ export const TabelaLotes = (props) => {
         let eIndex = { target: { value: id_lote } }
         funcoes.gerenciarDadosEstoque("estoque", "lote", eLote)
         funcoes.gerenciarDadosEstoque("estoque", "id_lote", eIndex)
-        gerenciarControle("cadastro", "tabsEntrada", false)
+        funcoes.gerenciarControle("cadastroEstoque", "tabsEntrada", false)
     }
 
     return (
