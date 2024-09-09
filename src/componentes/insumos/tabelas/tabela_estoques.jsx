@@ -32,8 +32,8 @@ export const TabelaEstoques = (props) => {
     const selecionarEstoque = (estoque, id_estoque) => {
         let eEstoque = { target: { value: estoque } }
         let eIndex = { target: { value: id_estoque } }
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "estoque", eEstoque)
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "id_estoque", eIndex)
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "estoque", eEstoque)
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "id_estoque", eIndex)
         funcoes.gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
     }
 

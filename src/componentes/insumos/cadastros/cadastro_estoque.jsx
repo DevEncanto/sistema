@@ -96,7 +96,7 @@ export const CadastroEstoque = () => {
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField sx={{ ...sxTexfieldMenor, width: "140px", }} label={"Lote"} value={dados.estoque.lote} />
-                        <ButtonSearch onClick={() => gerenciarControle("modalLotes", "tabsEntrada", false)} />
+                        <ButtonSearch onClick={() => funcoes.gerenciarControle("modalLotes", "tabsEntrada", false)} />
                         <Selector object="estoque" item="tipo_estoque" value={dados.estoque.tipo_estoque} valores={dataContext.controle.tipos_estoques} label="Tipo de Estoque" width="199px" />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>

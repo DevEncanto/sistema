@@ -56,18 +56,14 @@ export const initDados = {
     },
     entrada_insumo: {
         fornecedor: "",
+        insumos: [],
         id_fornecedor: 0,
-        id_insumo: 0,
-        insumo: "",
         data_emissao: "",
+        total_geral: 0,
         data_recebimento: "",
         status_financeiro: "Em Aberto",
         forma_pagamento: "Pix",
-        qtde_insumo: "",
         prazo: "",
-        valor_unitario: "",
-        descontos: "",
-        valor_total: "",
         parcelamento: "",
         nf_boleto: "",
         id_estoque: "",
@@ -75,6 +71,14 @@ export const initDados = {
         parcelamentos: [
 
         ]
+    },
+    insumo_entrada: {
+        id_insumo: 0,
+        insumo: "",
+        qtde_insumo: "",
+        valor_unitario: "",
+        descontos: "",
+        valor_total: "",
     },
     categoria: {
         nome: "",

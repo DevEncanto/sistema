@@ -36,14 +36,10 @@ export const celulasEstoque = [
 export const camposObrigatorios = [
     "fornecedor",
     "insumo",
-    "data_emissao",
-    "data_recebimento",
     "qtde_insumo",
-    "prazo",
     "valor_unitario",
     "valor_total",
-    "parcelamento",
-    "nf_boleto"
+    "estoque"
 ]
 
 

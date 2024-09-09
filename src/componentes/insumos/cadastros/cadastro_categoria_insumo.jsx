@@ -32,7 +32,7 @@ export const CadastroCategoriaInsumo = () => {
             dataContext.gerenciarControle(dadosCategorias, "categorias_insumos")
 
             setTimeout(() => {
-                gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
+                funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
                 funcoes.resetFormularios("categoria")
             }, 2500)
         }
