@@ -20,15 +20,17 @@ export const CadastroNovaEntrada = () => {
     const cancelarCadastros = () => {
         funcoes.gerenciarControle("tabela", "tabsEntrada", false);
         funcoes.gerenciarControle(true, "navigate", false)
+        funcoes.resetFormularios("entrada_insumo")
         funcoes.resetFormularios("insumo_entrada")
     };
 
-    const validarDados = async () => {
+
+    const salvarInsumo = async () => {
         for (const campo of camposObrigatorios) {
+            console.log(dados.insumo_entrada[campo])
             if (!dados.insumo_entrada[campo]) {
-                console.log(dados.insumo_entrada[campo])
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
-                return;
+                return false;
             }
         }
 
@@ -39,6 +41,39 @@ export const CadastroNovaEntrada = () => {
         funcoes.gerenciarDadosEstoque("entrada_insumo", "insumos", [...dadosAntigos, dadosNovos], false)
         funcoes.gerenciarDadosEstoque("entrada_insumo", "total_geral", total.toFixed().toString(), false)
         funcoes.resetFormularios("insumo_entrada")
+        return true
+    }
+
+
+    const validarDados = async () => {
+        let dadosEmCadastro = false
+        let continuar = true
+
+        console.log("Validando os dados...")
+
+        for (const campo of camposObrigatorios) {
+            if (dados.insumo_entrada[campo]) {
+                dadosEmCadastro = true
+            }
+        }
+        console.log(dadosEmCadastro)
+
+        if (dadosEmCadastro) {
+            continuar = await salvarInsumo()
+            if (!continuar) {
+                return
+            }
+            return funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+        }
+
+        if (dados.entrada_insumo.insumos.length === 0) {
+            funcoes.exibirAlerta("Adicione pelo menos um insumo!", "error");
+            return
+        }
+
+
+        funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+
     };
 
     const renderAlert = () => (
@@ -79,12 +114,12 @@ export const CadastroNovaEntrada = () => {
                     {renderAlert()}
                 </Stack>
             </Stack>
+            {JSON.stringify(dados.entrada_insumo.insumos)}
             <Stack
                 direction="row"
                 spacing={4}
             >
                 <Stack>
-                    {JSON.stringify(dados.entrada_insumo.total_geral)}
                     <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={() => funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
                     <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={() => funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false)} />
                     <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={() => funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false)} />
@@ -136,7 +171,7 @@ export const CadastroNovaEntrada = () => {
                 }}
             >
                 <ButtonCancelar onClick={cancelarCadastros} />
-                <ButtonSalvar onClick={validarDados} label="Salvar Insumo" />
+                <ButtonSalvar onClick={salvarInsumo} label="Salvar Insumo" />
                 <ButtonContinuar onClick={validarDados} label="Continuar" />
             </Stack>
         </Stack>

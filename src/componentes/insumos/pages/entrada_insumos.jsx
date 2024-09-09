@@ -9,11 +9,11 @@ import { ModalTabelaFornecedores } from "../modais/modalFornecedores";
 import { CadastroInsumo } from "../cadastros/cadastro_insumo";
 import { ModalCategoriaInsumo } from "../modais/modalCategoriaInsumo";
 import { CadastroCategoriaInsumo } from "../cadastros/cadastro_categoria_insumo";
-import { ModalEstoque } from "../modais/modal";
 import { ModalTabelaEstoques } from "../modais/modalEstoques";
 import { CadastroEstoque } from "../cadastros/cadastro_estoque";
 import { ModalTabelaLotes } from "../modais/modalLotes";
 import { CadastroLote } from "../cadastros/cadastro_lote";
+import { VerificacaoItensEntrada } from "../componentes/verificacao_itens";
 
 export const EntradaInsumos = () => {
     const { controleEstoque } = useContext(EstoqueContext);
@@ -44,6 +44,8 @@ export const EntradaInsumos = () => {
                 return <CadastroLote />;
             case "cadastroCategoriaInsumo":
                 return <CadastroCategoriaInsumo />;
+            case "itensEntrada":
+                return <VerificacaoItensEntrada />
             default:
                 return null;
         }
