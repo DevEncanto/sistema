@@ -5,7 +5,8 @@ export const initControle = {
     insumo: "",
     type: "",
     alert: "",
-    navigate: true
+    navigate: true,
+    tabela: "entrada_insumo"
 }
 
 export const initFormularioEntrada = {

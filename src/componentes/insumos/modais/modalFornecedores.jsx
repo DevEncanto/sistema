@@ -1,4 +1,5 @@
 import { TabelaFornecedores } from "../tabelas/tabela_fornecedores"
+import { TabelaEstoque } from "../tabelas/tabelas_estoque"
 
 const { ModalEstoque } = require("./modal")
 
@@ -9,7 +10,7 @@ export const ModalTabelaFornecedores = () => {
             destino={"cadastroEntradaInsumo"}
             width="580px"
         >
-            <TabelaFornecedores maxHeight={380}/>
+            <TabelaEstoque tabela="fornecedores" maxHeight={380} />
         </ModalEstoque>
     )
 }

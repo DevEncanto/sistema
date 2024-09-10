@@ -80,6 +80,11 @@ export const CadastroNovaEntrada = () => {
         controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
 
+    const exibirFornecedores = () => {
+        funcoes.gerenciarControle("fornecedores", "tabela", false)
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+    }
+
     return (
         <Stack
             spacing={1}
@@ -120,7 +125,7 @@ export const CadastroNovaEntrada = () => {
                 spacing={4}
             >
                 <Stack>
-                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={() => funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
+                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={exibirFornecedores} />
                     <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={() => funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false)} />
                     <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={() => funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false)} />
                     {/* <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>

@@ -34,7 +34,7 @@ export const TabelaFornecedores = (props) => {
     }
 
     return (
-        <Paper sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', backgroundColor:"red" }}>
             <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>

@@ -1,4 +1,3 @@
-import { TabelaCategoriaInsumos } from "../tabelas/tabela_categoria_insumos"
 import { TabelaInsumos } from "../tabelas/tabela_insumos"
 
 const { ModalEstoque } = require("./modal")
