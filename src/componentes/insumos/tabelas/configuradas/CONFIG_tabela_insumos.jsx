@@ -6,38 +6,45 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    Button,
-    Stack
+    Button
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { categoriasInsumos, celulasCategoriaInsumos } from '../data';
-import { DataContext } from '../../../contexts/data_context/data_context';
-import { useContext } from 'react';
+import { celulasInsumos } from '../data';
+import { useContext, useEffect } from 'react';
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
+import { DataContext } from '../../../contexts/data_context/data_context';
 
-export const TabelaCategoriaInsumos = (props) => {
 
+
+export const TabelaInsumos = (props) => {
+
+    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
+    const { controle, saveLocalStorage } = useContext(DataContext)
+    const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
-    const { controle } = useContext(DataContext)
-    const { gerenciarControle, funcoes } = useContext(EstoqueContext)
+    useEffect(() => {
+        saveLocalStorage()
+    }, [])
 
-    const selecionarCategoria = (categoria, id_categoria_insumo) => {
-        let eCategoria = { target: { value: categoria } }
-        let eIndex = { target: { value: id_categoria_insumo } }
-        funcoes.gerenciarDadosEstoque("insumo", "categoria", eCategoria)
-        funcoes.gerenciarDadosEstoque("insumo", "id_categoria_insumo", eIndex)
-        funcoes.gerenciarControle("cadastroInsumo", "tabsEntrada", false)
+
+    const selecionarInsumo = (insumo, id_insumo) => {
+        let eInsumo = { target: { value: insumo } }
+        let eIndex = { target: { value: id_insumo } }
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "insumo", eInsumo)
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "id_insumo", eIndex)
+        funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false)
     }
+
 
     return (
         <Paper sx={{ width: '100%' }}>
-            <TableContainer sx={{ maxHeight: 350, ...sxCardScrollPersonalizada }}>
+            <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasCategoriaInsumos.map((celula, index) => {
+                            {celulasInsumos.map((celula, index) => {
                                 return <TableCell sx={sx} key={index}>
                                     {celula}
                                 </TableCell>
@@ -45,34 +52,31 @@ export const TabelaCategoriaInsumos = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {controle.categorias_insumos.map((categoria, index) => {
+                        {controle.insumos.map((insumo, index) => {
                             return (
                                 <TableRow
                                     hover
-                                    key={`categoria${index}`}
+                                    key={`insumo${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {categoria.id_categoria_insumo}
+                                        {insumo.id_insumo}
+                                    </TableCell>
+                                    <TableCell sx={sx}>
+                                        {insumo.nome}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
-                                        {categoria.nome}
-
-                                    </TableCell>
-                                    <TableCell
-                                        sx={sx}
-                                    >
                                         <Button
                                             sx={{
-                                                fontSize: "12px",
-                                                padding: 1
+                                                fontSize: "13px"
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarCategoria(categoria.nome, categoria.id_categoria_insumo) }}
+                                            onClick={() => { selecionarInsumo(insumo.nome, insumo.id_insumo) }}
                                         >
                                             Selecionar
                                         </Button>
+
                                     </TableCell>
                                 </TableRow>
                             );
@@ -80,6 +84,6 @@ export const TabelaCategoriaInsumos = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </Paper >
+        </Paper>
     );
 };

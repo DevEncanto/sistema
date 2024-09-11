@@ -8,11 +8,12 @@ import { cadastrarFornecedor } from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 
 export const CadastroFornecedor = () => {
-    const { controleEstoque, funcoes, gerenciarControle, dados } = useContext(EstoqueContext);
+    const { controleEstoque, funcoes, dados } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
-        gerenciarControle("modalFornecedor", "tabsEntrada", false);
+        funcoes.gerenciarControle("modal", "tabsEntrada", false);
+        funcoes.gerenciarControle("fornecedores", "tabela", false)
         funcoes.resetFormularios("fornecedor")
     };
 
@@ -34,7 +35,8 @@ export const CadastroFornecedor = () => {
             dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
 
             setTimeout(() => {
-                funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false);
+                funcoes.gerenciarControle("modal", "tabsEntrada", false)
+                funcoes.gerenciarControle("fornecedores", "tabela", false)
                 funcoes.resetFormularios("fornecedor")
             }, 2500)
         }

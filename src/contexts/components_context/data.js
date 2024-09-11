@@ -6,7 +6,10 @@ export const initControle = {
     type: "",
     alert: "",
     navigate: true,
-    tabela: "entrada_insumo"
+    tabela: "entrada_insumo",
+    emEdicao: false,
+    itemEdicao: -1,
+    itemRemocao: -1
 }
 
 export const initFormularioEntrada = {
@@ -74,6 +77,7 @@ export const initDados = {
         ]
     },
     insumo_entrada: {
+        index: "",
         id_insumo: 0,
         insumo: "",
         qtde_insumo: "",

@@ -1,21 +1,23 @@
 import {
     Paper,
     TableContainer,
-    Table,  
+    Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
     Button
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasEstoques, celulasLote } from '../data';
+import { celulasEstoques, celulasInsumos } from '../../data';
 import { useContext, useEffect } from 'react';
-import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
-import { DataContext } from '../../../contexts/data_context/data_context';
+import { EstoqueContext } from '../../../../contexts/components_context/estoque_context';
+import { DataContext } from '../../../../contexts/data_context/data_context';
 
-export const TabelaLotes = (props) => {
+
+
+export const TabelaEstoques = (props) => {
 
     const { gerenciarControle, funcoes } = useContext(EstoqueContext)
     const { controle, saveLocalStorage } = useContext(DataContext)
@@ -27,13 +29,14 @@ export const TabelaLotes = (props) => {
     }, [])
 
 
-    const selecionarLote = (lote, id_lote) => {
-        let eLote = { target: { value: lote } }
-        let eIndex = { target: { value: id_lote } }
-        funcoes.gerenciarDadosEstoque("estoque", "lote", eLote)
-        funcoes.gerenciarDadosEstoque("estoque", "id_lote", eIndex)
-        funcoes.gerenciarControle("cadastroEstoque", "tabsEntrada", false)
+    const selecionarEstoque = (estoque, id_estoque) => {
+        let eEstoque = { target: { value: estoque } }
+        let eIndex = { target: { value: id_estoque } }
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "estoque", eEstoque)
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "id_estoque", eIndex)
+        funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false)
     }
+
 
     return (
         <Paper sx={{ width: '100%' }}>
@@ -41,7 +44,7 @@ export const TabelaLotes = (props) => {
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasLote.map((celula, index) => {
+                            {celulasEstoques.map((celula, index) => {
                                 return <TableCell sx={sx} key={index}>
                                     {celula}
                                 </TableCell>
@@ -49,17 +52,20 @@ export const TabelaLotes = (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {controle.lotes.map((lote, index) => {
+                        {controle.estoques.map((estoque, index) => {
                             return (
                                 <TableRow
                                     hover
                                     key={`insumo${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {lote.id_lote}
+                                        {estoque.id_estoque}
                                     </TableCell>
                                     <TableCell sx={sx}>
-                                        {lote.nome}
+                                        {estoque.nome}
+                                    </TableCell>
+                                    <TableCell sx={sx}>
+                                        {estoque.lote}
                                     </TableCell>
                                     <TableCell sx={sx}>
 
@@ -69,7 +75,7 @@ export const TabelaLotes = (props) => {
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarLote(lote.nome, lote.id_lote) }}
+                                            onClick={() => { selecionarEstoque(estoque.nome, estoque.id_estoque) }}
                                         >
                                             Selecionar
                                         </Button>

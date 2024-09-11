@@ -9,7 +9,7 @@ export const ModalEstoque = (props) => {
 
     const { funcoes } = useContext(EstoqueContext)
     const { saveLocalStorage } = useContext(DataContext)
-    const { destino, children, title, width = "450px", height = "460px" } = props
+    const { destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     useEffect(() => {
         saveLocalStorage()
@@ -43,6 +43,8 @@ export const ModalEstoque = (props) => {
                 }}
             >
                 <Stack
+                    direction={`row`}
+                    spacing={2}
                     sx={{
                         width: "90%",
                         justifyContent: "center",
@@ -50,6 +52,11 @@ export const ModalEstoque = (props) => {
                         paddingLeft: "13%"
                     }}
                 >
+                    {
+                        icon
+                            ? <img src="/assets/sirene.gif" width={30} height={30} />
+                            : <></>
+                    }
                     <Typography
                         variant="h5"
                         sx={{ fontSize: "20px" }}

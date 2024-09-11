@@ -14,7 +14,8 @@ export const CadastroLote = () => {
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
-        gerenciarControle("modalLotes", "tabsEntrada", false);
+        funcoes.gerenciarControle("modal", "tabsEntrada", false);
+        funcoes.gerenciarControle("lotes", "tabela", false);
         funcoes.resetFormularios("lotes")
     };
 

@@ -63,7 +63,7 @@ export const valoresUnidades = [
 ]
 
 export const celulasEntradas = [
-    "ID INSUMO",
+    "ID ITEM",
     "INSUMO",
     "QTDE",
     "UNIDADE",

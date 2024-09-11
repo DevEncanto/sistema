@@ -1,6 +1,7 @@
 const formatSaldo = (saldo, casas = 2) => {
-
-    console.log(saldo)
+    if (isNaN(saldo)) {
+        saldo = 0
+    }
 
     return parseFloat(saldo).toFixed(casas) // casas decimais
         .replace('.', ',')

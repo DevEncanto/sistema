@@ -1,22 +1,27 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ButtonSearch } from "../botoes/botao_busca";
 import { PopupAlerta } from "../popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../../contexts/data";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarEstoque, cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
+import { cadastrarEstoque} from "../../../service/request_cadastro";
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { Selector } from "../componentes/select";
-import { camposObrigatoriosEstoque, camposObrigatoriosInsumos, valoresUnidades } from "../data";
+import { camposObrigatoriosEstoque} from "../data";
 
 export const CadastroEstoque = () => {
-    const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
+    const { dados, funcoes, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
-        funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false);
+        funcoes.gerenciarControle("modal", "tabsEntrada", false);
+        funcoes.gerenciarControle("estoques", "tabela", false);
         funcoes.resetFormularios("estoque")
     };
+
+    const exibirLotes = () => {
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+        funcoes.gerenciarControle("lotes", "tabela", false)
+    }
 
     const validarDados = async () => {
         for (const campo of camposObrigatoriosEstoque) {
@@ -96,7 +101,7 @@ export const CadastroEstoque = () => {
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField sx={{ ...sxTexfieldMenor, width: "140px", }} label={"Lote"} value={dados.estoque.lote} />
-                        <ButtonSearch onClick={() => funcoes.gerenciarControle("modalLotes", "tabsEntrada", false)} />
+                        <ButtonSearch onClick={exibirLotes} />
                         <Selector object="estoque" item="tipo_estoque" value={dados.estoque.tipo_estoque} valores={dataContext.controle.tipos_estoques} label="Tipo de Estoque" width="199px" />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>

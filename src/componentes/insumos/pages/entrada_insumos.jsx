@@ -1,20 +1,16 @@
 import { useContext } from "react";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { TabelaEntradaInsumos } from "../tabelas/tabela_entrada_insumos";
-import { CadastroNovaEntrada } from "../cadastros/cadastro_entrada_insumos";
-import { ModalTabelaInsumos } from "../modais/modalInsumos";
 import { CadastroFornecedor } from "../cadastros/cadastro_fornecedor";
 import { Stack } from "@mui/material";
-import { ModalTabelaFornecedores } from "../modais/modalFornecedores";
 import { CadastroInsumo } from "../cadastros/cadastro_insumo";
-import { ModalCategoriaInsumo } from "../modais/modalCategoriaInsumo";
 import { CadastroCategoriaInsumo } from "../cadastros/cadastro_categoria_insumo";
-import { ModalTabelaEstoques } from "../modais/modalEstoques";
 import { CadastroEstoque } from "../cadastros/cadastro_estoque";
-import { ModalTabelaLotes } from "../modais/modalLotes";
 import { CadastroLote } from "../cadastros/cadastro_lote";
 import { VerificacaoItensEntrada } from "../componentes/verificacao_itens";
 import { ModalTabelas } from "../modais/modalTabelas";
+import { TabelaEstoque } from "../tabelas/tabelas_estoque";
+import { ModalRemocaoItem } from "../modais/modalRemocaoItem";
+import { CadastroNovaEntradaI } from "../cadastros/cadastro_entrada_insumos_I";
 
 export const EntradaInsumos = () => {
     const { controleEstoque } = useContext(EstoqueContext);
@@ -22,19 +18,13 @@ export const EntradaInsumos = () => {
     const renderContent = () => {
         switch (controleEstoque.tabsEntrada) {
             case "tabela":
-                return <TabelaEntradaInsumos />;
-            case "cadastroEntradaInsumo":
-                return <CadastroNovaEntrada />;
+                return <TabelaEstoque tabela="fornecedores" />
+            case "cadastroEntradaInsumoI":
+                return <CadastroNovaEntradaI />;
             case "modal":
                 return <ModalTabelas />;
-            case "modalInsumos":
-                return <ModalTabelaInsumos />;
-            case "modalEstoques":
-                return <ModalTabelaEstoques />;
-            case "modalLotes":
-                return <ModalTabelaLotes />;
-            case "modalCategoriaInsumo":
-                return <ModalCategoriaInsumo />;
+            case "remocaoItem":
+                return <ModalRemocaoItem />
             case "cadastroFornecedor":
                 return <CadastroFornecedor />;
             case "cadastroInsumo":

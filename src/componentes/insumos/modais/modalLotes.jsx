@@ -1,4 +1,4 @@
-import { TabelaLotes } from "../tabelas/tabela_lotes"
+import { TabelaLotes } from "../tabelas/configuradas/tabela_lotes"
 
 const { ModalEstoque } = require("./modal")
 

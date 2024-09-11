@@ -8,71 +8,71 @@ import {
     TableRow,
     Button
 } from '@mui/material';
-import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
+import { sxCardScrollPersonalizada } from '../../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasInsumos } from '../data';
+import { celulasFornecedores } from '../../data';
 import { useContext, useEffect } from 'react';
-import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
-import { DataContext } from '../../../contexts/data_context/data_context';
+import { UserContext } from '../../../../contexts/user_context/user_context';
+import { DataContext } from '../../../../contexts/data_context/data_context';
+import { EstoqueContext } from '../../../../contexts/components_context/estoque_context';
 
 
 
-export const TabelaInsumos = (props) => {
+export const TabelaFornecedores = (props) => {
 
     const { gerenciarControle, funcoes } = useContext(EstoqueContext)
     const { controle, saveLocalStorage } = useContext(DataContext)
     const { maxHeight = 350 } = props
     const sx = { textAlign: "center" }
 
-    useEffect(() => {
-        saveLocalStorage()
-    }, [])
-
-
-    const selecionarInsumo = (insumo, id_insumo) => {
-        let eInsumo = { target: { value: insumo } }
-        let eIndex = { target: { value: id_insumo } }
-        funcoes.gerenciarDadosEstoque("insumo_entrada", "insumo", eInsumo)
-        funcoes.gerenciarDadosEstoque("insumo_entrada", "id_insumo", eIndex)
-        funcoes.gerenciarControle("cadastroEntradaInsumo", "tabsEntrada", false)
+    const selecionarFornecedor = (fornecedor, id_fornecedor) => {
+        let eFornecedor = { target: { value: fornecedor } }
+        let eIndex = { target: { value: id_fornecedor } }
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "fornecedor", eFornecedor)
+        funcoes.gerenciarDadosEstoque("insumo_entrada", "id_fornecedor", eIndex)
+        funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false)
     }
 
-
     return (
-        <Paper sx={{ width: '100%' }}>
+        <Paper sx={{ width: '100%', backgroundColor:"red" }}>
             <TableContainer sx={{ maxHeight: maxHeight, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>
-                            {celulasInsumos.map((celula, index) => {
-                                return <TableCell sx={sx} key={index}>
-                                    {celula}
-                                </TableCell>
+                            {celulasFornecedores.map((celula, index) => {
+                                return (
+                                    <TableCell sx={sx} key={index}>
+                                        {celula}
+                                    </TableCell>
+                                )
                             })}
                         </TableRow>
                     </TableHead>
                     <TableBody >
-                        {controle.insumos.map((insumo, index) => {
+                        {controle.fornecedores.map((fornecedor, index) => {
                             return (
                                 <TableRow
                                     hover
                                     key={`insumo${index}`}
                                 >
                                     <TableCell sx={sx}>
-                                        {insumo.id_insumo}
+                                        {fornecedor.id_fornecedor}
                                     </TableCell>
                                     <TableCell sx={sx}>
-                                        {insumo.nome}
+
+                                        {fornecedor.fantasia}
+
                                     </TableCell>
                                     <TableCell sx={sx}>
 
                                         <Button
                                             sx={{
-                                                fontSize: "13px"
+                                                fontSize: "12px",
+                                                padding: 1
                                             }}
                                             key={`btn_entrada`}
                                             variant='contained'
-                                            onClick={() => { selecionarInsumo(insumo.nome, insumo.id_insumo) }}
+                                            onClick={() => { selecionarFornecedor(fornecedor.fantasia, fornecedor.id_fornecedor) }}
                                         >
                                             Selecionar
                                         </Button>

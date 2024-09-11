@@ -1,49 +1,120 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { PopupAlerta } from "../popups/popup_status";
-import { TabelaParcelas } from "../tabelas/tabela_entrada_parcela";
-import { DataContext } from "../../../contexts/data_context/data_context";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { Calendario } from "../componentes/calendario";
-import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } from "../data";
+import { camposObrigatorios } from "../data";
 import { ButtonSearch } from "../botoes/botao_busca";
-import { Selector } from "../componentes/select";
 
-export const CadastroNovaEntrada = () => {
-    const { controleEstoque, gerenciarControle, dados, funcoes } = useContext(EstoqueContext);
-    const data = useContext(DataContext)
+export const CadastroNovaEntradaI = () => {
+    const { controleEstoque, dados, funcoes } = useContext(EstoqueContext);
 
     useLayoutEffect(() => {
         funcoes.gerenciarControle(false, "navigate", false)
     }, [])
 
+    useEffect(() => {
+        if (controleEstoque.emEdicao) {
+            const index = controleEstoque.itemEdicao - 1
+            const insumos = dados.entrada_insumo.insumos
+            let keys = Object.keys(insumos[index])
+            keys.forEach((key) => {
+                console.log(insumos[index][key])
+                funcoes.gerenciarDadosEstoque("insumo_entrada", key, insumos[index][key], false)
+            })
+        }
+    }, [])
+
     const cancelarCadastros = () => {
-        funcoes.gerenciarControle("tabela", "tabsEntrada", false);
-        funcoes.gerenciarControle(true, "navigate", false)
+        const destino = controleEstoque.emEdicao ? "itensEntrada" : "tabela"
+        const navigate = controleEstoque.emEdicao ? false : true
+        funcoes.gerenciarControle(destino, "tabsEntrada", false);
+        funcoes.gerenciarControle(navigate, "navigate", false)
         funcoes.resetFormularios("insumo_entrada")
     };
 
-    const validarDados = async () => {
+    const salvarInsumo = async () => {
         for (const campo of camposObrigatorios) {
+            console.log(dados.insumo_entrada[campo])
             if (!dados.insumo_entrada[campo]) {
-                console.log(dados.insumo_entrada[campo])
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
-                return;
+                return false;
             }
         }
+        let dadosAntigos = dados.entrada_insumo.insumos
 
-        const total = parseFloat(dados.entrada_insumo.total_geral) + parseFloat(dados.insumo_entrada.valor_total)
+        let total = 0
 
-        const dadosAntigos = dados.entrada_insumo.insumos
-        const dadosNovos = dados.insumo_entrada
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "insumos", [...dadosAntigos, dadosNovos], false)
+        const dadosNovos = {
+            ...dados.insumo_entrada,
+            index: controleEstoque.emEdicao ? dados.insumo_entrada.index : dadosAntigos.length + 1,
+        }
+
+        if (controleEstoque.emEdicao) {
+            dadosAntigos.splice(controleEstoque.itemEdicao - 1, 1)
+        }
+        let itens = [...dadosAntigos, dadosNovos]
+        itens.sort((a, b) => {
+            if (a.index > b.index) return 1
+            if (a.index < b.index) return -1
+        })
+
+        itens.forEach((item) => {
+            total += parseFloat(item.valor_total)
+        })
+
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "insumos", itens, false)
         funcoes.gerenciarDadosEstoque("entrada_insumo", "total_geral", total.toFixed().toString(), false)
         funcoes.resetFormularios("insumo_entrada")
+
+        if (controleEstoque.emEdicao) {
+            funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+        }
+
+        return true
+    }
+
+    const validarDados = async () => {
+        let dadosEmCadastro = false
+        let continuar = true
+        for (const campo of camposObrigatorios) {
+            if (dados.insumo_entrada[campo]) {
+                dadosEmCadastro = true
+            }
+        }
+        if (dadosEmCadastro) {
+            continuar = await salvarInsumo()
+            if (!continuar) {
+                return
+            }
+            return funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+        }
+        if (dados.entrada_insumo.insumos.length === 0) {
+            funcoes.exibirAlerta("Adicione pelo menos um insumo!", "error");
+            return
+        }
+        funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
     };
 
     const renderAlert = () => (
         controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
+
+    const exibirFornecedores = () => {
+        funcoes.gerenciarControle("fornecedores", "tabela", false)
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+    }
+    const exibirInsumos = () => {
+        funcoes.gerenciarControle("insumo", "tabela", false)
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+    }
+    const exibirEstoques = () => {
+        funcoes.gerenciarControle("estoques", "tabela", false)
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+    }
+    const exibirQuantidade = () => {
+        const itens = dados.entrada_insumo?.insumos?.length
+        return itens > 0 ? `Itens Cadastrados: ${itens}` : ""
+    }
 
     return (
         <Stack
@@ -54,7 +125,12 @@ export const CadastroNovaEntrada = () => {
         >
             <Stack
                 direction="row"
-                sx={{ justifyContent: "center", marginTop: "-5px" }}
+                sx={{ 
+                    alignItems: "center", 
+                    marginTop: "-5px", 
+                    // backgroundColor:"red", 
+                    height:"50px"
+                }}
             >
                 <Typography
                     variant="h5"
@@ -64,14 +140,17 @@ export const CadastroNovaEntrada = () => {
                         width: "50%",
                     }}
                 >
-                    Nova Entrada
+                    {controleEstoque.emEdicao
+                        ? "Edição de Lançamento"
+                        : "Nova Entrada"
+                    }
                 </Typography>
                 <Stack
                     direction="row"
                     spacing={2}
                     sx={{
                         height: "80%",
-                        width: "70%",
+                        width: "90%",
                         alignItems: "center",
                         justifyContent: "center",
                     }}
@@ -84,10 +163,19 @@ export const CadastroNovaEntrada = () => {
                 spacing={4}
             >
                 <Stack>
-                    {JSON.stringify(dados.entrada_insumo.total_geral)}
-                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={() => funcoes.gerenciarControle("modalFornecedor", "tabsEntrada", false)} />
-                    <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={() => funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false)} />
-                    <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={() => funcoes.gerenciarControle("modalEstoques", "tabsEntrada", false)} />
+                    <Stack
+                        sx={{ height: "18px" }}
+                    >
+                        <Typography
+                        variant="h5"
+                        sx={{fontSize: "13px", marginLeft: "1px"}}
+                        >
+                            {exibirQuantidade()}
+                        </Typography>
+                    </Stack>
+                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={exibirFornecedores} />
+                    <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={exibirInsumos} />
+                    <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={exibirEstoques} />
                     {/* <Stack direction="row" spacing={1} sx={{ marginTop: "5px" }}>
                         <Calendario object="entrada_insumo" item="data_emissao" value={dados.entrada_insumo.data_emissao} width="180px" label="Data de Emissão" />
                         <Calendario object="entrada_insumo" item="data_recebimento" value={dados.entrada_insumo.data_recebimento}  width="218px" label="Data de Recebimento" />
@@ -136,8 +224,8 @@ export const CadastroNovaEntrada = () => {
                 }}
             >
                 <ButtonCancelar onClick={cancelarCadastros} />
-                <ButtonSalvar onClick={validarDados} label="Salvar Insumo" />
-                <ButtonContinuar onClick={validarDados} label="Continuar" />
+                <ButtonSalvar onClick={salvarInsumo} label="Salvar Insumo" />
+                {!controleEstoque.emEdicao ? <ButtonContinuar onClick={validarDados} label="Continuar" /> : <></>}
             </Stack>
         </Stack>
     );

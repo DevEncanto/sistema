@@ -8,16 +8,16 @@ import { cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_c
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { Selector } from "../componentes/select";
 import { camposObrigatoriosInsumos, valoresUnidades } from "../data";
+import { ButtonCancelar } from "../botoes/botao_cancelar";
+import { ButtonSalvar } from "../botoes/botao_salvar";
 
 export const CadastroInsumo = () => {
     const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
-    const [alert, setAlert] = useState("");
-    const [type, setType] = useState("");
-
     const cancelarCadastros = () => {
-        funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false);
+        funcoes.gerenciarControle("modal", "tabsEntrada", false);
+        funcoes.gerenciarControle("insumo", "tabela", false);
         funcoes.resetFormularios("insumo")
     };
 
@@ -28,7 +28,7 @@ export const CadastroInsumo = () => {
                 return;
             }
         }
-    
+
         const response = await cadastrarInsumo(dados.insumo)
         const type = response.status === 200 ? "success" : "error"
 
@@ -49,6 +49,11 @@ export const CadastroInsumo = () => {
     const renderAlert = () => (
         controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
+
+    const exibirCategoriaInsumos = () => {
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+        funcoes.gerenciarControle("categorias_insumos", "tabela", false)
+    }
 
     return (
         <Stack
@@ -97,7 +102,7 @@ export const CadastroInsumo = () => {
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
                         <TextField sx={sxTexfield} label={"Categoria do Insumo"} value={dados.insumo.categoria} />
-                        <ButtonSearch onClick={() => funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false)} />
+                        <ButtonSearch onClick={exibirCategoriaInsumos} />
                     </Stack>
 
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", marginTop: "5px", justifyContent: "center", display: "flex" }}>
@@ -130,38 +135,6 @@ const CampoComBotao = ({ label, value, onClick }) => (
         <TextField sx={sxTexfield} label={label} value={value} />
         <ButtonSearch onClick={onClick} />
     </Stack>
-);
-
-const ButtonCancelar = ({ onClick }) => (
-    <Button
-        variant="contained"
-        onClick={onClick}
-        sx={{
-            backgroundColor: "error.main",
-            width: "100px",
-            "&:hover": {
-                backgroundColor: "error.dark",
-            },
-        }}
-    >
-        Cancelar
-    </Button>
-);
-
-const ButtonSalvar = ({ onClick }) => (
-    <Button
-        variant="contained"
-        onClick={onClick}
-        sx={{
-            backgroundColor: "success.main",
-            width: "100px",
-            "&:hover": {
-                backgroundColor: "success.dark",
-            },
-        }}
-    >
-        Salvar
-    </Button>
 );
 
 const sxTexfield = {

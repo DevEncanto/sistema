@@ -11,7 +11,8 @@ export const CadastroCategoriaInsumo = () => {
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
-        funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
+        funcoes.gerenciarControle("modal", "tabsEntrada", false);
+        funcoes.gerenciarControle("categorias_insumos", "tabela", false);
         funcoes.resetFormularios("categoria")
     };
 

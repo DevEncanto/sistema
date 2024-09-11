@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { sxCardScrollPersonalizada } from '../../../components/config-componentes/config-imagens-perfil';
 
-import { celulasEntradas, entradaInsumos, insumos } from '../data';
+import { celulasEntrada } from '../data';
 import { useContext } from 'react';
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 
@@ -26,7 +26,7 @@ export const TabelaItensEntrada = (props) => {
                     <TableHead>
                         <TableRow key={`header`}>
                             {celulasEntradas.map((celula, index) => {
-                                return <TableCell sx={sx} key={index}>
+                                return <TableCell sx={sx} key={index} colSpan={celula == "AÇÕES" ? 2 : 1}>
                                     {celula}
                                 </TableCell>
                             })}
@@ -34,7 +34,7 @@ export const TabelaItensEntrada = (props) => {
                     </TableHead>
                     <TableBody >
                         {insumos.map((insumo, index) => {
-                            return (    
+                            return (
                                 <TableRow
                                     hover
                                     key={`insumo${index}`}
