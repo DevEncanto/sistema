@@ -42,6 +42,17 @@ export const camposObrigatorios = [
     "estoque"
 ]
 
+export const camposObrigatoriosII = [
+    "data_emissao",
+    "data_recebimento",
+    "status_financeiro",
+    "forma_pagamento",
+    "parcelamento",
+    "nf",
+    "prazo_geral",
+    "prazo_inicial"
+]
+
 
 export const valoresStatusFinanceiro = [
     "Pago",

@@ -2,123 +2,66 @@ import { Button, Stack, TextField, Typography } from "@mui/material";
 import { PopupAlerta } from "../popups/popup_status";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { camposObrigatorios, valoresFormasPagamento, valoresStatusFinanceiro } from "../data";
+import { camposObrigatorios, camposObrigatoriosII, valoresFormasPagamento, valoresStatusFinanceiro } from "../data";
 import { ButtonSearch } from "../botoes/botao_busca";
 import { Calendario } from "../componentes/calendario";
 import { Selector } from "../componentes/select";
 import { TabelaParcelas } from "../tabelas/tabela_entrada_parcela";
 import { TabelaEstoque } from "../tabelas/tabelas_estoque";
 import formatSaldo from "../../../utils/formatarSaldos";
+import { ButtonCancelar } from "../botoes/botao_cancelar";
+import { ButtonDefault } from "../botoes/botao";
+import { ButtonSalvar } from "../botoes/botao_salvar";
+import { converterDateParaString } from "../../../utils/formatar-datas-createdAt";
 
 export const CadastroNovaEntradaII = () => {
     const { controleEstoque, dados, funcoes } = useContext(EstoqueContext);
 
-    useLayoutEffect(() => {
-        funcoes.gerenciarControle(false, "navigate", false)
-    }, [])
-
     useEffect(() => {
-        if (controleEstoque.emEdicao) {
-            const index = controleEstoque.itemEdicao - 1
-            const insumos = dados.entrada_insumo.insumos
-            let keys = Object.keys(insumos[index])
-            keys.forEach((key) => {
-                console.log(insumos[index][key])
-                funcoes.gerenciarDadosEstoque("insumo_entrada", key, insumos[index][key], false)
-            })
-        }
+
     }, [])
 
     const cancelarCadastros = () => {
-        const destino = controleEstoque.emEdicao ? "itensEntrada" : "tabela"
-        const navigate = controleEstoque.emEdicao ? false : true
-        funcoes.gerenciarControle(destino, "tabsEntrada", false);
-        funcoes.gerenciarControle(navigate, "navigate", false)
+        funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false);
+        funcoes.gerenciarControle(false, "navigate", false)
         funcoes.resetFormularios("insumo_entrada")
+        funcoes.resetFormularios("entrada_insumo")
     };
 
-    const salvarInsumo = async () => {
-        for (const campo of camposObrigatorios) {
-            console.log(dados.insumo_entrada[campo])
-            if (!dados.insumo_entrada[campo]) {
+    const voltar = () => {
+        funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+    }
+
+    const validarDados = async () => {
+        for (const campo of camposObrigatoriosII) {
+            if (!dados.entrada_insumo[campo]) {
+                console.log(campo)
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return false;
             }
         }
-        let dadosAntigos = dados.entrada_insumo.insumos
 
-        let total = 0
-
-        const dadosNovos = {
-            ...dados.insumo_entrada,
-            index: controleEstoque.emEdicao ? dados.insumo_entrada.index : dadosAntigos.length + 1,
+        if (dados.entrada_insumo.status_financeiro === "Pago" && dados.entrada_insumo.parcelamentos.length !== 1) {
+            funcoes.exibirAlerta("Atualize os parcelamentos!", "warning");
+            return false;
         }
 
-        if (controleEstoque.emEdicao) {
-            dadosAntigos.splice(controleEstoque.itemEdicao - 1, 1)
-        }
-        let itens = [...dadosAntigos, dadosNovos]
-        itens.sort((a, b) => {
-            if (a.index > b.index) return 1
-            if (a.index < b.index) return -1
-        })
-
-        itens.forEach((item) => {
-            total += parseFloat(item.valor_total)
-        })
-
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "insumos", itens, false)
-        funcoes.gerenciarDadosEstoque("entrada_insumo", "total_geral", total.toFixed().toString(), false)
-        funcoes.resetFormularios("insumo_entrada")
-
-        if (controleEstoque.emEdicao) {
-            funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+        if (dados.entrada_insumo.status_financeiro !== "Pago" && parseInt(dados.entrada_insumo.parcelamento) !== dados.entrada_insumo.parcelamentos.length) {
+            funcoes.exibirAlerta("Atualize os parcelamentos!", "warning");
+            return false;
         }
 
-        return true
-    }
-
-    const validarDados = async () => {
-        let dadosEmCadastro = false
-        let continuar = true
-        for (const campo of camposObrigatorios) {
-            if (dados.insumo_entrada[campo]) {
-                dadosEmCadastro = true
-            }
-        }
-        if (dadosEmCadastro) {
-            continuar = await salvarInsumo()
-            if (!continuar) {
-                return
-            }
-            return funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
-        }
-        if (dados.entrada_insumo.insumos.length === 0) {
-            funcoes.exibirAlerta("Adicione pelo menos um insumo!", "error");
-            return
-        }
-        funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
+        funcoes.exibirAlerta("Lançamentos cadastrados com sucesso!", "success")
+        console.log(dados.entrada_insumo)
+        setTimeout(() => {
+            funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false);
+            funcoes.resetFormularios("entrada_insumo")
+        }, 2500)
     };
 
     const renderAlert = () => (
         controleEstoque.alert && <PopupAlerta type={controleEstoque.type} title={controleEstoque.alert} />
     );
-
-    const exibirFornecedores = () => {
-        funcoes.gerenciarControle("fornecedores", "tabela", false)
-        funcoes.gerenciarControle("modal", "tabsEntrada", false)
-    }
-    const exibirInsumos = () => {
-        funcoes.gerenciarControle("insumo", "tabela", false)
-        funcoes.gerenciarControle("modal", "tabsEntrada", false)
-    }
-    const exibirEstoques = () => {
-        funcoes.gerenciarControle("estoques", "tabela", false)
-        funcoes.gerenciarControle("modal", "tabsEntrada", false)
-    }
-    const exibirQuantidade = () => {
-        return `Total: R$ ${formatSaldo(dados.entrada_insumo?.total_geral)}`
-    }
 
     return (
         <Stack
@@ -160,14 +103,12 @@ export const CadastroNovaEntradaII = () => {
             </Stack>
 
             <Stack
-                sx={{ height: "200px" }}
+                direction={"row"}
+                spacing={.6}
+                sx={{ marginBottom: "5px", fontSize: "13px" }}
             >
-                <Typography
-                    variant="h5"
-                    sx={{ fontSize: "15px", marginLeft: "1px" }}
-                >
-                    {exibirQuantidade()}
-                </Typography>
+                <Typography sx={{ fontWeight: 600, fontSize: "15px" }}>{`Total: `}</Typography>
+                <Typography sx={{ fontSize: "15px" }}>{`R$ ${formatSaldo(dados.entrada_insumo.total_geral)}`}</Typography>
             </Stack>
             <Stack
                 direction="row"
@@ -202,7 +143,11 @@ export const CadastroNovaEntradaII = () => {
 
                     </Stack>
                     <Stack direction="row" spacing={.7} >
-                        <TextField sx={{ ...sxTexfieldMenor, width: "106px" }} label="Parcelas" onChange={e => funcoes.gerenciarDadosEstoque("entrada_insumo", "parcelamento", e)} value={dados.entrada_insumo.parcelamento} />
+                        {dados.entrada_insumo.status_financeiro === "Em Aberto" && (
+                            <>
+                                <TextField sx={{ ...sxTexfieldMenor, width: "106px" }} label="Parcelas" onChange={e => funcoes.gerenciarDadosEstoque("entrada_insumo", "parcelamento", e)} value={dados.entrada_insumo.parcelamento} />
+                            </>
+                        )}
                         <TextField sx={{ ...sxTexfieldMenor, width: "106px" }} label="NF" onChange={e => funcoes.gerenciarDadosEstoque("entrada_insumo", "nf", e)} value={dados.entrada_insumo.nf} />
                     </Stack>
                     <Stack direction="row" spacing={.7} sx={{ minHeight: "60px" }} >
@@ -231,67 +176,13 @@ export const CadastroNovaEntradaII = () => {
                 }}
             >
                 <ButtonCancelar onClick={cancelarCadastros} />
-                <ButtonSalvar onClick={salvarInsumo} label="Salvar Insumo" />
-                {!controleEstoque.emEdicao ? <ButtonContinuar onClick={validarDados} label="Continuar" /> : <></>}
+                <ButtonDefault onClick={voltar} label={"Voltar"} />
+                <ButtonSalvar onClick={validarDados} />
             </Stack>
         </Stack>
     );
 };
 
-const CampoComBotao = ({ label, value, onClick }) => (
-    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-        <TextField sx={sxTexfield} label={label} value={value} />
-        <ButtonSearch onClick={onClick} />
-    </Stack>
-);
-
-const ButtonCancelar = ({ onClick }) => (
-    <Button
-        variant="contained"
-        onClick={onClick}
-        sx={{
-            backgroundColor: "error.main",
-            width: "100px",
-            "&:hover": {
-                backgroundColor: "error.dark",
-            },
-        }}
-    >
-        Cancelar
-    </Button>
-);
-
-const ButtonSalvar = ({ onClick, label }) => (
-    <Button
-        variant="contained"
-        onClick={onClick}
-        sx={{
-            backgroundColor: "success.main",
-            width: "150px",
-            "&:hover": {
-                backgroundColor: "success.dark",
-            },
-        }}
-    >
-        {label}
-    </Button>
-);
-
-const ButtonContinuar = ({ onClick, label }) => (
-    <Button
-        variant="contained"
-        onClick={onClick}
-        sx={{
-            backgroundColor: "primary.main",
-            width: "150px",
-            "&:hover": {
-                backgroundColor: "primary.dark",
-            },
-        }}
-    >
-        {label}
-    </Button>
-);
 
 const sxTexfield = {
     width: "400px",

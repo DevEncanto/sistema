@@ -454,8 +454,8 @@ export const config_tables = {
           content: "antecipacao"
         },
         {
-          type: "text",
-          content: "dias"
+          type: "blank",
+          content: ""
         }
       ]
     },

@@ -54,11 +54,13 @@ export const EstoqueProvider = ({ children }) => {
             })
         },
         calculoValores: (object, item, e, target = true) => {
-            if (!e.target.value.includes(",")) {
-                let total = 0
-                let eParsed = e.target.value == "" ? 0 : parseFloat(e.target.value.toString().replace(",", "."))
+            let value = e.target.value.replace(/,/g, '.').replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
 
-                gerenciarDadosEstoque("insumo_entrada", item, e.target.value, false)
+            if (!value.includes(",")) {
+                let total = 0
+                let eParsed = e.target.value == "" ? 0 : parseFloat(value.toString().replace(",", "."))
+
+                gerenciarDadosEstoque("insumo_entrada", item, value, false)
 
                 const { qtde_insumo, valor_unitario, descontos } = dados.insumo_entrada
                 const num1 = qtde_insumo == "" ? 0 : parseFloat(qtde_insumo)
@@ -78,11 +80,12 @@ export const EstoqueProvider = ({ children }) => {
             let parcelamentos = []
             const { total_geral, parcelamento, data_emissao, prazo_inicial, prazo_geral, status_financeiro } = dados.entrada_insumo
 
-            console.log(dados.entrada_insumo)
             if (!validarCampo(data_emissao, "Informe uma data de emissão!")) return;
             if (!validarCampo(parcelamento, "Informe um parcelamento!")) return;
-            if (!validarCampo(prazo_inicial, "Informe o prazo da primeira parcela")) return;
-            if (!validarCampo(prazo_geral, "Informe o prazo entre as parcelas!")) return;
+            if (status_financeiro !== "Pago") {
+                if (!validarCampo(prazo_inicial, "Informe o prazo da primeira parcela")) return;
+                if (!validarCampo(prazo_geral, "Informe o prazo entre as parcelas!")) return;
+            }
 
             const num1 = total_geral == "" ? 0 : parseFloat(total_geral)
             const num2 = parcelamento == "" ? 0 : status_financeiro === "Pago" ? 1 : parseFloat(parcelamento)
@@ -96,7 +99,6 @@ export const EstoqueProvider = ({ children }) => {
                     valor: total_geral === 0 ? 0 : num1 / num2,
                     vencimento: status_financeiro === "Pago" ? data : calcularDatas(data, i === 0 ? num3 : (num3 + (num4 * i))),
                     antecipacao: status_financeiro === "Pago" ? data : diasSemanaAnterior(calcularDatas(data, i === 0 ? num3 : (num3 + (num4 * i)))),
-                    dias: i === 0 ? num3 : (num3 + (num4 * i))
                 })
             }
             console.log(parcelamentos)

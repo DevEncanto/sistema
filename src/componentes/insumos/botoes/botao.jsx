@@ -5,7 +5,7 @@ export const ButtonDefault = ({ onClick, label }) => (
         variant="contained"
         onClick={onClick}
         sx={{
-            width: "100px",
+            width: "auto",
         }}
     >
         {label}
