@@ -120,7 +120,7 @@ export const CadastroNovaEntradaI = () => {
         <Stack
             spacing={1}
             sx={{
-                padding: "-50px 20px"
+                padding: "10px 20px"
             }}
         >
             <Stack

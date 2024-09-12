@@ -20,6 +20,10 @@ export const VerificacaoItensEntrada = () => {
         funcoes.gerenciarControle("cadastroEntradaInsumoI", "tabsEntrada", false);
         funcoes.resetFormularios("insumo_entrada")
     }
+    const finalizarVerificacao = () => {
+        funcoes.gerenciarControle("cadastroEntradaInsumoII", "tabsEntrada", false);
+    }
+
 
     useEffect(() => {
         funcoes.gerenciarControle(false, "emEdicao", false);
@@ -48,7 +52,7 @@ export const VerificacaoItensEntrada = () => {
                 >
                     <ButtonCancelar onClick={cancelarEntradaItens} />
                     <ButtonDefault onClick={retornarCadastro} label="Voltar" />
-                    <ButtonDefault onClick={() => { }} label="Continuar" />
+                    <ButtonDefault onClick={finalizarVerificacao} label="Continuar" />
                 </Stack>
             </Stack>
         </Stack>

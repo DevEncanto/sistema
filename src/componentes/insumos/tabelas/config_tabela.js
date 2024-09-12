@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { BotaoNovoCadastro } from "../botoes/botao_novo_cadastro";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
+import { FabClick } from "../botoes/FabFunction";
 
 export const config_tables = {
   insumo: {
@@ -370,7 +371,7 @@ export const config_tables = {
               <Button
                 sx={{
                   fontSize: "12px",
-                  width:"90px",
+                  width: "90px",
                   padding: 1,
                   backgroundColor: "success.main",
                   ":hover": { backgroundColor: "success.dark" }
@@ -418,6 +419,46 @@ export const config_tables = {
     sx: { textAlign: "center" },
     modal: {
 
-    }
+    },
+    
+  },
+  parcelas: {
+    header: [
+      "ID PARCELA",
+      "VALOR",
+      "DATA VENCIMENTO",
+      "DATA ANTECIPAÇÃO",
+      <FabClick />
+    ],
+    body: {
+      prop: "parcelamentos",
+      key: "parcelamento",
+      functions: {
+        gerarParametros: (object, params = []) => params.map(item => object[item])
+      },
+      contents: [
+        {
+          type: "text",
+          content: "id_parcela"
+        },
+        {
+          type: "moeda",
+          content: "valor"
+        },
+        {
+          type: "text",
+          content: "vencimento"
+        },
+        {
+          type: "text",
+          content: "antecipacao"
+        },
+        {
+          type: "text",
+          content: "dias"
+        }
+      ]
+    },
+    sx: { textAlign: "center" },
   }
 };

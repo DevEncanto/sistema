@@ -27,13 +27,13 @@ export const TabelaParcelas = (props) => {
 
     const sx = { textAlign: "center" }
 
-    const {maxHeight = 200, minHeight = 200} = props
+    const {size} = props
     const { dados } = useContext(EstoqueContext)
 
 
     return (
         <Paper sx={{ width: '100%' }}>
-            <TableContainer sx={{ maxHeight: maxHeight, minHeight: minHeight, ...sxCardScrollPersonalizada }}>
+            <TableContainer sx={{ maxHeight: size, minHeight: size, ...sxCardScrollPersonalizada }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow key={`header`}>

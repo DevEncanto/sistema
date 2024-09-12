@@ -11,6 +11,7 @@ import { ModalTabelas } from "../modais/modalTabelas";
 import { TabelaEstoque } from "../tabelas/tabelas_estoque";
 import { ModalRemocaoItem } from "../modais/modalRemocaoItem";
 import { CadastroNovaEntradaI } from "../cadastros/cadastro_entrada_insumos_I";
+import { CadastroNovaEntradaII } from "../cadastros/cadastro_entrada_insumos_II";
 
 export const EntradaInsumos = () => {
     const { controleEstoque } = useContext(EstoqueContext);
@@ -21,6 +22,8 @@ export const EntradaInsumos = () => {
                 return <TabelaEstoque tabela="fornecedores" />
             case "cadastroEntradaInsumoI":
                 return <CadastroNovaEntradaI />;
+            case "cadastroEntradaInsumoII":
+                return <CadastroNovaEntradaII />;
             case "modal":
                 return <ModalTabelas />;
             case "remocaoItem":

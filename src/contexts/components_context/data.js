@@ -26,10 +26,10 @@ export const initFormularioEntrada = {
     valor_unitario: "",
     descontos: "",
     valor_total: "",
-    parcelamento: "",
+    parcelamento: 1,
     nf_boleto: "",
     parcelamentos: [
-
+        
     ]
 }
 
@@ -67,9 +67,10 @@ export const initDados = {
         data_recebimento: "",
         status_financeiro: "Em Aberto",
         forma_pagamento: "Pix",
-        prazo: "",
-        parcelamento: "",
-        nf_boleto: "",
+        prazo_geral: "",
+        prazo_inicial: "",
+        parcelamento: 1,
+        nf: "",
         id_estoque: "",
         estoque: "",
         parcelamentos: [

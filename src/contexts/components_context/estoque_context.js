@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { initControle, initDados, initFormularioInsumo } from "./data";
 import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
-import { calcularDatas } from "../../utils/gerador-datas";
+import { calcularDatas, diasSemanaAnterior } from "../../utils/gerador-datas";
 
 export const EstoqueContext = createContext();
 
@@ -76,27 +76,30 @@ export const EstoqueProvider = ({ children }) => {
         parcelar: () => {
 
             let parcelamentos = []
-            const { valor_total, parcelamento, data_emissao, prazo } = dados.entrada_insumo
+            const { total_geral, parcelamento, data_emissao, prazo_inicial, prazo_geral, status_financeiro } = dados.entrada_insumo
 
-
+            console.log(dados.entrada_insumo)
             if (!validarCampo(data_emissao, "Informe uma data de emissão!")) return;
             if (!validarCampo(parcelamento, "Informe um parcelamento!")) return;
-            if (!validarCampo(prazo, "Informe o prazo de pagamento!")) return;
-            if (!validarCampo(valor_total, "Informe o total do lançamento")) return;
+            if (!validarCampo(prazo_inicial, "Informe o prazo da primeira parcela")) return;
+            if (!validarCampo(prazo_geral, "Informe o prazo entre as parcelas!")) return;
 
-            const num1 = valor_total == "" ? 0 : parseFloat(valor_total)
-            const num2 = parcelamento == "" ? 0 : parseFloat(parcelamento)
-            const num3 = prazo == "" ? 0 : parseFloat(prazo)
+            const num1 = total_geral == "" ? 0 : parseFloat(total_geral)
+            const num2 = parcelamento == "" ? 0 : status_financeiro === "Pago" ? 1 : parseFloat(parcelamento)
+            const num3 = prazo_inicial == "" ? 0 : parseFloat(prazo_inicial)
+            const num4 = prazo_geral == "" ? 0 : parseFloat(prazo_geral)
             const data = converterDateParaString(data_emissao)
-
 
             for (let i = 0; i < num2; i++) {
                 parcelamentos.push({
                     id_parcela: i + 1,
-                    valor: num1 / num2,
-                    vencimento: calcularDatas(data, num3 * (i + 1))
+                    valor: total_geral === 0 ? 0 : num1 / num2,
+                    vencimento: status_financeiro === "Pago" ? data : calcularDatas(data, i === 0 ? num3 : (num3 + (num4 * i))),
+                    antecipacao: status_financeiro === "Pago" ? data : diasSemanaAnterior(calcularDatas(data, i === 0 ? num3 : (num3 + (num4 * i)))),
+                    dias: i === 0 ? num3 : (num3 + (num4 * i))
                 })
             }
+            console.log(parcelamentos)
             gerenciarDadosEstoque("entrada_insumo", "parcelamentos", [...parcelamentos], false)
         },
         exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },

@@ -40,6 +40,10 @@ export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth =
         break;
       case "number":
         component = formatSaldo(item[content.content], 2)
+        break;
+      case "blank":
+        component = ""
+        break
     }
 
     return component

@@ -16,7 +16,7 @@ export const Selector = (props) => {
     <Box sx={{ width: width }}>
       <FormControl fullWidth>
         <TextField
-          sx={{ height: "60px" }}
+          sx={{ height: "60px", marginBottom:"5px" }}
           label={label}
           select
           defaultValue={defaultValue}

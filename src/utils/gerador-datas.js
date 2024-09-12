@@ -1,13 +1,12 @@
-export const calcularDatas = (dataInicial, dias) => {
+export const calcularDatas = (dataInicial, dias, dias_reducao = 0) => {
     // Converte a data inicial do formato DD/MM/YYYY para um objeto Date
     const startDate = parseDate(dataInicial);
 
     // Verifica se startDate é uma instância válida de Date
     if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
         throw new Error('A data inicial deve estar no formato DD/MM/YYYY.');
-    }       
-    console.log(typeof dias)
-    console.log(isNaN(dias))
+    }
+
     // Verifica se days é um número válido
     // if (typeof days !== 'number' || isNaN(dias)) {
     //     throw new Error('O prazo deve ser um número válido.');
@@ -17,7 +16,7 @@ export const calcularDatas = (dataInicial, dias) => {
     const dueDate = new Date(startDate);
 
     // Adiciona o prazo em dias à data inicial
-    dueDate.setDate(dueDate.getDate() + dias);
+    dueDate.setDate(dueDate.getDate() + dias - dias_reducao);
 
     // Retorna a data de vencimento no formato DD/MM/YYYY
     return formatDate(dueDate);
@@ -33,4 +32,30 @@ function formatDate(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são zero-indexados
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+}
+
+export const diasSemanaAnterior = (dataStr) => {
+    // Converte a string da data para um objeto Date
+    const [dia, mes, ano] = dataStr.split('/').map(Number);
+    const data = new Date(ano, mes - 1, dia);
+
+    // Retrocede a data até encontrar a quarta-feira mais próxima antes da data fornecida
+    let quartaAnterior = new Date(data);
+    
+    // Se a data fornecida for uma quarta-feira, devemos retroceder mais uma semana
+    if (quartaAnterior.getDay() === 3) { // 3 representa quarta-feira
+        quartaAnterior.setDate(quartaAnterior.getDate() - 7);
+    }
+    
+    // Retrocede até encontrar a quarta-feira
+    while (quartaAnterior.getDay() !== 3) { // 3 representa quarta-feira
+        quartaAnterior.setDate(quartaAnterior.getDate() - 1);
+    }
+    
+    // Formata a data no padrão DD/MM/YYYY
+    const diaFormatado = String(quartaAnterior.getDate()).padStart(2, '0');
+    const mesFormatado = String(quartaAnterior.getMonth() + 1).padStart(2, '0');
+    const anoFormatado = quartaAnterior.getFullYear();
+    
+    return `${diaFormatado}/${mesFormatado}/${anoFormatado}`;
 }
