@@ -39,8 +39,10 @@ export const camposObrigatorios = [
     "qtde_insumo",
     "valor_unitario",
     "valor_total",
-    "estoque"
+    "estoque",
+    "tipo_entrada"
 ]
+
 
 export const camposObrigatoriosII = [
     "data_emissao",
@@ -53,6 +55,10 @@ export const camposObrigatoriosII = [
     "prazo_inicial"
 ]
 
+export const camposObrigatoriosIII = [
+    "data_emissao",
+    "data_recebimento",
+]
 
 export const valoresStatusFinanceiro = [
     "Pago",
@@ -163,14 +169,17 @@ export const botoesNavegacao = [
     {
         label: "Resumo",
         tab: "resumo",
+        tabela: "estoque_insumos"
     },
     {
         label: "Entradas",
-        tab: "entradas"
+        tab: "entradas",
+        tabela: "entradas_insumos"
     },
     {
         label: "Saídas",
-        tab: "saidas"
+        tab: "saidas",
+        tabela: "saidas_insumos"
     }
 ]
 

@@ -53,6 +53,7 @@ export const EstoqueProvider = ({ children }) => {
                 return { ...currentState, [formulario]: initDados[formulario] }
             })
         },
+        
         calculoValores: (object, item, e, target = true) => {
             let value = e.target.value.replace(/,/g, '.').replace(/[^\d.]/g, '').replace(/(\..*)\./g, '$1')
 

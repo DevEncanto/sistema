@@ -1,13 +1,15 @@
 import { Button, Stack, TextField, Typography } from "@mui/material";
-import { PopupAlerta } from "../popups/popup_status";
+import { PopupAlerta } from "../../popups/popup_status";
 import { useContext, useEffect, useLayoutEffect } from "react";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { camposObrigatorios } from "../data";
-import { ButtonSearch } from "../botoes/botao_busca";
+import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
+import { camposObrigatorios } from "../../data";
+import { ButtonSearch } from "../../botoes/botao_busca";
+import { Selector } from "../../componentes/select";
+import { DataContext } from "../../../../contexts/data_context/data_context";
 
 export const CadastroNovaEntradaI = () => {
     const { controleEstoque, dados, funcoes } = useContext(EstoqueContext);
-
+    const { controle } = useContext(DataContext)
     useLayoutEffect(() => {
         funcoes.gerenciarControle(false, "navigate", false)
     }, [])
@@ -30,22 +32,61 @@ export const CadastroNovaEntradaI = () => {
         funcoes.gerenciarControle(destino, "tabsEntrada", false);
         funcoes.gerenciarControle(navigate, "navigate", false)
         funcoes.resetFormularios("insumo_entrada")
+        funcoes.resetFormularios("entrada_insumo")
     };
 
     const salvarInsumo = async () => {
+
+
         for (const campo of camposObrigatorios) {
-            console.log(dados.insumo_entrada[campo])
             if (!dados.insumo_entrada[campo]) {
                 funcoes.exibirAlerta("Preencha todos os campos", "warning");
                 return false;
             }
         }
-        let dadosAntigos = dados.entrada_insumo.insumos
+
+        if (dados.insumo_entrada.valor_total < 0) {
+            funcoes.exibirAlerta("Verifique o total do lançamento", "error");
+            return false
+        }
+
+        if (dados.entrada_insumo.insumos.length > 0) {
+            const insumoInicial = dados.entrada_insumo.insumos[0]
+            if (insumoInicial.tipo_entrada !== dados.insumo_entrada.tipo_entrada) {
+                funcoes.exibirAlerta("Tipo de entrada incompatível", "error");
+                setTimeout(() => {
+                    funcoes.exibirAlerta(`Selecione o tipo: ${insumoInicial.tipo_entrada}`, "success");
+                }, 2600)
+                return false
+            }
+
+            if (insumoInicial.fornecedor!== dados.insumo_entrada.fornecedor) {
+                funcoes.exibirAlerta("Adicione mesmo fornecedor!", "error");
+                return false
+            }
+        }
+
+
+        let dadosAntigos = dados.entrada_insumo.insumos || []
+        let insumoPrimario = dados.insumo_entrada
+
+        dadosAntigos.forEach((item, index) => {
+            if (item.fornecedor === insumoPrimario.fornecedor &&
+                item.valor_unitario === insumoPrimario.valor_unitario &&
+                item.estoque === insumoPrimario.estoque &&
+                item.insumo === insumoPrimario.insumo
+            ) {
+                insumoPrimario.qtde_insumo = parseFloat(insumoPrimario.qtde_insumo) + parseFloat(item.qtde_insumo)
+                insumoPrimario.descontos = parseFloat(insumoPrimario.descontos) + parseFloat(item.descontos)
+                insumoPrimario.valor_total = (insumoPrimario.qtde_insumo * insumoPrimario.valor_unitario) - insumoPrimario.descontos
+                dadosAntigos.splice(index, 1)
+            }
+        })
 
         let total = 0
 
         const dadosNovos = {
-            ...dados.insumo_entrada,
+            ...insumoPrimario,
             index: controleEstoque.emEdicao ? dados.insumo_entrada.index : dadosAntigos.length + 1,
         }
 
@@ -61,6 +102,7 @@ export const CadastroNovaEntradaI = () => {
         itens.forEach((item) => {
             total += parseFloat(item.valor_total)
         })
+
 
         funcoes.gerenciarDadosEstoque("entrada_insumo", "insumos", itens, false)
         funcoes.gerenciarDadosEstoque("entrada_insumo", "total_geral", total.toFixed().toString(), false)
@@ -89,7 +131,7 @@ export const CadastroNovaEntradaI = () => {
             return funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
         }
         if (dados.entrada_insumo.insumos.length === 0) {
-            funcoes.exibirAlerta("Adicione pelo menos um insumo!", "error");
+            funcoes.exibirAlerta("Adicione no mínimo um item!", "error");
             return
         }
         funcoes.gerenciarControle("itensEntrada", "tabsEntrada", false);
@@ -113,10 +155,12 @@ export const CadastroNovaEntradaI = () => {
     }
     const exibirQuantidade = () => {
         const itens = dados.entrada_insumo?.insumos?.length
-        return itens > 0 && !controleEstoque.emEdicao? `Itens Cadastrados: ${itens}` : ""
+        return itens > 0 && !controleEstoque.emEdicao ? `Itens Cadastrados: ${itens}` : ""
     }
 
     return (
+
+
         <Stack
             spacing={1}
             sx={{
@@ -125,11 +169,11 @@ export const CadastroNovaEntradaI = () => {
         >
             <Stack
                 direction="row"
-                sx={{ 
-                    alignItems: "center", 
-                    marginTop: "-5px", 
+                sx={{
+                    alignItems: "center",
+                    marginTop: "-5px",
                     // backgroundColor:"red", 
-                    height:"50px"
+                    height: "50px"
                 }}
             >
                 <Typography
@@ -150,7 +194,7 @@ export const CadastroNovaEntradaI = () => {
                     spacing={2}
                     sx={{
                         height: "80%",
-                        width: "80%",
+                        width: "100%",
                         alignItems: "center",
                         justifyContent: "center",
                     }}
@@ -160,30 +204,49 @@ export const CadastroNovaEntradaI = () => {
             </Stack>
             <Stack
                 direction="row"
-                spacing={4}
+                spacing={2}
             >
                 <Stack>
                     <Stack
                         sx={{ height: "18px" }}
                     >
                         <Typography
-                        variant="h5"
-                        sx={{fontSize: "13px", marginLeft: "1px"}}
+                            variant="h5"
+                            sx={{ fontSize: "13px", marginLeft: "1px" }}
                         >
                             {exibirQuantidade()}
                         </Typography>
                     </Stack>
-                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={exibirFornecedores} />
-                    <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={exibirInsumos} />
-                    <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={exibirEstoques} />
-                   
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Qtde do Insumo" onChange={e => funcoes.calculoValores("entrada_insumo", "qtde_insumo", e, false)} value={dados.insumo_entrada.qtde_insumo} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Unitário" onChange={e => funcoes.calculoValores("entrada_insumo", "valor_unitario", e, false)} value={dados.insumo_entrada.valor_unitario} />
+                    <CampoComBotao label="Fornecedor" value={dados.insumo_entrada.fornecedor || ""} onClick={exibirFornecedores} sx={{ ...sxTexfield, width: "240px" }} />
+                    <CampoComBotao label="Insumo" value={dados.insumo_entrada.insumo || ""} onClick={exibirInsumos} sx={{ ...sxTexfield, width: "240px" }} />
+                    <CampoComBotao label="Estoque" value={dados.insumo_entrada.estoque || ""} onClick={exibirEstoques} sx={{ ...sxTexfield, width: "240px" }} />
+                    <Selector object="insumo_entrada" item="tipo_entrada" value={dados.insumo_entrada.tipo_entrada} valores={controle?.tipos_movimentacoes} label="Tipo de Entrada" width="240px" />
+
+                </Stack>
+                <Stack
+
+                >
+                    <Stack
+                        sx={{ height: "18px" }}
+                    >
+                        <Typography
+                            variant="h5"
+                            sx={{ fontSize: "13px", marginLeft: "1px" }}
+                        >
+
+                        </Typography>
                     </Stack>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "px" }} label="Descontos" onChange={e => funcoes.calculoValores("entrada_insumo", "descontos", e, false)} value={dados.insumo_entrada.descontos} />
-                        <TextField sx={{ ...sxTexfieldMenor, width: "50%", marginTop: "8px" }} label="Valor Total" value={dados.insumo_entrada.valor_total} />
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, width: "100%" }} label="Qtde do Insumo" onChange={e => funcoes.calculoValores("entrada_insumo", "qtde_insumo", e, false)} value={dados.insumo_entrada.qtde_insumo} />
+                    </Stack>
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center", justifyContent: "center" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, width: "100%", }} label="Valor Unitário" onChange={e => funcoes.calculoValores("entrada_insumo", "valor_unitario", e, false)} value={dados.insumo_entrada.valor_unitario} />
+                    </Stack>
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, width: "100%" }} label="Descontos" onChange={e => funcoes.calculoValores("entrada_insumo", "descontos", e, false)} value={dados.insumo_entrada.descontos} />
+                    </Stack>
+                    <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+                        <TextField sx={{ ...sxTexfieldMenor, width: "100%", }} label="Valor Total" value={dados.insumo_entrada.valor_total} />
                     </Stack>
                 </Stack>
             </Stack>
@@ -204,10 +267,10 @@ export const CadastroNovaEntradaI = () => {
     );
 };
 
-const CampoComBotao = ({ label, value, onClick }) => (
-    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-        <TextField sx={sxTexfield} label={label} value={value} />
-        <ButtonSearch onClick={onClick} />
+const CampoComBotao = ({ label, value, onClick, sx }) => (
+    <Stack spacing={1} direction="row">
+        <TextField sx={sx} label={label} value={value} />
+        <ButtonSearch onClick={onClick} marginTop="-50px" />
     </Stack>
 );
 
@@ -262,11 +325,9 @@ const ButtonContinuar = ({ onClick, label }) => (
 const sxTexfield = {
     width: "400px",
     height: "60px",
-    marginTop: "5px",
 };
 
 const sxTexfieldMenor = {
     width: "170px",
     height: "60px",
-    marginTop: "5px",
 };

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
-import { config_tables } from "./config_tabela";
+import { config_tables } from "./configuracoes/config_tabela";
 import { DataContext } from "../../../contexts/data_context/data_context";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import formatSaldo from "../../../utils/formatarSaldos";
@@ -15,8 +15,8 @@ export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth =
   const data = tabela ? dados : controle[body.prop]
 
   useEffect(() => {
-    saveLocalStorage();
-  }, [saveLocalStorage]);
+
+  }, []);
 
 
   const RenderContent = (props) => {
@@ -36,10 +36,10 @@ export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth =
         )
         break;
       case "moeda":
-        component = `R$ ${formatSaldo(item[content.content], 2)}`
+        component = `R$ ${formatSaldo(item[content.content] ? item[content.content] : 0, 2)}`
         break;
       case "number":
-        component = formatSaldo(item[content.content], 2)
+        component = formatSaldo(item[content.content] ? item[content.content] : 0, 2)
         break;
       case "blank":
         component = ""

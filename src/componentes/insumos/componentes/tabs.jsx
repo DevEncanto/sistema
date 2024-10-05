@@ -1,12 +1,20 @@
 import { Stack } from "@mui/material"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
 import { EntradaInsumos } from "../pages/entrada_insumos"
-import { TabelaEstoqueInsumos } from "../tabelas/tabela_estoque_insumos"
+import { TabelaEstoque } from "../tabelas/tabelas_estoque"
+import { DataContext } from "../../../contexts/data_context/data_context"
+import { SaidaInsumos } from "../pages/saida_insumos"
 
 export const TabsInsumos = () => {
 
     const { controleEstoque } = useContext(EstoqueContext)
+    const { loadLocalStorage } = useContext(DataContext)
+
+    useEffect(() => {
+        loadLocalStorage()
+    }, [])
+
     const sx = {
         width: "100%",
         heigth: "100%",
@@ -17,9 +25,9 @@ export const TabsInsumos = () => {
 
     return (
         <Stack sx={sx}>
-            {controleEstoque.tab === "resumo" ? <TabelaEstoqueInsumos /> : <></>}
+            {controleEstoque.tab === "resumo" ? <TabelaEstoque /> : <></>}
             {controleEstoque.tab === "entradas" ? <EntradaInsumos /> : <></>}
-            {controleEstoque.tab === "saidas" ? <TabelaInsumos /> : <></>}
+            {controleEstoque.tab === "saidas" ? <SaidaInsumos /> : <></>}
         </Stack>
     )
 }

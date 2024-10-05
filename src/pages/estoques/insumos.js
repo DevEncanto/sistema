@@ -21,11 +21,12 @@ const Page = () => {
 
 
   useEffect(() => {
+    funcoes.gerenciarControle("tabs", "resumo", false)
     loadLocalStorage()
   }, [])
 
 
-  const redirecionamento = (tabs, object, targeted) => {
+  const redirecionamento = (tabs, object, targeted, tabela) => {
     const { tabsEntrada, tabsSaida, tab } = controleEstoque
 
     let navigate = false
@@ -41,6 +42,7 @@ const Page = () => {
       navigate = true
     }
     if (navigate) {
+      funcoes.gerenciarControle(tabela, "tabela", false)
       funcoes.gerenciarControle(tabs, object, targeted)
     }
   }
@@ -104,7 +106,7 @@ const Page = () => {
                     return <Button
                       key={`btn_nav${index}`}
                       variant='contained'
-                      onClick={() => { redirecionamento(botao.tab, "tab", false) }}
+                      onClick={() => { redirecionamento(botao.tab, "tab", false, botao.tabela) }}
                       sx={{
                         backgroundColor: controleEstoque.tab === botao.tab ? "primary.dark" : "grey"
                       }}
@@ -128,6 +130,14 @@ const Page = () => {
                   startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
                 >
                   Nova Entrada
+                </Button> : <></>}
+                {controleEstoque.tab === "saidas" && controleEstoque.tabsSaida == "tabela" ? <Button
+                  key={`btn_entrada`}
+                  variant='contained'
+                  onClick={() => { funcoes.gerenciarControle("cadastroSaidaInsumoI", "tabsSaida", false) }}
+                  startIcon={<PlusIcon height={20} width={20} fontWeight={600} />}
+                >
+                  Nova Saída
                 </Button> : <></>}
               </Stack>
             </Stack>

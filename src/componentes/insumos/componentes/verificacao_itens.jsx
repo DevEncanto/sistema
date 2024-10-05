@@ -21,6 +21,7 @@ export const VerificacaoItensEntrada = () => {
         funcoes.resetFormularios("insumo_entrada")
     }
     const finalizarVerificacao = () => {
+        funcoes.gerenciarDadosEstoque("entrada_insumo", "tipo_entrada", dados.entrada_insumo.insumos[0].tipo_entrada, false)
         funcoes.gerenciarControle("cadastroEntradaInsumoII", "tabsEntrada", false);
     }
 

@@ -1,10 +1,10 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { ButtonSearch } from "../botoes/botao_busca";
-import { PopupAlerta } from "../popups/popup_status";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarCategoriaInsumo} from "../../../service/request_cadastro";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { ButtonSearch } from "../../botoes/botao_busca";
+import { PopupAlerta } from "../../popups/popup_status";
+import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
+import { cadastrarCategoriaInsumo } from "../../../../service/request_cadastro";
+import { DataContext } from "../../../../contexts/data_context/data_context";
 
 export const CadastroCategoriaInsumo = () => {
     const { dados, funcoes, controleEstoque } = useContext(EstoqueContext);
@@ -33,7 +33,7 @@ export const CadastroCategoriaInsumo = () => {
             dataContext.gerenciarControle(dadosCategorias, "categorias_insumos")
 
             setTimeout(() => {
-                funcoes.gerenciarControle("modalCategoriaInsumo", "tabsEntrada", false);
+                funcoes.gerenciarControle("categorias_insumos", "tabela", false);
                 funcoes.resetFormularios("categoria")
             }, 2500)
         }

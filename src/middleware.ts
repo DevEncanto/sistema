@@ -34,7 +34,7 @@ export const config = {
         '/historico-saques/:path*',
         '/perfil/:path*',
         '/auth/:path*',
-        '/insumos/:path*',
+        '/estoques/:path*',
         '/desafios/:path*',
         '/solicitar-saque/:path*',
         '/admin/:path*',

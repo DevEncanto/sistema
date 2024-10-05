@@ -1,5 +1,7 @@
 export const dataInit = {
     fornecedores: [],
     areas: [],
-    permissoes: []
+    permissoes: [],
+    estoque_insumos: [],
+    saidas_insumos: []
 }

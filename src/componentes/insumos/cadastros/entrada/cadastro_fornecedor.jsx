@@ -1,11 +1,11 @@
-import { Stack, TextField, Button, Typography } from "@mui/material";
+import { Stack, TextField, Button, Typography, Checkbox } from "@mui/material";
 import { useContext, useState } from "react";
-import { ButtonSearch } from "../botoes/botao_busca";
-import { PopupAlerta } from "../popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../../contexts/data";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor } from "../../../service/request_cadastro";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { ButtonSearch } from "../../botoes/botao_busca";
+import { PopupAlerta } from "../../popups/popup_status";
+import { camposObrigatoriosFornecedor } from "../../../../contexts/data";
+import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
+import { cadastrarFornecedor } from "../../../../service/request_cadastro";
+import { DataContext } from "../../../../contexts/data_context/data_context";
 
 export const CadastroFornecedor = () => {
     const { controleEstoque, funcoes, dados } = useContext(EstoqueContext);
@@ -35,9 +35,7 @@ export const CadastroFornecedor = () => {
             dataContext.gerenciarControle(dadosFornecedor, "fornecedores")
 
             setTimeout(() => {
-                funcoes.gerenciarControle("modal", "tabsEntrada", false)
-                funcoes.gerenciarControle("fornecedores", "tabela", false)
-                funcoes.resetFormularios("fornecedor")
+                cancelarCadastros()
             }, 2500)
         }
     };
@@ -91,7 +89,7 @@ export const CadastroFornecedor = () => {
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Fantasia" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "fantasia", e)} value={dados.fornecedor.fantasia} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
-                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "cpf_cnpj", e)} value={dados.fornecedor.cpf_cnpj} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="CPF/CNPJ" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "cpf_cnpj", e.target.value.replace(/\D/g, ''), false)} value={dados.fornecedor.cpf_cnpj} />
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Inscrição Estadual" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "inscricao", e)} value={dados.fornecedor.inscricao} />
                     </Stack>
 
@@ -120,7 +118,17 @@ export const CadastroFornecedor = () => {
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Agência" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "agencia", e)} value={dados.fornecedor.agencia} />
                         <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Conta" onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "conta", e)} value={dados.fornecedor.conta} />
                     </Stack>
+
                 </Stack>
+            </Stack>
+            <Stack direction="row" spacing={.1} sx={{ alignItems: "center", justifyContent: "center", marginTop: "5px" }}>
+                <Checkbox checked={dados.fornecedor.vincular} onChange={e => funcoes.gerenciarDadosEstoque("fornecedor", "vincular", !dados.fornecedor.vincular, false)} inputProps={{ 'aria-label': 'controlled' }} />
+                <Typography
+                    variant="h5"
+                    sx={{ fontSize: 15 }}
+                >
+                    Vincular como fornecedor caso o CPF/CNPJ já esteja cadastrado?
+                </Typography>
             </Stack>
             <Stack
                 direction="row"
@@ -128,7 +136,7 @@ export const CadastroFornecedor = () => {
                 sx={{
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "30px"
+                    padding: "10px 30px"
                 }}
             >
                 <ButtonCancelar onClick={cancelarCadastros} />

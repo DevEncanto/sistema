@@ -1,15 +1,15 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { ButtonSearch } from "../botoes/botao_busca";
-import { PopupAlerta } from "../popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../../contexts/data";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor, cadastrarInsumo } from "../../../service/request_cadastro";
-import { DataContext } from "../../../contexts/data_context/data_context";
-import { Selector } from "../componentes/select";
-import { camposObrigatoriosInsumos, valoresUnidades } from "../data";
-import { ButtonCancelar } from "../botoes/botao_cancelar";
-import { ButtonSalvar } from "../botoes/botao_salvar";
+import { ButtonSearch } from "../../botoes/botao_busca";
+import { PopupAlerta } from "../../popups/popup_status";
+import { camposObrigatoriosFornecedor } from "../../../../contexts/data";
+import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
+import { cadastrarFornecedor, cadastrarInsumo } from "../../../../service/request_cadastro";
+import { DataContext } from "../../../../contexts/data_context/data_context";
+import { Selector } from "../../componentes/select";
+import { camposObrigatoriosInsumos, valoresUnidades } from "../../data";
+import { ButtonCancelar } from "../../botoes/botao_cancelar";
+import { ButtonSalvar } from "../../botoes/botao_salvar";
 
 export const CadastroInsumo = () => {
     const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
@@ -40,8 +40,7 @@ export const CadastroInsumo = () => {
             dataContext.gerenciarControle(dadosInsumos, "insumos")
 
             setTimeout(() => {
-                funcoes.gerenciarControle("modalInsumos", "tabsEntrada", false);
-                funcoes.resetFormularios("insumo")
+                cancelarCadastros()
             }, 2500)
         }
     };
@@ -129,13 +128,6 @@ export const CadastroInsumo = () => {
         </Stack>
     );
 };
-
-const CampoComBotao = ({ label, value, onClick }) => (
-    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-        <TextField sx={sxTexfield} label={label} value={value} />
-        <ButtonSearch onClick={onClick} />
-    </Stack>
-);
 
 const sxTexfield = {
     width: "350px",

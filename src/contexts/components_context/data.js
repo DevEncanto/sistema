@@ -6,10 +6,12 @@ export const initControle = {
     type: "",
     alert: "",
     navigate: true,
-    tabela: "entrada_insumo",
+    tabela: "estoque_insumos",
     emEdicao: false,
     itemEdicao: -1,
-    itemRemocao: -1
+    itemRemocao: -1,
+    load: false,
+    key: "",
 }
 
 export const initFormularioEntrada = {
@@ -56,7 +58,8 @@ export const initDados = {
         agencia: "",
         conta: "",
         banco: "",
-        fantasia: ""
+        fantasia: "",
+        vincular: false
     },
     entrada_insumo: {
         fornecedor: "",
@@ -72,6 +75,7 @@ export const initDados = {
         parcelamento: 1,
         nf: "",
         id_estoque: "",
+        tipo_entrada: "",
         estoque: "",
         parcelamentos: [
 
@@ -84,7 +88,9 @@ export const initDados = {
         qtde_insumo: "",
         valor_unitario: "",
         descontos: "",
+        id_item: "",
         valor_total: "",
+        tipo_entrada: ""
     },
     categoria: {
         nome: "",

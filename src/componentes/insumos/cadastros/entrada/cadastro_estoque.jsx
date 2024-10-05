@@ -1,47 +1,51 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { ButtonSearch } from "../botoes/botao_busca";
-import { PopupAlerta } from "../popups/popup_status";
-import { camposObrigatoriosFornecedor } from "../../../contexts/data";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { cadastrarFornecedor, cadastrarInsumo, cadastrarLote } from "../../../service/request_cadastro";
-import { DataContext } from "../../../contexts/data_context/data_context";
-import { Selector } from "../componentes/select";
-import { camposObrigatoriosEstoque, camposObrigatoriosInsumos, valoresUnidades } from "../data";
+import { useContext } from "react";
+import { ButtonSearch } from "../../botoes/botao_busca";
+import { PopupAlerta } from "../../popups/popup_status";
+import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
+import { cadastrarEstoque} from "../../../../service/request_cadastro";
+import { DataContext } from "../../../../contexts/data_context/data_context";
+import { Selector } from "../../componentes/select";
+import { camposObrigatoriosEstoque} from "../../data";
 
-export const CadastroLote = () => {
-    const { dados, funcoes, gerenciarControle, controleEstoque } = useContext(EstoqueContext);
+export const CadastroEstoque = () => {
+    const { dados, funcoes, controleEstoque } = useContext(EstoqueContext);
     const dataContext = useContext(DataContext)
 
     const cancelarCadastros = () => {
         funcoes.gerenciarControle("modal", "tabsEntrada", false);
-        funcoes.gerenciarControle("lotes", "tabela", false);
-        funcoes.resetFormularios("lotes")
+        funcoes.gerenciarControle("estoques", "tabela", false);
+        funcoes.resetFormularios("estoque")
     };
 
-    const validarDados = async () => {
-        console.log("validando dados...")
+    const exibirLotes = () => {
+        funcoes.gerenciarControle("modal", "tabsEntrada", false)
+        funcoes.gerenciarControle("lotes", "tabela", false)
+    }
 
-        if (!dados.lote.nome) {
-            funcoes.exibirAlerta("Informe o nome do lote!", "warning");
-            return;
+    const validarDados = async () => {
+        for (const campo of camposObrigatoriosEstoque) {
+            if (!dados.estoque[campo]) {
+                console.log(campo)
+                console.log(dados.estoque[campo])
+                funcoes.exibirAlerta("Preencha todos os campos", "warning");
+                return;
+            }
         }
 
-
-        const response = await cadastrarLote(dados.lote)
+        const response = await cadastrarEstoque(dados.estoque)
         const type = response.status === 200 ? "success" : "error"
 
         funcoes.exibirAlerta(response.message, type)
 
         if (response.status === 200) {
-            const dadosLotes = [...dataContext.controle.lotes, response.lote]
+            const dadosInsumos = [...dataContext.controle.estoques, response.estoque]
 
-            dataContext.gerenciarControle(dadosLotes, "lotes")
+            dataContext.gerenciarControle(dadosInsumos, "estoques")
 
             setTimeout(() => {
-                funcoes.gerenciarControle("modalLotes", "tabsEntrada", false);
-                funcoes.resetFormularios("lotes")
-            }, 2000)
+                cancelarCadastros()
+            }, 2500)
         }
     };
 
@@ -69,7 +73,7 @@ export const CadastroLote = () => {
                         width: "50%",
                     }}
                 >
-                    Novo Lote
+                    Novo Estoque
                 </Typography>
                 <Stack
                     direction="row"
@@ -92,10 +96,15 @@ export const CadastroLote = () => {
             >
                 <Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Lote" onChange={e => funcoes.gerenciarDadosEstoque("lote", "nome", e)} value={dados.lote.nome} />
+                        <TextField sx={{ ...sxTexfield, width: "405px" }} label="Nome do Estoque" onChange={e => funcoes.gerenciarDadosEstoque("estoque", "nome", e)} value={dados.estoque.nome} />
                     </Stack>
                     <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                        <TextField multiline rows={4} sx={{ ...sxTexfield, width: "405px", height: "150px" }} label="Descrição" onChange={e => funcoes.gerenciarDadosEstoque("lote", "descricao", e)} value={dados.lote.descricao} />
+                        <TextField sx={{ ...sxTexfieldMenor, width: "140px", }} label={"Lote"} value={dados.estoque.lote} />
+                        <ButtonSearch onClick={exibirLotes} />
+                        <Selector object="estoque" item="tipo_estoque" value={dados.estoque.tipo_estoque} valores={dataContext.controle.tipos_estoques} label="Tipo de Estoque" width="199px" />
+                    </Stack>
+                    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
+                        <TextField multiline rows={4} sx={{ ...sxTexfield, width: "405px", height: "150px" }} label="Descrição" onChange={e => funcoes.gerenciarDadosEstoque("estoque", "descricao", e)} value={dados.estoque.descricao} />
                     </Stack>
                 </Stack>
             </Stack>

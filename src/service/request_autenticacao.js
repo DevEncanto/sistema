@@ -27,6 +27,7 @@ const loginUsuario = async (iniciarControle, saveLocalStorage, controle, gerenci
 
         await statusLogin(response.data.message, type)
 
+        console.log(response.data)
 
         if (response.data.status === 200) {
             iniciarControle(response.data.dados)

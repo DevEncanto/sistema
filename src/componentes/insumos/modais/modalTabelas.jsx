@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { TabelaEstoque } from "../tabelas/tabelas_estoque"
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
-import { config_tables } from "../tabelas/config_tabela"
+import { config_tables } from "../tabelas/configuracoes/config_tabela"
 
 const { ModalEstoque } = require("./modal")
 

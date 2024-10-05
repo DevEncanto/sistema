@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
     }
 
     const saveLocalStorage = (data) => {
-        if(data){
+        if (data) {
             window.localStorage.setItem("dados", JSON.stringify(data))
             return
         }
@@ -32,8 +32,9 @@ export const DataProvider = ({ children }) => {
 
     const iniciarControle = async (dados) => {
         if (dados) {
-            const listaDados = Object.keys(dados) || []
+            const listaDados = Object.keys(dados)
             listaDados.forEach((key) => {
+                console.log(dados[key])
                 gerenciarControle(dados[key], key)
             })
         }
