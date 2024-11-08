@@ -12,6 +12,7 @@ import { createEmotionCache } from 'src/utils/create-emotion-cache';
 import 'simplebar-react/dist/simplebar.min.css';
 import { EstoqueProvider } from '../contexts/components_context/estoque_context.js';
 import { DataProvider } from '../contexts/data_context/data_context.js';
+import { CorteCoracaoProvider } from '../contexts/corte.coracao.context.js';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -27,35 +28,37 @@ const App = (props) => {
   const theme = createTheme();
 
   return (
-    <DataProvider>
-      <UserProvider>
-        <EstoqueProvider>
-          <CacheProvider value={emotionCache}>
-            <Head>
-              <title>
-                Encanto das Frutas
-              </title>
-              <meta
-                name="viewport"
-                content="initial-scale=1, width=device-width"
-              />
-            </Head>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <AuthConsumer>
-                  {
-                    (auth) => auth.isLoading
-                      ? <SplashScreen />
-                      : getLayout(<Component {...pageProps} />)
-                  }
-                </AuthConsumer>
-              </ThemeProvider>
-            </LocalizationProvider>
-          </CacheProvider>
-        </EstoqueProvider>
-      </UserProvider>
-    </DataProvider>
+    <CorteCoracaoProvider>
+      <DataProvider>
+        <UserProvider>
+          <EstoqueProvider>
+            <CacheProvider value={emotionCache}>
+              <Head>
+                <title>
+                  Encanto das Frutas
+                </title>
+                <meta
+                  name="viewport"
+                  content="initial-scale=1, width=device-width"
+                />
+              </Head>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <AuthConsumer>
+                    {
+                      (auth) => auth.isLoading
+                        ? <SplashScreen />
+                        : getLayout(<Component {...pageProps} />)
+                    }
+                  </AuthConsumer>
+                </ThemeProvider>
+              </LocalizationProvider>
+            </CacheProvider>
+          </EstoqueProvider>
+        </UserProvider>
+      </DataProvider>
+    </CorteCoracaoProvider>
   );
 };
 

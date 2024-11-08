@@ -22,16 +22,49 @@ export const calcularDatas = (dataInicial, dias, dias_reducao = 0) => {
     return formatDate(dueDate);
 }
 
-const parseDate = (dateStr) => {
+export const parseDate = (dateStr) => {
     const [day, month, year] = dateStr.split('/').map(Number);
     return new Date(year, month - 1, day); // Meses são zero-indexados em JavaScript
 }
 
-function formatDate(date) {
+export function formatDate(date) {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses são zero-indexados
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
+}
+
+export function obterSemana(dataString) {
+    // Extrair o dia, mês e ano da string no formato DD/MM/YYYY
+    const [dia, mes, ano] = dataString.split('/').map(Number);
+
+    // Criar um objeto Date utilizando o ano, mês (ajustado para 0-indexed) e dia
+    const data = new Date(ano, mes - 1, dia);
+
+    // Criar uma data para o primeiro dia do ano
+    const inicioAno = new Date(ano, 0, 1);
+
+    // Calcular a diferença em milissegundos entre a data e o primeiro dia do ano
+    const diff = data - inicioAno;
+
+    // Calcular o número de dias desde o primeiro dia do ano
+    const diasNoAno = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+    // Calcular a semana do ano (considerando que a semana começa no dia 1 de janeiro)
+    const semana = Math.ceil((diasNoAno + 1) / 7);
+
+    return semana;
+}
+
+export function converterDataCalendario(dataString) {
+    // Extrair o dia, mês e ano da string no formato DD/MM/YYYY
+    const [dia, mes, ano] = dataString.split('/').map(Number);
+
+    // Criar um objeto Date utilizando o ano, mês (ajustado para 0-indexed) e dia
+    const data = new Date(Date.UTC(ano, mes - 1, dia, 3, 0, 0, 0));
+
+    // Retornar a string no formato ISO 8601 com o horário UTC
+    return data.toISOString();
 }
 
 export const diasSemanaAnterior = (dataStr) => {

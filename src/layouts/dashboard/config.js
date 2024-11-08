@@ -31,6 +31,16 @@ export const items = {
       ),
       mode: "USER"
     },
+    {
+      title: 'Corte de Corações',
+      path: '/corte_coracoes',
+      icon: (
+        <SvgIcon fontSize="small">
+          <FaBoxes />
+        </SvgIcon>
+      ),
+      mode: "USER"
+    },
   ],
   ADMIN: [
     {

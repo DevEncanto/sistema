@@ -102,7 +102,6 @@ export const EstoqueProvider = ({ children }) => {
                     antecipacao: status_financeiro === "Pago" ? data : diasSemanaAnterior(calcularDatas(data, i === 0 ? num3 : (num3 + (num4 * i)))),
                 })
             }
-            console.log(parcelamentos)
             gerenciarDadosEstoque("entrada_insumo", "parcelamentos", [...parcelamentos], false)
         },
         exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },

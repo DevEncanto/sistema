@@ -1,16 +1,16 @@
 import { useContext, useEffect } from "react";
 import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
-import { config_tables } from "./configuracoes/config_tabela";
 import { DataContext } from "../../../contexts/data_context/data_context";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import formatSaldo from "../../../utils/formatarSaldos";
+import { config_tables } from "./configuracoes/config_tables";
+import { CorteCoracaoContext } from "../../../contexts/corte.coracao.context";
 
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses } = require("@mui/material");
 
-export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
+export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
   const { controle, saveLocalStorage } = useContext(DataContext);
-  const { funcoes, controleEstoque } = useContext(EstoqueContext);
-  const { header, body, sx } = config_tables[tabela ? tabela : controleEstoque.tabela];
+  const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext);
+  const { header, body, sx } = config_tables[tabela ? tabela : cCorteCoracao.tabela];
 
   const data = tabela ? dados : controle[body.prop]
 
@@ -28,19 +28,19 @@ export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth =
       case "text":
         component = item[content.content]
         break;
-      case "componentExt":
+      case "component":
         component = content.content(
           funcoes,
           body.functions[content.function],
           body.functions.gerarParametros(item, content.params)
         )
         break;
-      case "component":
-        component = component = content.content(
-          funcoes,
-          body.functions[content.function],
-          body.functions.gerarParametros(item, content.params)
-        )
+      case "componentExt":
+
+        const data = content.params.map((p) => {
+          return { [p]: item[p] }
+        })
+        component = content.content(data)
         break;
       case "moeda":
         component = `R$ ${formatSaldo(item[content.content] ? item[content.content] : 0, 2)}`
@@ -52,7 +52,7 @@ export const TabelaEstoque = ({ tabela, maxHeight = 350, dados = [], minHeigth =
         component = ""
         break
     }
-    console.log(component)
+
     return component
   }
 

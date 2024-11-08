@@ -195,6 +195,13 @@ export function createComponents(config) {
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
+          // Alterando a cor de fundo
+          '&.Mui-disabled': {
+            [`& .${outlinedInputClasses.disabled}`]: {
+              color: palette.primary.main
+            }          // Cor do texto quando desabilitado
+          }
+          ,
           '&:hover': {
             backgroundColor: palette.action.hover,
             [`& .${outlinedInputClasses.notchedOutline}`]: {

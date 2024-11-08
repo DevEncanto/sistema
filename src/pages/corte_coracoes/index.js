@@ -8,54 +8,36 @@ import { LuFuel } from "react-icons/lu";
 import { HiCube } from "react-icons/hi2";
 import { TiLeaf } from "react-icons/ti";
 import { IoFastFood } from "react-icons/io5";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { BsBox2Fill, BsQrCode } from 'react-icons/bs';
+import { CorteCoracaoContext } from '../../contexts/corte.coracao.context';
 
 const Page = () => {
 
     const router = useRouter()
     const [load, setLoad] = useState(false)
+    const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
+    const redirecionarEstoque = (url) => router.push(`/corte_coracoes/${url}`)
 
-    const redirecionarEstoque = (url) => router.push(`/estoques/${url}`)
 
     const estoques = [
         {
-            label: "Ferramentas",
+            label: "Lotes de Fitas",
             icon: (
                 <SvgIcon fontSize="medium" color='white'>
-                    <HiMiniWrenchScrewdriver />
+                    <BsBox2Fill />
                 </SvgIcon>
             ),
-            url: "ferramentas"
+            url: "lote_etiquetas"
         },
         {
-            label: "Cantina",
+            label: "Gerador de Etiquetas",
             icon: (
                 <SvgIcon fontSize="medium" color='white'>
-                    <IoFastFood />
+                    <BsQrCode />
                 </SvgIcon>
             ),
-            url: "cantina"
-        },
-        {
-            label: "Combustível",
-            icon: <SvgIcon fontSize="medium" color='white'>
-                <LuFuel />
-            </SvgIcon>,
-            url: "combustivel"
-        },
-        {
-            label: "Materiais",
-            icon: <SvgIcon fontSize="medium" color='white'>
-                <HiCube />
-            </SvgIcon>,
-            url: "materiais"
-        },
-        {
-            label: "Insumos",
-            icon: <SvgIcon fontSize="medium" color='white'>
-                <TiLeaf />
-            </SvgIcon>,
-            url: "insumos"
+            url: "gerador_etiquetas"
         }
     ]
 
@@ -64,14 +46,14 @@ const Page = () => {
     }
 
     useEffect(() => {
-
+        funcoes.gControleCorteCoracao("tab", "resumo", false)
     }, [])
 
 
     return <>
         <Head>
             <title>
-                Estoques | Cherry Social
+                Corte de Corações | Encanto
             </title>
         </Head>
         <Box
@@ -84,6 +66,7 @@ const Page = () => {
         >
             <Container maxWidth="xl">
                 <Stack spacing={3}>
+
                     <Stack
                         direction="row"
                         sx={{
@@ -94,9 +77,9 @@ const Page = () => {
                         <Stack spacing={1}>
                             <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
                                 <Typography variant="h4">
-                                    Estoques
+                                    Corte de Corações
                                 </Typography>
-                                {load ?
+                                {/* {load ?
                                     <img src="/assets/loading.svg" width={40} height={40} />
                                     :
                                     <Fab
@@ -110,18 +93,21 @@ const Page = () => {
                                     >
                                         <ArrowDownCircleIcon height={25} width={25} fontWeight={600} />
                                     </Fab>
-                                }
+                                } */}
                             </Stack>
                         </Stack>
 
                     </Stack>
-                    <Stack>
-                        <Grid container rowSpacing={1} spacing={{ xs: 1, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}
+                    <Stack
+                        spacing={1}
+                    >
+                        <Grid container rowSpacing={1} spacing={{ xs: 3, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}
                             sx={{ padding: "50px 220px 0px 220px" }}
                         >
                             {estoques.map((estoque, index) => (
                                 <Grid key={index}
                                     sx={{ marginBottom: "20px" }}
+                                    spacing={5}
                                 >
                                     <Button
                                         sx={{
@@ -131,7 +117,8 @@ const Page = () => {
                                             borderRadius: '10%',
                                             backgroundColor: "primary",
                                             alignItems: 'center',
-                                            justifyContent: 'center'
+                                            justifyContent: 'center',
+                                            margin: "10px"
                                         }}
                                         onClick={() => { redirecionarEstoque(estoque.url) }}
                                     >
