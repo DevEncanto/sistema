@@ -1,10 +1,11 @@
 import { createContext, useState } from "react";
+import delay from "../../utils/delay";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
 
-    //Estados de controle do estoque
+    //Estados de controle do usuário
 
     const [controle, setControle] = useState({})
 
@@ -14,10 +15,17 @@ export const UserProvider = ({ children }) => {
         })
     }
 
+    const statusLogin = async (message, type) => {
+        gerenciarControle(type, "alert", false)
+        gerenciarControle(message, "message", false)
+        await delay(4500)
+        gerenciarControle("", "message", false)
+    }
 
     const value = {
         controle,
-        gerenciarControle
+        gerenciarControle,
+        statusLogin
     }
 
 

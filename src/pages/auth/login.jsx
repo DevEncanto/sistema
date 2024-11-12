@@ -1,42 +1,21 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import Head from 'next/head';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
-import { useRouter } from 'next/router';
 import { DataContext } from '../../contexts/data_context/data_context';
-import { loginUsuario } from '../../service/request_autenticacao';
-import delay from "src/utils/delay"
+import { UserContext } from '../../contexts/user_context/user_context';
+import { UsuariosService } from '../../service/usuarios.service';
 
 
 const Page = () => {
 
-
-  const { iniciarControle, saveLocalStorage } = useContext(DataContext)
-
-  const [controle, setControle] = useState({
-    usuario: "",
-    senha: "",
-    message: "",
-    alert: "",
-    load: false, 
-    router: useRouter()
-  })
-
-  const gerenciarControle = (e, item, target = true) => {
-    setControle((currentState) => {
-      return { ...currentState, [item]: target ? e.target.value : e }
-    })
-  }
-  const statusLogin = async (message, type) => {
-    gerenciarControle(type, "alert", false)
-    gerenciarControle(message, "message", false)
-    await delay(4500)
-    gerenciarControle("", "message", false) 
-  }
-
+  const dataContext = useContext(DataContext)
+  const userContext = useContext(UserContext)
+  const { controle, gerenciarControle } = userContext
 
   const handleLogin = async () => {
-    await loginUsuario(iniciarControle, saveLocalStorage, controle, gerenciarControle, statusLogin)
+    const aService = UsuariosService.build(userContext, dataContext)
+    await aService.login()
   }
 
   return (
@@ -78,7 +57,7 @@ const Page = () => {
                 {controle.load ?
                   <img src="/assets/loading.svg" width={38} height={38} /> : <></>
                 }
-                
+
               </Stack>
             </Stack>
             <Stack

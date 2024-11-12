@@ -30,7 +30,6 @@ export const Layout = (props) => {
   const { children } = props;
   const router = useRouter()
   const pathname = usePathname();
-  const { mode, setMode, chat } = useContext(UserContext)
   const [openNav, setOpenNav] = useState(false);
   const [isLoading, setIsLoading] = useState(true)
 
@@ -81,11 +80,10 @@ export const Layout = (props) => {
         </>
         :
         <>
-          {!chat ? <TopNav onNavOpen={() => setOpenNav(true)} /> : <></>}
+          { <TopNav onNavOpen={() => setOpenNav(true)} /> }
           <SideNav
             onClose={() => setOpenNav(false)}
             open={openNav}
-            mode={mode == undefined ? "USER" : mode}
           />
           <LayoutRoot>
             <LayoutContainer>

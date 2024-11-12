@@ -16,8 +16,8 @@ const loginUsuario = async (iniciarControle, saveLocalStorage, controle, gerenci
     try {
         gerenciarControle(true, "load", false)
 
-        const response = await api.post("/login_usuario", {
-            acesso: controle.usuario,
+        const response = await api.post("/usuarios/login", {
+            usuario: controle.usuario,
             senha: controle.senha
         })
 

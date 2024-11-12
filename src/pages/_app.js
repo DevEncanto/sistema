@@ -5,60 +5,73 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { AuthConsumer } from 'src/contexts/auth-context';
-import { UserProvider } from '../contexts/user_context/user_context.js';
 import { useNProgress } from 'src/hooks/use-nprogress';
 import { createTheme } from 'src/theme';
 import { createEmotionCache } from 'src/utils/create-emotion-cache';
 import 'simplebar-react/dist/simplebar.min.css';
+
+// Contextos
+import { UserProvider } from '../contexts/user_context/user_context.js';
 import { EstoqueProvider } from '../contexts/components_context/estoque_context.js';
 import { DataProvider } from '../contexts/data_context/data_context.js';
 import { CorteCoracaoProvider } from '../contexts/corte.coracao.context.js';
 
+// Cache inicial
 const clientSideEmotionCache = createEmotionCache();
 
+// SplashScreen
 const SplashScreen = () => null;
 
-const App = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+const App = ({ Component, emotionCache = clientSideEmotionCache, pageProps }) => {
+  const { getLayout = (page) => page } = Component; // Suporte a layouts personalizados
+  useNProgress(); // Hook de progresso
 
-  useNProgress();
+  const theme = createTheme(); // Tema da aplicação
 
-  const getLayout = Component.getLayout ?? ((page) => page);
+  // Condicionalmente carrega os providers de contexto, dependendo da página
+  const renderContextProviders = (page) => {
+    if (page === '/someSpecificPage') {
+      return (
+        <CorteCoracaoProvider>
+          <EstoqueProvider>
+            <Component {...pageProps} />
+          </EstoqueProvider>
+        </CorteCoracaoProvider>
+      );
+    }
 
-  const theme = createTheme();
-
-  return (
-    <CorteCoracaoProvider>
+    // Default (aplica contextos padrão)
+    return (
       <DataProvider>
         <UserProvider>
-          <EstoqueProvider>
-            <CacheProvider value={emotionCache}>
-              <Head>
-                <title>
-                  Encanto das Frutas
-                </title>
-                <meta
-                  name="viewport"
-                  content="initial-scale=1, width=device-width"
-                />
-              </Head>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <AuthConsumer>
-                    {
-                      (auth) => auth.isLoading
-                        ? <SplashScreen />
-                        : getLayout(<Component {...pageProps} />)
-                    }
-                  </AuthConsumer>
-                </ThemeProvider>
-              </LocalizationProvider>
-            </CacheProvider>
-          </EstoqueProvider>
+          <Component {...pageProps} />
         </UserProvider>
       </DataProvider>
-    </CorteCoracaoProvider>
+    );
+  };
+
+  return (
+    <CacheProvider value={emotionCache}>
+      <Head>
+        <title>Encanto das Frutas</title>
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
+      </Head>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <AuthConsumer>
+            {(auth) =>
+              auth.isLoading ? (
+                <SplashScreen />
+              ) : (
+                // Renderiza os contextos de acordo com a página
+                getLayout(renderContextProviders(Component))
+              )
+            }
+          </AuthConsumer>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </CacheProvider>
   );
 };
 
