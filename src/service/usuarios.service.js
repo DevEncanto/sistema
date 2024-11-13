@@ -15,35 +15,41 @@ export class UsuariosService {
 
     async login() {
 
-        const { controle: { usuario, senha }, gerenciarControle, statusLogin } = this.context
+        const { controle, gerenciarControle, statusLogin, router } = this.userContext
         const { iniciarControle, saveLocalStorage } = this.dataContext
 
-        const axiosAPI = AxiosClientAPI.build()
-        const aRepository = UsuariosRepository.build(axiosAPI)
+        console.log(controle.usuario, controle.senha)
+        const axiosAPI = new AxiosClientAPI()
+        const aRepository = UsuariosRepository.build(axiosAPI.api)
 
-        if (usuario || senha === "") {
+        if (controle.usuario === "" || controle.senha === "") {
             await statusLogin("Preencha todos os campos!", "error")
             return
         }
 
         try {
             gerenciarControle(true, "load", false)
-            const { message, data, status } = await aRepository.login(usuario, senha)
+            const response = await aRepository.login(controle.usuario, controle.senha)
+            const {data, status} = response
+            
+            console.log(data, status)
+
+
             await delay(1000)
             gerenciarControle(false, "load", false)
-            await statusLogin(message, status == 200 ? "sucess" : "error")
 
+            await statusLogin(data.message, status == 200 ? "green" : "error")
             if (status) {
-                iniciarControle(data)
-                saveLocalStorage(data)
+
                 axiosAPI.setBearerToken(data.token)
                 axiosAPI.setCookieAuthToken(data.token)
-                axiosAPI.setPushRoute("/home")
+                router.push("/home")
             }
             gerenciarControle(false, "load", false)
-        }catch(error){
+        } catch (error) {
             gerenciarControle(false, "load", false)
-            await statusLogin("Falha ao realizar o login!", "error")
+            await statusLogin("Uma falha no sistema foi detectada!", "error")
+            console.log(error)
         }
     }
 }

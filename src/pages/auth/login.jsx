@@ -34,6 +34,7 @@ const Page = () => {
           justifyContent: 'center'
         }}
       >
+        
         <Box
           sx={{
             maxWidth: 550,

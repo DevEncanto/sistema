@@ -43,10 +43,6 @@ export const Layout = (props) => {
   );
 
   const handleSetMode = async () => {
-    const response = await validarToken()
-    if (!response.status) {
-      router.push("/auth/login")
-    }
     setTimeout(() => {
       setIsLoading(false)
     }, 2000)

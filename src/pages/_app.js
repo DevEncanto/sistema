@@ -28,50 +28,35 @@ const App = ({ Component, emotionCache = clientSideEmotionCache, pageProps }) =>
 
   const theme = createTheme(); // Tema da aplicação
 
-  // Condicionalmente carrega os providers de contexto, dependendo da página
-  const renderContextProviders = (page) => {
-    if (page === '/someSpecificPage') {
-      return (
-        <CorteCoracaoProvider>
-          <EstoqueProvider>
-            <Component {...pageProps} />
-          </EstoqueProvider>
-        </CorteCoracaoProvider>
-      );
-    }
-
-    // Default (aplica contextos padrão)
-    return (
-      <DataProvider>
+  return (
+    <DataProvider>
         <UserProvider>
-          <Component {...pageProps} />
+          <CorteCoracaoProvider>
+            <EstoqueProvider>
+              <CacheProvider value={emotionCache}>
+                <Head>
+                  <title>Encanto das Frutas</title>
+                  <meta name="viewport" content="initial-scale=1, width=device-width" />
+                </Head>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <ThemeProvider theme={theme}>
+                    <CssBaseline />
+                    <AuthConsumer>
+                      {(auth) =>
+                        auth.isLoading ? (
+                          <SplashScreen />
+                        ) : (
+                          getLayout(<Component {...pageProps} />)
+                        )
+                      }
+                    </AuthConsumer>
+                  </ThemeProvider>
+                </LocalizationProvider>
+              </CacheProvider>
+            </EstoqueProvider>
+          </CorteCoracaoProvider>
         </UserProvider>
       </DataProvider>
-    );
-  };
-
-  return (
-    <CacheProvider value={emotionCache}>
-      <Head>
-        <title>Encanto das Frutas</title>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <AuthConsumer>
-            {(auth) =>
-              auth.isLoading ? (
-                <SplashScreen />
-              ) : (
-                // Renderiza os contextos de acordo com a página
-                getLayout(renderContextProviders(Component))
-              )
-            }
-          </AuthConsumer>
-        </ThemeProvider>
-      </LocalizationProvider>
-    </CacheProvider>
   );
 };
 

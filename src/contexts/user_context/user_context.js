@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import delay from "../../utils/delay";
+import { useRouter } from "next/navigation";
 
 export const UserContext = createContext();
 
@@ -8,10 +9,11 @@ export const UserProvider = ({ children }) => {
     //Estados de controle do usuário
 
     const [controle, setControle] = useState({})
+    const router = useRouter()
 
-    const gerenciarControle = (e, item) => {
+    const gerenciarControle = (e, item, target = true) => {
         setControle((currentState) => {
-            return { ...currentState, [item]: e.target.value }
+            return { ...currentState, [item]: target ? e.target.value : e }
         })
     }
 
@@ -24,6 +26,7 @@ export const UserProvider = ({ children }) => {
 
     const value = {
         controle,
+        router,
         gerenciarControle,
         statusLogin
     }
