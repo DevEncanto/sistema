@@ -16,9 +16,6 @@ export class UsuariosService {
     async login() {
 
         const { controle, gerenciarControle, statusLogin, router } = this.userContext
-        const { iniciarControle, saveLocalStorage } = this.dataContext
-
-        console.log(controle.usuario, controle.senha)
         const axiosAPI = new AxiosClientAPI()
         const aRepository = UsuariosRepository.build(axiosAPI.api)
 
@@ -30,26 +27,24 @@ export class UsuariosService {
         try {
             gerenciarControle(true, "load", false)
             const response = await aRepository.login(controle.usuario, controle.senha)
-            const {data, status} = response
-            
-            console.log(data, status)
-
-
+            const { data, status } = response
             await delay(1000)
             gerenciarControle(false, "load", false)
-
             await statusLogin(data.message, status == 200 ? "green" : "error")
             if (status) {
-
                 axiosAPI.setBearerToken(data.token)
-                axiosAPI.setCookieAuthToken(data.token)
-                router.push("/home")
+                const res = await axiosAPI.setCookieAuthToken(data.token, data.creationTimestamp, data.expirationTimestamp)
+                if (res) {
+                    router.push("/home")
+                    return
+                }
+                await statusLogin("Uma falha no sistema foi detectada!", "error")
+                axiosAPI.setBearerToken("")
             }
             gerenciarControle(false, "load", false)
         } catch (error) {
             gerenciarControle(false, "load", false)
             await statusLogin("Uma falha no sistema foi detectada!", "error")
-            console.log(error)
         }
     }
 }

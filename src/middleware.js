@@ -1,9 +1,21 @@
+import { cookies } from 'next/headers'
+
+
 export async function middleware(request, response) {
 
     console.log("--- Middleware ---")
 
-    // let token = request.cookies.get('auth_token')?.value
-    // // const token = true  
+    const data = JSON.parse(request.cookies.get('auth_token')?.value)
+
+    const {creationTimestamp, expirationTimestamp} = data
+
+    if(isTokenValid(creationTimestamp, expirationTimestamp)){
+        console.log("Token Válido")
+    }else{
+        console.log("Token inválido")
+    }
+
+    // const token = true  
     // const signInURL = new URL('/auth/login', request.url)
     // const homeURL = new URL('/home', request.url)
     // const manutencaoURL = new URL('/manutencao', request.url)
@@ -28,6 +40,18 @@ export async function middleware(request, response) {
     return null
 
 }
+
+const isTokenValid = (creationTimestamp, expirationTimestamp) => {
+    const currentTimestamp = Date.now(); // Obtém o timestamp atual
+
+    // Verifica se o token ainda está dentro do período de validade
+    if (currentTimestamp >= creationTimestamp && currentTimestamp <= expirationTimestamp) {
+        return true;  // O token ainda é válido
+    } else {
+        return false; // O token é inválido ou expirou
+    }
+}
+
 
 
 export const config = {
