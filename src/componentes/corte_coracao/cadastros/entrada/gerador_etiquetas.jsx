@@ -1,29 +1,25 @@
-import { QRCodeCanvas } from "qrcode.react"
-import { Suspense, useContext, useEffect, useRef, useState } from "react"
 import { DataContext } from "../../../../contexts/contexts/data.context"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { Etiqueta } from "./etiqueta"
-const { Stack, Grid, Typography, Button } = require("@mui/material")
+const { Stack, Grid } = require("@mui/material")
 import { useReactToPrint } from 'react-to-print';
 import { LoaderEstatico } from "../../componentes/loader"
+import { useContext, useEffect, useState, useRef } from "react";
+import { logger } from "../../../../utils/logger";
 
 export const GeradorEtiquetas = () => {
 
-    const { controle } = useContext(DataContext)
+    const { dData } = useContext(DataContext)
     const { cCorteCoracao } = useContext(CorteCoracaoContext)
     const [etiquetas, setEtiquetas] = useState([])
     const [load, setLoad] = useState(true)
    
     const lazyLoading = async () => {
-        let etiquetas = []
-        let data = controle.lotes_etiquetas.find(lote => lote.id_lote == cCorteCoracao.id_lote)
-        for (let i = data?.etiqueta_inicial; i <= data?.etiqueta_final; i++) {
-            etiquetas.push({
-                etiqueta: i.toString().padStart(4, '0'),
-                semana: data?.semana_colheita
-            })
-        }
-        setEtiquetas(etiquetas)
+
+        let data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
+        
+        logger(data)
+        setEtiquetas(data)
         setLoad(false)
     }
 

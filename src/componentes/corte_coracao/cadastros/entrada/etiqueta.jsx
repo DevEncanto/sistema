@@ -17,6 +17,11 @@ export const Etiqueta = (props) => {
         // backgroundColor: "red"
     }
 
+    const dataQRCode = {
+        etiqueta: etiqueta.etiqueta,
+        semana_colheita: etiqueta.semana_colheita
+    }
+
     return (
         <Stack
             sx={sx}
@@ -32,7 +37,7 @@ export const Etiqueta = (props) => {
                     padding: "20px"
                 }}
             >
-                <QRCodeCanvas value={JSON.stringify(etiqueta)} size={70} />
+                <QRCodeCanvas value={JSON.stringify(dataQRCode)} size={70} />
             </Stack>
             <Stack
                 direction={`row`}
@@ -57,7 +62,7 @@ export const Etiqueta = (props) => {
                                 variant="h5"
                                 fontSize={65}
                             >
-                                {etiqueta.semana}
+                                {etiqueta.semana_colheita}
                             </Typography>
                             <Typography
                                 variant="h5"

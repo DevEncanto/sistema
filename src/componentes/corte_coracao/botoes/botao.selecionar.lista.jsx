@@ -6,15 +6,15 @@ const { Button } = require("@mui/material")
 const { BsEye } = require("react-icons/bs")
 
 export const BotaoListarEtiquetas = (props) => {
-    const { id_lote } = props[0]
+    const { id_lote_etiqueta } = props[0]
     const { funcoes } = useContext(CorteCoracaoContext)
-    const { controle } = useContext(DataContext)
+    const { dData } = useContext(DataContext)
 
     const handleClick = () => {
-        const lista = controle.lotes_etiquetas.find(lote => lote.id_lote)?.etiquetas
+        const lista = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta)?.etiquetas
         funcoes.gControleCorteCoracao("lista_etiquetas", "tabela", false)
         funcoes.gControleCorteCoracao(lista, "lista_etiquetas", false)
-        funcoes.gControleCorteCoracao(id_lote.toString(), "id_lote", false)
+        funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
         funcoes.gControleCorteCoracao("resumo_etiquetas", "tab", false)
     }
 

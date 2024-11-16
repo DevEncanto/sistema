@@ -46,6 +46,7 @@ const Page = () => {
                             <Stack 
                             
                             spacing={1}>
+                                {JSON.stringify(cCorteCoracao)}
                                 <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
                                     <Typography variant="h4">
                                         Lotes de Etiquetas

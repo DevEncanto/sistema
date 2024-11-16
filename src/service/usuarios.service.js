@@ -37,7 +37,7 @@ export class UsuariosService {
             if (data.status == 200) {
                 axiosAPI.setBearerToken(data.token)
                 const res = await axiosAPI.setCookieAuthToken(data.token, data.creationTimestamp, data.expirationTimestamp)
-                console.log(data)
+                funcoes.dControleDataSimple("lotes_etiquetas", data.dataInitial.lotes_etiquetas, false)
                 if (res) {
                     funcoes.dControleDataSimple("usuario", { id_usuario: data.id_usuario }, false)
                     router.push("/home")

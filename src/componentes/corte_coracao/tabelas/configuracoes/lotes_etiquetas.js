@@ -1,5 +1,3 @@
-import { Button } from "@mui/material"
-import { BsQrCode } from "react-icons/bs"
 import { BotaoGerarQRCode } from "../../botoes/botao_gerar_qr";
 import { BotaoListarEtiquetas } from "../../botoes/botao.selecionar.lista";
 
@@ -17,14 +15,13 @@ export const lotes_etiquetas = {
     prop: "lotes_etiquetas",
     key: "lote_etiqueta",
     functions: {
-      gerarEtiquetas: (id_lote) => { },
       gerarParametros: (object, params = []) => params.map(item => object[item])
     },
     contents: [
 
       {
         type: "text",
-        content: "criacao_lote"
+        content: "criacao"
       },
       {
         type: "text",
@@ -45,7 +42,7 @@ export const lotes_etiquetas = {
       {
         type: "componentExt",
         function: "gerarEtiquetas",
-        params: ["id_lote"],
+        params: ["id_lote_etiqueta"],
         content: (data) => {
           return (
             <BotaoGerarQRCode {...[...data]} />
@@ -55,7 +52,7 @@ export const lotes_etiquetas = {
       {
         type: "componentExt",
         function: "gerarEtiquetas",
-        params: ["id_lote"],
+        params: ["id_lote_etiqueta"],
         content: (data) => {
           return (
             <>

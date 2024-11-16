@@ -14,4 +14,5 @@ export class UsuariosRepository {
         const url = "/usuarios/login"
         return await this.client.post(url, { usuario: usuario, senha: senha })
     }
+    
 }

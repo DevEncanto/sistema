@@ -35,9 +35,9 @@ export const DataProvider = ({ children }) => {
 
     const loadLocalStorage = async () => {
         const localData = JSON.parse(window.localStorage.getItem("dados"))
-        if (localData) {
-            await iniciarControle(localData)
-        }
+        // if (localData) {
+        //     await iniciarControle(localData)
+        // }
     }
 
     const funcoes = {
