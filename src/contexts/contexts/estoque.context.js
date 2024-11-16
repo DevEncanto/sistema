@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
-import { initControle, initDados, initFormularioInsumo } from "./data";
 import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
 import { calcularDatas, diasSemanaAnterior } from "../../utils/gerador-datas";
+import { initControle, initDados } from "../initialize/initialize.estoque.context";
 
 export const EstoqueContext = createContext();
 

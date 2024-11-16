@@ -12,7 +12,7 @@ import { TabelaEstoque } from "../tabelas/tabelas_estoque";
 import { ModalRemocaoItem } from "../modais/modalRemocaoItem";
 import { CadastroNovaEntradaI } from "../cadastros/entrada/cadastro_entrada_insumos_I";
 import { CadastroNovaEntradaII } from "../cadastros/entrada/cadastro_entrada_insumos_II";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { DataContext } from "../../../contexts/contexts/data.context";
 
 export const EntradaInsumos = () => {
     const { controleEstoque } = useContext(EstoqueContext);

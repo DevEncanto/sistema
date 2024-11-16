@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react"
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
 import { EntradaInsumos } from "../pages/entrada_insumos"
 import { TabelaEstoque } from "../tabelas/tabelas_estoque"
-import { DataContext } from "../../../contexts/data_context/data_context"
+import { DataContext } from "../../../contexts/contexts/data.context"
 import { SaidaInsumos } from "../pages/saida_insumos"
 
 export const TabsInsumos = () => {

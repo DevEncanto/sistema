@@ -1,7 +1,7 @@
 import { QRCodeCanvas } from "qrcode.react"
 import { Suspense, useContext, useEffect, useRef, useState } from "react"
-import { DataContext } from "../../../../contexts/data_context/data_context"
-import { CorteCoracaoContext } from "../../../../contexts/corte.coracao.context"
+import { DataContext } from "../../../../contexts/contexts/data.context"
+import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { Etiqueta } from "./etiqueta"
 const { Stack, Grid, Typography, Button } = require("@mui/material")
 import { useReactToPrint } from 'react-to-print';
@@ -57,7 +57,7 @@ export const GeradorEtiquetas = () => {
                         alignItems: "center",
                         backgroundColor: "purple",
                         overflow: "auto",
-                        padding: "10px"
+                        padding: "10px 80px"
                     }}
                 >
 

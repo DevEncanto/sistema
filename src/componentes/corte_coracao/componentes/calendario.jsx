@@ -5,8 +5,8 @@ import { TextField } from '@mui/material';
 import { ptBR } from '@mui/x-date-pickers';
 import 'dayjs/locale/pt-br';
 import { useContext } from 'react';
-import { CorteCoracaoContext } from '../../../contexts/corte.coracao.context';
-import { DataContext } from '../../../contexts/data_context/data_context';
+import { CorteCoracaoContext } from '../../../contexts/contexts/corte.coracao.context';
+import { DataContext } from '../../../contexts/contexts/data.context';
 
 export const Calendario = (props) => {
 
@@ -14,7 +14,7 @@ export const Calendario = (props) => {
     const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText;
     const { width, label, item, object, disabled = false } = props
     const { dCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const { controle } = useContext(DataContext)
+    const { dData } = useContext(DataContext)
 
     const sx = {
         width: width,
@@ -25,7 +25,7 @@ export const Calendario = (props) => {
 
     const handleOnChange = (e) => {
         funcoes.gDadosCorteCoracao(object, item, e, false)
-        funcoes.gerarPrevisao(e, controle.previsao_mensal)
+        funcoes.gerarPrevisao(e, dData.previsao_mensal)
     }
 
     return (
@@ -35,14 +35,13 @@ export const Calendario = (props) => {
             localeText={brazilLocale}
         >
             <DatePicker
-                disabled={disabled}
                 key={item}
                 error={false}
                 label={label}
                 color="blue"
                 format="DD/MM/YYYY"
                 value={dCorteCoracao.lote_etiqueta[item]}
-                onChange={e => handleOnChange(e)}
+                onChange={disabled ? () => { } : e => handleOnChange(e)}
                 renderInput={(params) => <TextField sx={sx} {...params} error={false} placeholder={"DD/MM/YYYY"} />}
             />
         </LocalizationProvider>

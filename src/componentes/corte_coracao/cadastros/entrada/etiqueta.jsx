@@ -9,7 +9,7 @@ export const Etiqueta = (props) => {
         borderRadius: "12px",
         width: "200px",
         height: "85px",
-        margin: "4px",
+        margin: "6px",
         padding: "0",
         alignItems: "center",
         border: "2px solid #000",

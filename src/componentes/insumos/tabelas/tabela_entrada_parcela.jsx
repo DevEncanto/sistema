@@ -18,7 +18,7 @@ import { SeverityPill } from 'src/components/severity-pill';
 import { alterarStatus } from 'src/util/util-admin';
 import { useContext, useMemo } from 'react';
 import { celulasEntradas, celulasParcelas, entradaInsumos, insumos } from '../data';
-import { UserContext } from '../../../contexts/user_context/user_context';
+import { UserContext } from '../../../contexts/contexts/user.context';
 import formatSaldo from '../../../utils/formatarSaldos';
 import { EstoqueContext } from '../../../contexts/components_context/estoque_context';
 

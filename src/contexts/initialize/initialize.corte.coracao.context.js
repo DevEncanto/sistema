@@ -6,7 +6,9 @@ export const cInitialize = {
     id_lote: 0, 
     load: false,
     return: "",
-    lista_etiquetas: []
+    lista_etiquetas: [],
+    type: "",
+    alert: ""
 }
 
 //Inicialização dos dados do Contexto Corte Coração
@@ -18,6 +20,8 @@ export const dInitialize = {
         semana_colheita: "",
         etiqueta_inicial: "",
         etiqueta_final: "",
-        total_etiquetas: ""
+        total_etiquetas: "",
+        ano_corte: "1900",
+        ano_colheita: "1900"
     }
 }

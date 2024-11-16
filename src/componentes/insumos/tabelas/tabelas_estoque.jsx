@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
 import { config_tables } from "./configuracoes/config_tabela";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { DataContext } from "../../../contexts/contexts/data.context";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import formatSaldo from "../../../utils/formatarSaldos";
 

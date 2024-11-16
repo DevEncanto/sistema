@@ -17,7 +17,6 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
-import { UserContext } from '../../contexts/user_context/user_context';
 import { useContext, useEffect } from 'react';
 import { SeverityPill } from 'src/components/severity-pill';
 
@@ -25,7 +24,6 @@ const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
 
 export const TopNav = (props) => {
-  const { user, loadUser } = useContext(UserContext)
   useEffect(() => {
    
   }, [])
@@ -83,45 +81,6 @@ export const TopNav = (props) => {
                 </SvgIcon>
               </IconButton>
             </Tooltip>
-            {user?.manutencaoProgramada?.programada ?
-              <Stack
-                direction={`row`}
-                spacing={1}
-                sx={{ alignItems: "center" }}
-              >
-                <img src="/assets/alert-icon.png" width={20} height={18} />
-
-                <Stack
-                  direction={{ sm: "row", xp: "column" }}
-                >
-                  <Typography variant="h5"
-                    sx={{ fontSize: "18px" }}
-                  >
-                    <SeverityPill color={`neutral`}>
-                      Manutenção Programada
-                    </SeverityPill>
-                  </Typography>
-                  <Typography variant="h5"
-                    sx={{ fontSize: "18px" }}
-                  >
-                    <SeverityPill color={`neutral`}>
-                      {`Data: ${user?.manutencaoProgramada?.data}`}
-                    </SeverityPill>
-                  </Typography>
-                  <Typography variant="h5"
-                    sx={{ fontSize: "18px" }}
-                  >
-                    <SeverityPill color={`neutral`}>
-                      {`Horário de Inicio: ${user?.manutencaoProgramada?.horario}`}
-                    </SeverityPill>
-                  </Typography>
-                </Stack>
-                <img src="/assets/alert-icon.png" width={20} height={18} />
-              </Stack>
-
-              : <></>
-
-            }
           </Stack>
           <Stack
             sx={{
@@ -151,7 +110,7 @@ export const TopNav = (props) => {
                 height: 40,
                 width: 40
               }}
-              src={user?.usuario?.avatar == undefined ? "/assets/avatars/default.png" : `/assets/avatars${user?.usuario?.avatar}`}
+              src={"/assets/avatars/default.png"}
             />
           </Stack>
         </Stack>
@@ -160,7 +119,7 @@ export const TopNav = (props) => {
         anchorEl={accountPopover.anchorRef.current}
         open={accountPopover.open}
         onClose={accountPopover.handleClose}
-        usuario={user?.usuario?.nome}
+        usuario={"Usuário de Teste"}
       />
     </>
   );

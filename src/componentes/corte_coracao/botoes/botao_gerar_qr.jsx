@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { CorteCoracaoContext } from "../../../contexts/corte.coracao.context"
+import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
 
 const { Button } = require("@mui/material")
 const { BsQrCode } = require("react-icons/bs")

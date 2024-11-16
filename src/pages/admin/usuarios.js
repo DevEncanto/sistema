@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography, Fab, Button, TextField } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user_context/user_context';
+import { UserContext } from '../../contexts/contexts/user.context';
 import { TabelaUsuarios } from 'src/components/tabela-usuarios';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
 import { CadastrarAvatar, dadosAdmin } from '../../util/util-admin';

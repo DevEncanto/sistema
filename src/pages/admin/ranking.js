@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography, TextField, Button } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user_context/user_context';
+import { UserContext } from '../../contexts/contexts/user.context';
 import { changeRanking, dadosAdmin } from '../../util/util-admin';
 import { loadRanking } from '../../util/util-admin';
 import { ListaRanking } from 'src/components/ListaRanking';

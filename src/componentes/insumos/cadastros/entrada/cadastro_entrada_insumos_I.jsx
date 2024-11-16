@@ -5,7 +5,7 @@ import { EstoqueContext } from "../../../../contexts/components_context/estoque_
 import { camposObrigatorios } from "../../data";
 import { ButtonSearch } from "../../botoes/botao_busca";
 import { Selector } from "../../componentes/select";
-import { DataContext } from "../../../../contexts/data_context/data_context";
+import { DataContext } from "../../../../contexts/contexts/data.context";
 
 export const CadastroNovaEntradaI = () => {
     const { controleEstoque, dados, funcoes } = useContext(EstoqueContext);

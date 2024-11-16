@@ -5,7 +5,7 @@ import { PopupAlerta } from "../../popups/popup_status";
 import { camposObrigatoriosFornecedor } from "../../../../contexts/data";
 import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
 import { cadastrarFornecedor, cadastrarInsumo } from "../../../../service/request_cadastro";
-import { DataContext } from "../../../../contexts/data_context/data_context";
+import { DataContext } from "../../../../contexts/contexts/data.context";
 import { Selector } from "../../componentes/select";
 import { ButtonCancelar } from "../../botoes/botao_cancelar";
 import { ButtonSalvar } from "../../botoes/botao_salvar";

@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
-import { cInitialize, dInitialize } from "./initialize/initialize.corte.coracao.context";
-import { calcularDatas, converterDataCalenadario, converterDataCalendario, obterSemana, parseDate } from "../utils/gerador-datas";
-import { converterDateParaString } from "../utils/formatar-datas-createdAt";
+import { cInitialize, dInitialize } from "../initialize/initialize.corte.coracao.context";
+import { calcularDatas, converterDataCalendario, obterSemana, parseDate } from "../../utils/gerador-datas";
+import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
 
 export const CorteCoracaoContext = createContext();
 
@@ -20,6 +20,28 @@ export const CorteCoracaoProvider = ({ children }) => {
             return { ...currentState, [item]: target ? e.target.value : e }
         })
     }
+
+    const exibirAlerta = (mensagem, tipo) => {
+        gControleCorteCoracao(mensagem, "alert", false)
+        gControleCorteCoracao(tipo, "type", false)
+        setTimeout(() => {
+            gControleCorteCoracao("", "alert", false)
+            gControleCorteCoracao("", "type", false)
+        }, 2500);
+    };
+
+    const validarDados = (dados) => {
+        let validos = true
+        const keys = Object.keys(dados)
+        keys.forEach((key) => {
+            console.log(`KEY: ${dados[key]}`)
+            if (dados[key] === "") {
+                validos = false
+            }
+        })
+        return validos
+    }
+
 
     const atualizarEtiquetas = (object, item, e = { target: { value: 0 } }) => {
         let total = 0
@@ -63,7 +85,9 @@ export const CorteCoracaoProvider = ({ children }) => {
         gControleCorteCoracao: (e, item, target = true) => { gControleCorteCoracao(e, item, target) },
         gDadosCorteCoracao: (object, item, e, target = true) => { gDadosCorteCoracao(object, item, e, target) },
         gerarPrevisao: (data, previsao_mensal = []) => { gerarPrevisao(data, previsao_mensal) },
-        atualizarEtiquetas: (object, item, e, target = true) => { atualizarEtiquetas(object, item, e, target) }
+        atualizarEtiquetas: (object, item, e, target = true) => { atualizarEtiquetas(object, item, e, target) },
+        validarDados: (dados) => { return validarDados(dados) },
+        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) }
     }
 
     const saveLocalStorage = (data) => {

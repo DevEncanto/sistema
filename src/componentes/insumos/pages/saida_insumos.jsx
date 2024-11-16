@@ -2,7 +2,7 @@ import { useContext, useLayoutEffect } from "react";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
 import { Stack } from "@mui/material";
 import { TabelaEstoque } from "../tabelas/tabelas_estoque";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { DataContext } from "../../../contexts/contexts/data.context";
 import { CadastroNovaSaidaI } from "../cadastros/saida/cadastro_saida_insumos_I";
 
 export const SaidaInsumos = () => {

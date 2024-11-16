@@ -3,10 +3,7 @@ import { usePathname } from 'next/navigation';
 import { styled } from '@mui/material/styles';
 import { SideNav } from './side-nav';
 import { TopNav } from './top-nav';
-import { useContext } from 'react';
-import { UserContext } from '../../contexts/user_context/user_context';
 import { useRouter } from 'next/router';
-import { validarToken } from '../../service/request_autenticacao';
 import { Stack } from '@mui/material';
 
 const SIDE_NAV_WIDTH = 280;

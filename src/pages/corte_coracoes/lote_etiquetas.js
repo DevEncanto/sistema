@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { Box, Divider, Container, Stack, Typography, Fab, Button, TextField } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
-import { DataContext } from '../../contexts/data_context/data_context';
-import { CorteCoracaoContext } from '../../contexts/corte.coracao.context';
+import { DataContext } from '../../contexts/contexts/data.context';
+import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 import { TabsCorteCoracao } from '../../componentes/corte_coracao/componentes/tabs';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { BsArrowLeft } from 'react-icons/bs';
@@ -36,7 +36,6 @@ const Page = () => {
             >
                 <Container maxWidth="xl">
                     <Stack spacing={2}>
-                        {JSON.stringify(cCorteCoracao)}
                         <Stack
                             direction="row"
                             sx={{
@@ -44,7 +43,9 @@ const Page = () => {
                             }}
                             spacing={2}
                         >
-                            <Stack spacing={1}>
+                            <Stack 
+                            
+                            spacing={1}>
                                 <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
                                     <Typography variant="h4">
                                         Lotes de Etiquetas
@@ -108,7 +109,9 @@ const Page = () => {
 
 Page.getLayout = (page) => (
     <DashboardLayout>
-        {page}
+        <CorteCoracaoProvider>
+            {page}
+        </CorteCoracaoProvider>
     </DashboardLayout>
 );
 

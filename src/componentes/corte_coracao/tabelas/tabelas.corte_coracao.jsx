@@ -1,18 +1,18 @@
 import { useContext, useEffect } from "react";
 import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { DataContext } from "../../../contexts/contexts/data.context";
 import formatSaldo from "../../../utils/formatarSaldos";
 import { config_tables } from "./configuracoes/config_tables";
-import { CorteCoracaoContext } from "../../../contexts/corte.coracao.context";
+import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context";
 
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses } = require("@mui/material");
 
 export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
-  const { controle, saveLocalStorage } = useContext(DataContext);
+  const { dData } = useContext(DataContext);
   const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext);
   const { header, body, sx } = config_tables[tabela ? tabela : cCorteCoracao.tabela];
 
-  const data = tabela ? dados : controle[body.prop]
+  const data = tabela ? dados : dData[body?.prop]
 
   useEffect(() => {
 

@@ -21,3 +21,31 @@ export const converterDateParaString = (dateString) => {
     // Retorna a data formatada
     return `${day}/${month}/${year}`;
 }
+
+export const converterAno = (dateString) => {
+    // Cria um objeto Date a partir da string fornecida
+    const date = new Date(dateString);
+
+    // Verifica se a data é válida
+    if (isNaN(date.getTime())) {
+        throw new Error('Data inválida');
+    }
+
+    // Extrai o dia, mês e ano
+    // Meses são zero-indexados
+    const year = date.getUTCFullYear();
+
+    // Retorna a data formatada
+    return year
+}
+
+export function extrairAno(data) {
+    // Separando a data no formato dd/mm/yyyy
+
+    console.log(data)
+
+    const partes = data.split('/');
+
+    // Retornando o ano
+    return partes[2];
+}

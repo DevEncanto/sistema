@@ -1,20 +1,19 @@
 import { Stack } from "@mui/material"
 import { useContext, useEffect } from "react"
-import { DataContext } from "../../../contexts/data_context/data_context"
-import { CorteCoracaoContext } from "../../../contexts/corte.coracao.context"
+import { DataContext } from "../../../contexts/contexts/data.context"
+import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
 import { TabelasCorteCoracao } from "../tabelas/tabelas.corte_coracao"
 import { CadastroLoteEtiqueta } from "../cadastros/entrada/cadastro.lote.etiqueta"
 import { GeradorEtiquetas } from "../cadastros/entrada/gerador_etiquetas"
-import { Loader } from "./loader"
 
 export const TabsCorteCoracao = () => {
 
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const { loadLocalStorage } = useContext(DataContext)
+    const dataContext = useContext(DataContext)
 
     useEffect(() => {
         funcoes.gControleCorteCoracao("resumo", "tab", false)
-        loadLocalStorage()
+        dataContext.funcoes.loadLocalStorage()
     }, [])
 
     const sx = {

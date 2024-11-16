@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import Head from 'next/head';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
-import { DataContext } from '../../contexts/data_context/data_context';
-import { UserContext } from '../../contexts/user_context/user_context';
+import { DataContext } from '../../contexts/contexts/data.context';
+import { UserContext, UserProvider } from '../../contexts/contexts/user.context';
 import { UsuariosService } from '../../service/usuarios.service';
 
 
@@ -34,7 +34,7 @@ const Page = () => {
           justifyContent: 'center'
         }}
       >
-        
+
         <Box
           sx={{
             maxWidth: 550,
@@ -116,7 +116,9 @@ const Page = () => {
 
 Page.getLayout = (page) => (
   <AuthLayout>
-    {page}
+    <UserProvider>
+      {page}
+    </UserProvider>
   </AuthLayout>
 );
 

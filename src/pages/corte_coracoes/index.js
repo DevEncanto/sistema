@@ -2,15 +2,9 @@ import Head from 'next/head';
 import { Box, Stack, Container, Typography, Fab, SvgIcon, Grid, Button } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useRouter } from 'next/router';
-import ArrowDownCircleIcon from '@heroicons/react/24/solid/ArrowPathIcon';
-import { HiMiniWrenchScrewdriver } from "react-icons/hi2";
-import { LuFuel } from "react-icons/lu";
-import { HiCube } from "react-icons/hi2";
-import { TiLeaf } from "react-icons/ti";
-import { IoFastFood } from "react-icons/io5";
 import { useContext, useEffect, useState } from 'react';
 import { BsBox2Fill, BsQrCode } from 'react-icons/bs';
-import { CorteCoracaoContext } from '../../contexts/corte.coracao.context';
+import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 
 const Page = () => {
 
@@ -156,7 +150,9 @@ const Page = () => {
 
 Page.getLayout = (page) => (
     <DashboardLayout>
-        {page}
+        <CorteCoracaoProvider>
+            {page}
+        </CorteCoracaoProvider>
     </DashboardLayout>
 );
 

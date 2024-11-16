@@ -1,6 +1,6 @@
 import { serialize } from 'cookie';
 
-const NEXT_PUBLIC_SECRET_API_KEY = process.env.NEXT_PUBLIC_SECRET_API_KEY || ''; // Defina isso no arquivo .env
+const SECRET_API_KEY = process.env.SECRET_API_KEY || ''; // Defina isso no arquivo .env
 
 export default function handler(req, res) {
     console.log("================================")
@@ -15,7 +15,7 @@ export default function handler(req, res) {
         }
 
         // Verificando o cabeçalho 'apiKey' para garantir que a requisição é legítima
-        if (apiKey !== NEXT_PUBLIC_SECRET_API_KEY) {
+        if (apiKey !== SECRET_API_KEY) {
             return res.status(403).json({ message: 'Forbidden: Invalid API Key' });
         }
 

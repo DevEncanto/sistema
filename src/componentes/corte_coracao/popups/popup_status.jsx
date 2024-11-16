@@ -6,7 +6,7 @@ import { BsCheckCircle } from "react-icons/bs";
 
 export const PopupAlerta = (props) => {
 
-  const { title, type } = props
+  const { title, type, minWidth ="500px" } = props
 
   const colorMap = {
     warning: "warning.main",
@@ -24,7 +24,7 @@ export const PopupAlerta = (props) => {
       direction={"row"}
       spacing={2}
       sx={{
-        width: "100%",
+        minWidth: minWidth,
         height: "100%",
         alignItems: "center",
         justifyContent: "center",

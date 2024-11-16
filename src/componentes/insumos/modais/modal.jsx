@@ -1,9 +1,9 @@
 import { Stack, SvgIcon, Typography } from "@mui/material"
 import { useContext, useEffect } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import { UserContext } from "../../../contexts/user_context/user_context";
+import { UserContext } from "../../../contexts/contexts/user.context";
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { DataContext } from "../../../contexts/data_context/data_context";
+import { DataContext } from "../../../contexts/contexts/data.context";
 
 export const ModalEstoque = (props) => {
 

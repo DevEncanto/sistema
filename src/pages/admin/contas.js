@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography, TextField, Button, Fab } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { UserContext } from '../../contexts/user_context/user_context';
+import { UserContext } from '../../contexts/contexts/user.context';
 import { cadastrarContasSuaURL, changeBot, dadosAdmin } from '../../util/util-admin';
 import { useRouter } from 'next/router';
 import { TabelaContasSuaURL } from 'src/components/tabela-contas-sua-url';
