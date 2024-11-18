@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { dInitialize } from "../initialize/initialize.data.context";
+import { logger } from "../../utils/logger";
 
 export const DataContext = createContext();
 
@@ -25,24 +26,18 @@ export const DataProvider = ({ children }) => {
         })
     }
 
-    const saveLocalStorage = (data) => {
-        if (data) {
-            window.localStorage.setItem("dados", JSON.stringify(data))
-            return
-        }
-        window.localStorage.setItem("dados", JSON.stringify(controle))
+    const saveLocalStorage = () => {
+        window.localStorage.setItem("dados", JSON.stringify(dData))
     }
 
     const loadLocalStorage = async () => {
         const localData = JSON.parse(window.localStorage.getItem("dados"))
-        // if (localData) {
-        //     await iniciarControle(localData)
-        // }
+        setDData(localData)
     }
 
     const funcoes = {
         loadLocalStorage: () => { loadLocalStorage() },
-        saveLocalStorage: (data) => { saveLocalStorage(data) },
+        saveLocalStorage: () => { saveLocalStorage() },
         dControleDataComplex: (object, item, value, target = true) => {
             dControleDataComplex(object, item, value, target)
         },

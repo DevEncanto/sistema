@@ -29,7 +29,6 @@ export class UsuariosService {
         try {
             gerenciarControle(true, "load", false)
             const response = await aRepository.login(controle.usuario, controle.senha)
-            logger(response)
             const { data, status } = response
             await delay(1000)
             gerenciarControle(false, "load", false)
@@ -40,6 +39,7 @@ export class UsuariosService {
                 funcoes.dControleDataSimple("lotes_etiquetas", data.dataInitial.lotes_etiquetas, false)
                 if (res) {
                     funcoes.dControleDataSimple("usuario", { id_usuario: data.id_usuario }, false)
+                    funcoes.dControleDataSimple("lotes_etiquetas", data.dataInitial.lotes_etiquetas, false)
                     router.push("/home")
                     return
                 }

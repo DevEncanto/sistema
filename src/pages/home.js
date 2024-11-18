@@ -5,12 +5,14 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { BsBox2Fill, BsQrCode } from 'react-icons/bs';
 import { CorteCoracaoContext, CorteCoracaoProvider } from '../contexts/contexts/corte.coracao.context';
+import { DataContext } from '../contexts/contexts/data.context';
 
 const Page = () => {
 
     const router = useRouter()
     const [load, setLoad] = useState(false)
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
+    const dataContext = useContext(DataContext)
     const redirecionarEstoque = (url) => router.push(`/corte_coracoes/${url}`)
 
 
@@ -41,6 +43,7 @@ const Page = () => {
 
     useEffect(() => {
         funcoes.gControleCorteCoracao("tab", "resumo", false)
+        dataContext.funcoes.saveLocalStorage()
     }, [])
 
 

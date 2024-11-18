@@ -1,10 +1,10 @@
 export const lista_etiquetas = {
     header: [
-        "ETIQUETA",
-        "DATA",
-        "SEMANA COLHEITA",
-        "STATUS",
-        "LOCALIZAR",
+        { title: "ETIQUETA", tooltip: "Número da Etiqueta" },
+        { title: "DATA", tooltip: "Data de criação da etiqueta" },
+        { title: "SEM. COLHEITA", tooltip: "Semana para prevista para colheita" },
+        { title: "STATUS", tooltip: "Status atual da etiqueta" },
+        { title: "LOCALIZAR", tooltip: "Localização da etiqueta no Google Maps" },
     ],
     body: {
         prop: "lista_etiquetas",

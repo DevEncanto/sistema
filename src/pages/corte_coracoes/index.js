@@ -1,46 +1,19 @@
 import Head from 'next/head';
-import { Box, Stack, Container, Typography, Fab, SvgIcon, Grid, Button } from '@mui/material';
+import { Box, Stack, Container, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
-import { BsBox2Fill, BsQrCode } from 'react-icons/bs';
 import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
+import { DataContext } from '../../contexts/contexts/data.context';
+import { SubPagesCorteCoracao } from './_components/sub.pages.corte.coracao';
+import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
+import { BotaoVoltar } from './_components/botoes/botao.voltar';
 
 const Page = () => {
 
-    const router = useRouter()
-    const [load, setLoad] = useState(false)
-    const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const redirecionarEstoque = (url) => router.push(`/corte_coracoes/${url}`)
-
-
-    const estoques = [
-        {
-            label: "Lotes de Fitas",
-            icon: (
-                <SvgIcon fontSize="medium" color='white'>
-                    <BsBox2Fill />
-                </SvgIcon>
-            ),
-            url: "lote_etiquetas"
-        },
-        {
-            label: "Gerador de Etiquetas",
-            icon: (
-                <SvgIcon fontSize="medium" color='white'>
-                    <BsQrCode />
-                </SvgIcon>
-            ),
-            url: "gerador_etiquetas"
-        }
-    ]
-
-    const handleAdmin = () => {
-
-    }
+    const dataContext = useContext(DataContext)
 
     useEffect(() => {
-        funcoes.gControleCorteCoracao("tab", "resumo", false)
+        dataContext.funcoes.loadLocalStorage()
     }, [])
 
 
@@ -52,95 +25,36 @@ const Page = () => {
         </Head>
         <Box
             component="main"
-            sx={{
-                flexGrow: 1,
-                py: 8,
-                marginTop: "-60px"
-            }}
         >
             <Container maxWidth="xl">
-                <Stack spacing={3}>
-
+                <Stack sx={{ width: "100%", height: "88vh" }}>
                     <Stack
                         direction="row"
                         sx={{
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
                         }}
                         spacing={4}
                     >
                         <Stack spacing={1}>
                             <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
-                                <Typography variant="h4">
+                                <Typography variant="h4" fontSize={25}>
                                     Corte de Corações
                                 </Typography>
-                                {/* {load ?
-                                    <img src="/assets/loading.svg" width={40} height={40} />
-                                    :
-                                    <Fab
-                                        color="primary"
-                                        aria-label="add" size='small'
-                                        onClick={handleAdmin}
-                                        sx={{
-                                            justifyContent: "center",
-                                            alignItems: "center"
-                                        }}
-                                    >
-                                        <ArrowDownCircleIcon height={25} width={25} fontWeight={600} />
-                                    </Fab>
-                                } */}
                             </Stack>
+                        </Stack>
+                        <Stack
+                            direction={`row`}
+                            spacing={1}
+                        >
+                            <BotaoNovoLote />
+                            <BotaoVoltar />
                         </Stack>
 
                     </Stack>
                     <Stack
-                        spacing={1}
+                        sx={{ width: "100%", height: "100%" }}
                     >
-                        <Grid container rowSpacing={1} spacing={{ xs: 3, md: 5 }} columns={{ xs: 4, sm: 8, md: 12 }}
-                            sx={{ padding: "50px 220px 0px 220px" }}
-                        >
-                            {estoques.map((estoque, index) => (
-                                <Grid key={index}
-                                    sx={{ marginBottom: "20px" }}
-                                    spacing={5}
-                                >
-                                    <Button
-                                        sx={{
-                                            cursor: 'pointer',
-                                            height: 120,
-                                            width: 120,
-                                            borderRadius: '10%',
-                                            backgroundColor: "primary",
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            margin: "10px"
-                                        }}
-                                        onClick={() => { redirecionarEstoque(estoque.url) }}
-                                    >
-                                        <Stack
-                                            sx={{
-                                                cursor: 'pointer',
-                                                height: "100%",
-                                                width: "100%",
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
-                                            }}
-
-                                        >
-                                            {estoque.icon}
-                                            <Typography
-                                                sx={{
-                                                    cursor: 'pointer',
-                                                    color: '#fff',
-                                                    fontSize: '12pt'
-                                                }}
-                                            >
-                                                {estoque.label}
-                                            </Typography>
-                                        </Stack>
-                                    </Button>
-                                </Grid>
-                            ))}
-                        </Grid>
+                        <SubPagesCorteCoracao />
                     </Stack>
                 </Stack>
             </Container>

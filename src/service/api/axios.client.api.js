@@ -1,5 +1,6 @@
 import axios from 'axios'
 import cookie from 'js-cookie'
+import { logger } from '../../utils/logger'
 
 export class AxiosClientAPI {
 
@@ -26,21 +27,22 @@ export class AxiosClientAPI {
     }
 
     // Método para definir um cookie com HttpOnly no servidor
-    async setCookieAuthToken(token, creationTimestamp, expirationTimestamp) {
+    async setCookieAuthToken(token, creationTimestamp, expirationTimestamp, logout = false) {
         try {
             const data = {
                 apiKey: this.apiKey,
                 token,
                 creationTimestamp,
-                expirationTimestamp
+                expirationTimestamp,
+                logout
             }
-
             const response = await this.api.post('http://localhost:3000/api/set-cookie', data)
             if (response.status === 200) {
                 return true
             }
             return false
         } catch (error) {
+            console.log(error)
             return false
         }
     }

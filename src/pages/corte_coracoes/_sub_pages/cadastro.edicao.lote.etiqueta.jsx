@@ -1,11 +1,11 @@
 import { Stack, TextField, Button, Typography } from "@mui/material";
 import { useContext } from "react";
-import { ButtonSearch } from "../../botoes/botao_busca";
-import { DataContext } from "../../../../contexts/contexts/data.context";
-import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
-import { Calendario } from "../../componentes/calendario";
-import { PopupAlerta } from "../../popups/popup_status";
-import { LotesEtiquetasService } from "../../../../service/lotes.etiquetas.service";
+import { ButtonSearch } from "../../../componentes/corte_coracao/botoes/botao_busca";
+import { DataContext } from "../../../contexts/contexts/data.context";
+import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context";
+import { Calendario } from "../_components/calendario";
+import { LotesEtiquetasService } from "../../../service/lotes.etiquetas.service";
+import { PopupAlerta } from "../_components/popups/popup_status";
 
 export const CadastroLoteEtiqueta = () => {
     const corteCoracaoContext = useContext(CorteCoracaoContext);
@@ -14,10 +14,10 @@ export const CadastroLoteEtiqueta = () => {
     const { lote_etiqueta } = dCorteCoracao
 
     const cancelarCadastros = () => {
-        funcoes.gControleCorteCoracao("resumo", "tab", false);
+        funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "tab", false);
         funcoes.gControleCorteCoracao("lotes_etiquetas", "tabela", false);
         funcoes.gControleCorteCoracao("tabela", "tabsCadastro", false);
-        // funcoes.resetFormularios("lotes_etiquetas")
+        funcoes.resetFormulario("lote_etiqueta")
     };
 
     const salvarLote = async () => {
@@ -40,13 +40,13 @@ export const CadastroLoteEtiqueta = () => {
         >
             <Stack
                 direction="row"
-                sx={{justifyContent: "center", marginTop: "-5px", width: "100%", minHeight: "40px" }}
+                sx={{ justifyContent: "center", marginTop: "-5px", width: "100%", minHeight: "40px" }}
             >
                 <Typography
                     variant="h5"
                     sx={{
                         fontSize: "20px",
-                        margin: "0",
+                        marginTop: "15px",
                         width: "50%",
                     }}
                 >
@@ -60,6 +60,7 @@ export const CadastroLoteEtiqueta = () => {
                         width: "70%",
                         alignItems: "center",
                         justifyContent: "center",
+                        paddingTop: "5px"
                     }}
                 >
                     {renderAlert()}
@@ -89,11 +90,12 @@ export const CadastroLoteEtiqueta = () => {
                             <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Semana Colheita" value={lote_etiqueta.semana_colheita} />
                         </Stack>
                         <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Etiqueta Inicial" onChange={(e) => { funcoes.atualizarEtiquetas("lote_etiqueta", "etiqueta_inicial", e) }} value={lote_etiqueta.etiqueta_inicial} />
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Etiqueta Final" onChange={(e) => { funcoes.atualizarEtiquetas("lote_etiqueta", "etiqueta_final", e) }} value={lote_etiqueta.etiqueta_final} />
+                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Ano do Corte" value={lote_etiqueta.ano_corte} />
+                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Ano da Colheita" value={lote_etiqueta.ano_colheita} />
                         </Stack>
                         <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Etiqueta Final" value={lote_etiqueta.total_etiquetas} />
+                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Etiqueta Inicial" onChange={(e) => { funcoes.atualizarEtiquetas("lote_etiqueta", "etiqueta_inicial", e) }} value={lote_etiqueta.etiqueta_inicial} />
+                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Etiqueta Final" onChange={(e) => { funcoes.atualizarEtiquetas("lote_etiqueta", "etiqueta_final", e) }} value={lote_etiqueta.etiqueta_final} />
                         </Stack>
                     </Stack>
                 </Stack>

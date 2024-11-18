@@ -15,8 +15,6 @@ export async function middleware(request) {
         return NextResponse.next()
     }
 
-    logger(cookie)
-
     try {
         cookie = JSON.parse(cookie)
     } catch (error) {
@@ -30,7 +28,6 @@ export async function middleware(request) {
 
     const { creationTimestamp, expirationTimestamp } = cookie
 
-    logger(pathname)
     // Verificar se o token é válido
     if (!isTokenValid(creationTimestamp, expirationTimestamp)) {
         logger("Usuário não autenticado!")

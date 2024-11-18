@@ -9,8 +9,6 @@ import { CorteCoracaoContext } from '../../../contexts/contexts/corte.coracao.co
 import { DataContext } from '../../../contexts/contexts/data.context';
 
 export const Calendario = (props) => {
-
-
     const brazilLocale = ptBR.components.MuiLocalizationProvider.defaultProps.localeText;
     const { width, label, item, object, disabled = false } = props
     const { dCorteCoracao, funcoes } = useContext(CorteCoracaoContext)

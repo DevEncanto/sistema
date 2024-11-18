@@ -3,18 +3,17 @@ import PropTypes from 'prop-types';
 import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import Cookies from 'js-cookie';
+import { AxiosClientAPI } from '../../service/api/axios.client.api';
+import { logger } from '../../utils/logger';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, usuario } = props;
   const router = useRouter();
 
-  const handleLogout = () => {
-    Cookies.set("auth_token", "")
+  const handleLogout = async () => {
+    const axiosAPI = new AxiosClientAPI()
+    const response = await axiosAPI.setCookieAuthToken("", 0, 0, true)
     router.push('/auth/login')
-  }
-  const handleTrocarSenha = () => {
-    Cookies.set("auth_token", "")
-    router.push('/auth/trocar-senha')
   }
   return (
     <Popover
@@ -54,9 +53,6 @@ export const AccountPopover = (props) => {
           }
         }}
       >
-        <MenuItem onClick={handleTrocarSenha}>
-          Alterar Senha
-        </MenuItem>
         <MenuItem onClick={handleLogout}>
           Logout
         </MenuItem>

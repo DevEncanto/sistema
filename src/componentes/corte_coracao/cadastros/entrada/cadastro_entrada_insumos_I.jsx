@@ -3,7 +3,7 @@ import { PopupAlerta } from "../../popups/popup_status";
 import { useContext, useEffect, useLayoutEffect } from "react";
 import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
 import { ButtonSearch } from "../../botoes/botao_busca";
-import { Selector } from "../../componentes/select";
+import { Selector } from "../../../../pages/corte_coracoes/_components/select";
 import { DataContext } from "../../../../contexts/contexts/data.context";
 
 export const CadastroNovaEntradaI = () => {

@@ -1,11 +1,12 @@
-import { useContext, useEffect } from "react";
+import { cloneElement, useContext, useEffect } from "react";
 import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
 import { DataContext } from "../../../contexts/contexts/data.context";
 import formatSaldo from "../../../utils/formatarSaldos";
 import { config_tables } from "./configuracoes/config_tables";
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context";
+import { logger } from "../../../utils/logger";
 
-const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses } = require("@mui/material");
+const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses, Tooltip } = require("@mui/material");
 
 export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
   const { dData } = useContext(DataContext);
@@ -51,6 +52,12 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
       case "blank":
         component = ""
         break
+      case "arrayComponent":
+        const comps = content.components.map((Component, index) => {
+          const data = { [content.params[index]]: item[content.params[index]] }
+          return cloneElement(Component, data)
+        })
+        component = content.content(comps)
     }
 
     return component
@@ -63,9 +70,11 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
           <TableHead>
             <TableRow>
               {header.map((celula, index) => (
-                <TableCell sx={sx} key={index} colSpan={celula === "AÇÕES" ? 2 : 1}>
-                  {celula}
-                </TableCell>
+                <Tooltip title={celula.tooltip} placement="top" arrow>
+                  <TableCell sx={sx} key={index} colSpan={celula === "AÇÕES" ? 2 : 1}>
+                    {celula.title}
+                  </TableCell>
+                </Tooltip>
               ))}
             </TableRow>
           </TableHead>

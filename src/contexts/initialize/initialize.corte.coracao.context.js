@@ -1,14 +1,29 @@
+import { SvgIcon } from "@mui/material"
+import { BsBox2Fill } from "react-icons/bs"
+
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
-    tab: "resumo",
+    tab: "menu",
     tabela: "lotes_etiquetas",
     tabsCadastro: "tabela",
-    id_lote: 0, 
+    id_lote: 0,
     load: false,
     return: "",
     lista_etiquetas: [],
     type: "",
-    alert: ""
+    alert: "",
+    edicao: false,
+    menu: [
+        {
+            label: "Lotes de Fitas",
+            icon: (
+                <SvgIcon fontSize="medium" color='white'>
+                    <BsBox2Fill />
+                </SvgIcon>
+            ),
+            subPage: "resumo_lotes_etiquetas"
+        }
+    ]
 }
 
 //Inicialização dos dados do Contexto Corte Coração
@@ -21,7 +36,7 @@ export const dInitialize = {
         etiqueta_inicial: "",
         etiqueta_final: "",
         total_etiquetas: "",
-        ano_corte: "1900",
-        ano_colheita: "1900"
+        ano_corte: "",
+        ano_colheita: ""
     }
 }

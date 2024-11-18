@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { cInitialize, dInitialize } from "../initialize/initialize.corte.coracao.context";
 import { calcularDatas, converterDataCalendario, obterSemana, parseDate } from "../../utils/gerador-datas";
-import { converterDateParaString } from "../../utils/formatar-datas-createdAt";
+import { converterAno, converterDateParaString } from "../../utils/formatar-datas-createdAt";
 
 export const CorteCoracaoContext = createContext();
 
@@ -18,6 +18,21 @@ export const CorteCoracaoProvider = ({ children }) => {
     const gControleCorteCoracao = (e, item, target = true) => {
         setCCorteCoracao((currentState) => {
             return { ...currentState, [item]: target ? e.target.value : e }
+        })
+    }
+    const dControleCorteCoracaoSimple = (value, item, target = true) => {
+        setDCorteCoracao((currentState) => {
+            return { ...currentState, [item]: target ? value.target.value : value }
+        })
+    }
+
+    const dControleCorteCoracaoComplex = (object, item, value, target = true) => {
+        setDCorteCoracao((currentState) => {
+            return {
+                ...currentState, [object]: {
+                    ...currentState[object], [item]: target ? value.target.value : value
+                }
+            }
         })
     }
 
@@ -42,6 +57,11 @@ export const CorteCoracaoProvider = ({ children }) => {
         return validos
     }
 
+    const resetFormulario = (form) => {
+        setDCorteCoracao((currentState) => {
+            return { ...currentState, [form]: dInitialize[form] }
+        })
+    }
 
     const atualizarEtiquetas = (object, item, e = { target: { value: 0 } }) => {
         let total = 0
@@ -69,6 +89,8 @@ export const CorteCoracaoProvider = ({ children }) => {
         gDadosCorteCoracao("lote_etiqueta", "data_prevista", data_prevista, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_corte", semana_corte, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_colheita", semana_previsao, false)
+        gDadosCorteCoracao("lote_etiqueta", "ano_corte", converterAno(data), false)
+        gDadosCorteCoracao("lote_etiqueta", "ano_colheita", converterAno(data_prevista), false)
     }
 
     const gDadosCorteCoracao = (object, item, e, target = true) => {
@@ -87,7 +109,10 @@ export const CorteCoracaoProvider = ({ children }) => {
         gerarPrevisao: (data, previsao_mensal = []) => { gerarPrevisao(data, previsao_mensal) },
         atualizarEtiquetas: (object, item, e, target = true) => { atualizarEtiquetas(object, item, e, target) },
         validarDados: (dados) => { return validarDados(dados) },
-        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) }
+        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },
+        resetFormulario: (form) => { resetFormulario(form) },
+        dControleCorteCoracaoComplex: (object, item, value, target = true) => { dControleCorteCoracaoComplex(object, item, value, target) },
+        dControleCorteCoracaoSimple: (value, item, target = true) => { dControleCorteCoracaoSimple(value, item, target) }
     }
 
     const saveLocalStorage = (data) => {
@@ -116,11 +141,6 @@ export const CorteCoracaoProvider = ({ children }) => {
 
     const value = {
         cCorteCoracao,
-        gControleCorteCoracao,
-        iniciarControle,
-        gDadosCorteCoracao,
-        loadLocalStorage,
-        saveLocalStorage,
         funcoes,
         dCorteCoracao
     }

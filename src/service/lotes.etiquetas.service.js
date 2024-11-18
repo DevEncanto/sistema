@@ -32,14 +32,28 @@ export class LotesEtiquetasService {
                 semana_corte,
                 etiqueta_inicial,
                 etiqueta_final,
-                ano_colheita: converterAno(data_prevista),
-                ano_corte: converterAno(data_corte),
+                ano_colheita,
+                ano_corte,
                 id_usuario: this.dataContext.dData.usuario.id_usuario
             }
 
             const { data: { message, status, data } } = await aRepository.create(dados)
-            console.log(data)
-            return funcoes.exibirAlerta(message, status === 200 ? "success" : "error");
+
+
+            await funcoes.exibirAlerta(message, status === 200 ? "success" : "error");
+
+            if (status === 200) {
+                const old_data = this.dataContext.dData.lotes_etiquetas
+                const new_data = [...old_data, data]
+                this.dataContext.funcoes.dControleDataSimple("lotes_etiquetas", new_data, false)
+                setTimeout(() => {
+                    funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "tab", false)
+                    funcoes.gControleCorteCoracao("menu", "return", false)
+                }, 2500)
+            }
+
+
+            return
         } catch (error) {
             console.log(error)
             return funcoes.exibirAlerta("Uma falha foi detectada!", "error");

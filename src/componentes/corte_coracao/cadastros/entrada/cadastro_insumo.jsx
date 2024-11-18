@@ -6,7 +6,7 @@ import { camposObrigatoriosFornecedor } from "../../../../contexts/data";
 import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
 import { cadastrarFornecedor, cadastrarInsumo } from "../../../../service/request_cadastro";
 import { DataContext } from "../../../../contexts/contexts/data.context";
-import { Selector } from "../../componentes/select";
+import { Selector } from "../../../../pages/corte_coracoes/_components/select";
 import { ButtonCancelar } from "../../botoes/botao_cancelar";
 import { ButtonSalvar } from "../../botoes/botao_salvar";
 

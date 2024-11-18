@@ -1,14 +1,33 @@
 import { serialize } from 'cookie';
+import { logger } from '../../utils/logger';
 
 const SECRET_API_KEY = process.env.SECRET_API_KEY || ''; // Defina isso no arquivo .env
 
 export default function handler(req, res) {
-    console.log("================================")
-    console.log(req.body)
+
+    const { token, creationTimestamp, expirationTimestamp, apiKey, logout = false } = req.body;
+
+    if (logout) {
+        const tokenData = {
+            token: "",
+            creationTimestamp: 0,
+            expirationTimestamp: 0,
+        };
+        const cookie = serialize('auth_token', JSON.stringify(tokenData), {
+            httpOnly: true, // Impede o acesso via JavaScript
+            secure: process.env.NODE_ENV === 'production', // Apenas em conexões HTTPS em produção
+            sameSite: 'Strict', // Protege contra CSRF
+            maxAge: 0, // Validade do cookie igual ao tempo restante até a expiração
+            path: '/', // O cookie será acessível em todo o domínio
+        });
+
+        // Configurando o cookie na resposta
+        res.setHeader('Set-Cookie', cookie);
+        return res.status(200).json({ message: 'Logout successfully' });
+    }
+   
     // Verificando se o método da requisição é POST
     if (req.method === 'POST') {
-        const { token, creationTimestamp, expirationTimestamp, apiKey } = req.body;
-
         // Verificando se o token e os timestamps foram enviados
         if (!token || !creationTimestamp || !expirationTimestamp) {
             return res.status(400).json({ message: 'Token, creationTimestamp and expirationTimestamp are required' });
@@ -21,8 +40,10 @@ export default function handler(req, res) {
 
         // Verificando se o timestamp de expiração não já passou
         const currentTimestamp = Date.now();
-        if (currentTimestamp > expirationTimestamp) {
-            return res.status(400).json({ message: 'Token has expired' });
+        if (!logout) {
+            if (currentTimestamp > expirationTimestamp) {
+                return res.status(400).json({ message: 'Token has expired' });
+            }
         }
 
         // Criando o objeto de dados para salvar no cookie

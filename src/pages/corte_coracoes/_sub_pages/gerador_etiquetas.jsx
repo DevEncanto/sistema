@@ -1,11 +1,11 @@
-import { DataContext } from "../../../../contexts/contexts/data.context"
-import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
-import { Etiqueta } from "./etiqueta"
+import { DataContext } from "../../../contexts/contexts/data.context"
+import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
+import { Etiqueta } from "../../../componentes/corte_coracao/cadastros/entrada/etiqueta"
 const { Stack, Grid } = require("@mui/material")
 import { useReactToPrint } from 'react-to-print';
-import { LoaderEstatico } from "../../componentes/loader"
+import { LoaderEstatico } from "../_components/loader"
 import { useContext, useEffect, useState, useRef } from "react";
-import { logger } from "../../../../utils/logger";
+import { logger } from "../../../utils/logger";
 
 export const GeradorEtiquetas = () => {
 
@@ -17,8 +17,6 @@ export const GeradorEtiquetas = () => {
     const lazyLoading = async () => {
 
         let data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
-        
-        logger(data)
         setEtiquetas(data)
         setLoad(false)
     }
@@ -49,11 +47,11 @@ export const GeradorEtiquetas = () => {
                     ref={componentRef}
                     sx={{
                         width: "100%",
-                        maxHeight: "450px",
+                        maxHeight: "540px",
                         alignItems: "center",
                         backgroundColor: "purple",
                         overflow: "auto",
-                        padding: "10px 80px"
+                        padding: "30px 60px"
                     }}
                 >
 

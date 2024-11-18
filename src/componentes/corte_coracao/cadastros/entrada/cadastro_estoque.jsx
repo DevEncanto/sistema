@@ -5,7 +5,7 @@ import { PopupAlerta } from "../../popups/popup_status";
 import { EstoqueContext } from "../../../../contexts/components_context/estoque_context";
 import { cadastrarEstoque} from "../../../../service/request_cadastro";
 import { DataContext } from "../../../../contexts/contexts/data.context";
-import { Selector } from "../../componentes/select";
+import { Selector } from "../../../../pages/corte_coracoes/_components/select";
 
 export const CadastroEstoque = () => {
     const { dados, funcoes, controleEstoque } = useContext(EstoqueContext);
