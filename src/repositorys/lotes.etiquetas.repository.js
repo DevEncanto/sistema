@@ -15,8 +15,11 @@ export class LotesEtiquetasRepository {
         return this.client.post(url, { ...lote_etiqueta })
     }
 
-    async update() {
+    async update(lote_etiqueta) {
+        console.log(lote_etiqueta)
 
+        const url = "/lote_etiquetas/update"
+        return this.client.post(url, { ...lote_etiqueta })
     }
 
     async delete() {

@@ -35,7 +35,6 @@ export const dInitialize = {
         semana_colheita: "",
         etiqueta_inicial: "",
         etiqueta_final: "",
-        total_etiquetas: "",
         ano_corte: "",
         ano_colheita: ""
     }

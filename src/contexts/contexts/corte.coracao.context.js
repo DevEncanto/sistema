@@ -63,21 +63,6 @@ export const CorteCoracaoProvider = ({ children }) => {
         })
     }
 
-    const atualizarEtiquetas = (object, item, e = { target: { value: 0 } }) => {
-        let total = 0
-        const { lote_etiqueta: { etiqueta_inicial = 0, etiqueta_final = 0, total_etiquetas } } = dCorteCoracao;
-        if (item === "etiqueta_inicial") {
-            total = parseFloat(etiqueta_final) - parseFloat(e.target.value || etiqueta_inicial)
-        } else {
-            total = parseFloat(e.target.value || etiqueta_final) - parseFloat(etiqueta_inicial)
-        }
-        total = isNaN(total) ? total_etiquetas : total + 1
-
-        gDadosCorteCoracao("lote_etiqueta", "total_etiquetas", total, false)
-        gDadosCorteCoracao(object, item, e, true)
-
-    }
-
     const gerarPrevisao = (data, previsao_mensal = []) => {
         const dataString = converterDateParaString(data)
         const mes = parseDate(dataString).getMonth() + 1
@@ -86,6 +71,7 @@ export const CorteCoracaoProvider = ({ children }) => {
         const data_prevista = converterDataCalendario(calcularDatas(dataString, dias_previsao))
         const semana_previsao = obterSemana(converterDateParaString(data_prevista))
 
+        gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
         gDadosCorteCoracao("lote_etiqueta", "data_prevista", data_prevista, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_corte", semana_corte, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_colheita", semana_previsao, false)
