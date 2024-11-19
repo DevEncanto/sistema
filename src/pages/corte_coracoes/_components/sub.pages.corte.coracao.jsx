@@ -6,6 +6,7 @@ import { TabelasCorteCoracao } from "../../../componentes/corte_coracao/tabelas/
 import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.lote.etiqueta"
 import { GeradorEtiquetas } from "../_sub_pages/gerador_etiquetas"
 import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
+import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
 
 export const SubPagesCorteCoracao = () => {
 
@@ -13,7 +14,7 @@ export const SubPagesCorteCoracao = () => {
     const dataContext = useContext(DataContext)
 
     useEffect(() => {
-        funcoes.gControleCorteCoracao("menu", "tab", false)
+        funcoes.gControleCorteCoracao("modal_feedback", "tab", false)
         funcoes.gControleCorteCoracao("lotes_etiquetas", "tabela", false)
         dataContext.funcoes.loadLocalStorage()
     }, [])
@@ -27,6 +28,7 @@ export const SubPagesCorteCoracao = () => {
 
     return (
         <Stack sx={sx}>
+            {cCorteCoracao.tab === "modal_feedback" ? <ModalFeedBack /> : <></>}
             {cCorteCoracao.tab !== "menu" ? <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} /> : <></>}
             {cCorteCoracao.tab === "menu" ? <MenuPrincipalCorteCoracao /> : <></>}
             {cCorteCoracao.tab === "resumo_lotes_etiquetas" ? <TabelasCorteCoracao minHeigth={540} /> : <></>}

@@ -3,7 +3,7 @@ import { BsBox2Fill } from "react-icons/bs"
 
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
-    tab: "menu",
+    tab: "modal_feedback",
     tabela: "lotes_etiquetas",
     tabsCadastro: "tabela",
     id_lote: 0,

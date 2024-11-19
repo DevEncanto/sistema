@@ -1,18 +1,18 @@
 import { Stack, SvgIcon, Typography } from "@mui/material"
 import { useContext, useEffect } from "react";
 import { RiCloseFill } from "react-icons/ri";
-import { UserContext } from "../../../contexts/contexts/user.context";
-import { EstoqueContext } from "../../../contexts/components_context/estoque_context";
-import { DataContext } from "../../../contexts/contexts/data.context";
+import { DataContext } from "../../../../contexts/contexts/data.context";
 
-export const ModalEstoque = (props) => {
+export const ModalCorteCoracao = (props) => {
 
-    const { funcoes } = useContext(EstoqueContext)
-    const { saveLocalStorage } = useContext(DataContext)
+    const funcoes = {
+
+    }
+    const teste = useContext(DataContext)
     const { destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     useEffect(() => {
-        saveLocalStorage()
+        
     }, [])
 
 

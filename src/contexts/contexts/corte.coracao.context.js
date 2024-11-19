@@ -71,7 +71,7 @@ export const CorteCoracaoProvider = ({ children }) => {
         const data_prevista = converterDataCalendario(calcularDatas(dataString, dias_previsao))
         const semana_previsao = obterSemana(converterDateParaString(data_prevista))
 
-        gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
+            gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
         gDadosCorteCoracao("lote_etiqueta", "data_prevista", data_prevista, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_corte", semana_corte, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_colheita", semana_previsao, false)

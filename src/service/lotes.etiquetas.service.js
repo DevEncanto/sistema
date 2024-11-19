@@ -32,12 +32,11 @@ export class LotesEtiquetasService {
             return false
         }
 
-        logger("Data Corte")
-        logger(data_corte)
-        const data_criacao = cCorteCoracao.edicao ? data_corte : converterDateParaString(data_corte)
+        console.log(converterDateParaString(data_corte))
+
 
         const dados = {
-            criacao: data_criacao,
+            criacao:converterDateParaString(data_corte),
             semana_colheita: parseInt(semana_colheita),
             semana_corte: parseInt(semana_corte),
             etiqueta_inicial: parseInt(etiqueta_inicial),
