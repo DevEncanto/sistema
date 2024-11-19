@@ -12,20 +12,38 @@ export const BotaoEditarLotesEtiquetas = (props) => {
     const { dData } = useContext(DataContext)
 
     const handleClick = () => {
-        const lista = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta === id_lote_etiqueta)?.etiquetas
+        // Encontrar o lote etiqueta correspondente
         const lote_etiqueta = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta === id_lote_etiqueta)
-        const data_corte = converterDataCalendario(lote_etiqueta.criacao)
+    
+        if (!lote_etiqueta) {
+            console.error('Lote etiqueta não encontrado')
+            return
+        }
+    
+        // Extrair informações necessárias
+        const { etiquetas, criacao, etiqueta_inicial, etiqueta_final } = lote_etiqueta
+        const data_corte = converterDataCalendario(criacao)
         const previsao_mensal = dData.previsao_mensal
-        funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_inicial", lote_etiqueta.etiqueta_inicial, false)
-        funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_final", lote_etiqueta.etiqueta_final, false)
+    
+        // Chamar funções agrupando lógica repetitiva
+        const controles = [
+            { valor: "lista_etiquetas", alvo: "tabela" },
+            { valor: etiquetas, alvo: "lista_etiquetas" },
+            { valor: "resumo_lotes_etiquetas", alvo: "return" },
+            { valor: id_lote_etiqueta.toString(), alvo: "id_lote" },
+            { valor: "cadastro_lote", alvo: "tab" },
+            { valor: true, alvo: "edicao" }
+        ]
+    
+        // Atualizar dados e previsões
+        funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_inicial", etiqueta_inicial, false)
+        funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_final", etiqueta_final, false)
         funcoes.gerarPrevisao(data_corte, previsao_mensal)
-        funcoes.gControleCorteCoracao("lista_etiquetas", "tabela", false)
-        funcoes.gControleCorteCoracao(lista, "lista_etiquetas", false)
-        funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "return", false)
-        funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
-        funcoes.gControleCorteCoracao("cadastro_lote", "tab", false)
-        funcoes.gControleCorteCoracao(true, "edicao", false)
+    
+        // Atualizar controles
+        controles.forEach(({ valor, alvo }) => funcoes.gControleCorteCoracao(valor, alvo, false))
     }
+    
 
     return (
         <Tooltip title="Clique para editar o lote!" arrow>
