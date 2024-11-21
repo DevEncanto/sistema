@@ -1,14 +1,15 @@
 import { cloneElement, useContext, useEffect } from "react";
-import { sxCardScrollPersonalizada } from "../../../components/config-componentes/config-imagens-perfil";
-import { DataContext } from "../../../contexts/contexts/data.context";
-import formatSaldo from "../../../utils/formatarSaldos";
-import { config_tables } from "./configuracoes/config_tables";
-import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context";
-import { logger } from "../../../utils/logger";
+import { config_tables } from "./configuracoes/config_tables"
+import { sxCardScrollPersonalizada } from "../../../../components/config-componentes/config-imagens-perfil";
+import { DataContext } from "../../../../contexts/contexts/data.context";
+import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
+import formatSaldo from "../../../../utils/formatarSaldos";
+import { SeverityPill } from "../../../../components/severity-pill";
+import { logger } from "../../../../utils/logger";
 
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses, Tooltip } = require("@mui/material");
 
-export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
+export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
   const { dData } = useContext(DataContext);
   const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext);
   const { header, body, sx } = config_tables[tabela ? tabela : cCorteCoracao.tabela];
@@ -17,11 +18,11 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
 
   useEffect(() => {
 
-  }, []);
+  }, [cCorteCoracao]);
 
 
   const RenderContent = (props) => {
-    const { content, item } = props
+    const { content, item, index } = props
 
     let component = ""
 
@@ -29,6 +30,17 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
       case "text":
         component = item[content.content]
         break;
+
+      case "colorText":
+
+        const color = content.colors[item[content.content]]
+
+        logger(color)
+
+
+        component = <SeverityPill color={color}>{item[content.content]}</SeverityPill>
+        break;
+
       case "component":
         component = content.content(
           funcoes,
@@ -53,8 +65,17 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
         component = ""
         break
       case "arrayComponent":
-        const comps = content.components.map((Component, index) => {
-          const data = { [content.params[index]]: item[content.params[index]] }
+        logger(content)
+        const comps = content.components.map((Component, indexb) => {
+          let data = {}
+          content.params[indexb].forEach((param) => {
+            if (param === "index") {
+              data = { ...data, index: index }
+            } else {
+              data = { ...data, [param]: item[param] }
+            }
+          })
+          logger(data)
           return cloneElement(Component, data)
         })
         component = content.content(comps)
@@ -83,7 +104,7 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
               <TableRow hover key={`${body.key}${index}`}>
                 {body.contents.map((content, indexb) => (
                   <TableCell sx={sx} key={indexb}>
-                    <RenderContent content={content} item={item} />
+                    <RenderContent content={content} item={item} index={item.id_media_cacho} />
                   </TableCell>
                 ))}
               </TableRow>

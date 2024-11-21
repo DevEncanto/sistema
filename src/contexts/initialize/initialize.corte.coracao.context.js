@@ -1,6 +1,6 @@
 import { SvgIcon } from "@mui/material"
 import { BsBox2Fill } from "react-icons/bs"
-
+import { BiAbacus, BiCalendar } from "react-icons/bi";
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
     tab: "modal_feedback",
@@ -21,7 +21,31 @@ export const cInitialize = {
                     <BsBox2Fill />
                 </SvgIcon>
             ),
-            subPage: "resumo_lotes_etiquetas"
+            subPage: "resumo_lotes_etiquetas",
+            tabelaComponent: true,
+            tabela: "lotes_etiquetas"
+        },
+        {
+            label: "Médias de Cachos",
+            icon: (
+                <SvgIcon fontSize="medium" color='white'>
+                    <BiAbacus />
+                </SvgIcon>
+            ),
+            subPage: "medias_cachos",
+            tabelaComponent: true,
+            tabela: "medias_cachos"
+        },
+        {
+            label: "Previsões Mensais",
+            icon: (
+                <SvgIcon fontSize="medium" color='white'>
+                    <BiCalendar />
+                </SvgIcon>
+            ),
+            subPage: "previsoes_mensais",
+            tabelaComponent: true,
+            tabela: "previsoes_mensais"
         }
     ]
 }

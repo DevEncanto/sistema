@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { Button, Tooltip } from "@mui/material"
-import { BsQrCode, BsTicket } from "react-icons/bs"
+import {  BsTicket } from "react-icons/bs"
 
 export const BotaoGerarQRCode = (props) => {
     const { id_lote_etiqueta } = props

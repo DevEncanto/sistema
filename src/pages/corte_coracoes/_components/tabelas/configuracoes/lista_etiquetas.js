@@ -7,7 +7,7 @@ export const lista_etiquetas = {
         { title: "LOCALIZAR", tooltip: "Localização da etiqueta no Google Maps" },
     ],
     body: {
-        prop: "lista_etiquetas",
+        prop: "lotes_etiquetas",
         key: "lista_etiqueta",
         functions: {
             gerarParametros: (object, params = []) => params.map(item => object[item])

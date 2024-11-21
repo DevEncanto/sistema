@@ -1,8 +1,8 @@
-import { BotaoGerarQRCode } from "../../../../pages/corte_coracoes/_components/botoes/botao.etiquetas";
-import { BotaoListarEtiquetas } from "../../../../pages/corte_coracoes/_components/botoes/botao.selecionar.lista";
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { cloneElement } from "react";
-import { BotaoEditarLotesEtiquetas } from "../../../../pages/corte_coracoes/_components/botoes/botao.editar";
+import { BotaoGerarQRCode } from "../../botoes/botao.etiquetas";
+import { BotaoListarEtiquetas } from "../../botoes/botao.selecionar.lista";
+import { BotaoEditarLotesEtiquetas } from "../../botoes/botao.editar";
 
 export const lotes_etiquetas = {
   header: [
@@ -42,32 +42,10 @@ export const lotes_etiquetas = {
         type: "text",
         content: "etiqueta_final"
       },
-      // {
-      //   type: "componentExt",
-      //   function: "gerarEtiquetas",
-      //   params: ["id_lote_etiqueta"],
-      //   content: (data) => {
-      //     return (
-      //       <BotaoGerarQRCode {...[...data]} />
-      //     );
-      //   }
-      // },
-      // {
-      //   type: "componentExt",
-      //   function: "gerarEtiquetas",
-      //   params: ["id_lote_etiqueta"],
-      //   content: (data) => {
-      //     return (
-      //       <>
-      //         <BotaoListarEtiquetas {...[...data]} />
-      //       </>
-      //     );
-      //   }
-      // },
       {
         type: "arrayComponent",
         function: "",
-        params: ["id_lote_etiqueta", "id_lote_etiqueta", "id_lote_etiqueta"],
+        params: [["id_lote_etiqueta"], ["id_lote_etiqueta"], ["id_lote_etiqueta"]],
         components: [<BotaoGerarQRCode />, <BotaoListarEtiquetas />, <BotaoEditarLotesEtiquetas />],
         content: (components = []) => {
           return (

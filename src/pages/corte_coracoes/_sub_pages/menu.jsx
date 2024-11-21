@@ -5,7 +5,11 @@ import { Button, Grid, Stack, Typography } from "@mui/material"
 export const MenuPrincipalCorteCoracao = () => {
 
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const redirecionarSubPage = (subPage) => {
+    const redirecionarSubPage = (subPage, isComponentTable, table) => {
+
+        if (isComponentTable) {
+            funcoes.gControleCorteCoracao(table, "tabela", false)
+        }
         funcoes.gControleCorteCoracao(subPage, "tab", false)
         funcoes.gControleCorteCoracao("menu", "return", false)
     }
@@ -34,7 +38,7 @@ export const MenuPrincipalCorteCoracao = () => {
                                 justifyContent: 'center',
                                 margin: "10px"
                             }}
-                            onClick={() => { redirecionarSubPage(item.subPage) }}
+                            onClick={() => { redirecionarSubPage(item.subPage, item.tabelaComponent, item.tabela) }}
                         >
                             <Stack
                                 sx={{

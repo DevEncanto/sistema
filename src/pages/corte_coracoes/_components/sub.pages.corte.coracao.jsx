@@ -2,11 +2,11 @@ import { Divider, Stack } from "@mui/material"
 import { useContext, useEffect } from "react"
 import { DataContext } from "../../../contexts/contexts/data.context"
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
-import { TabelasCorteCoracao } from "../../../componentes/corte_coracao/tabelas/tabelas.corte_coracao"
 import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.lote.etiqueta"
 import { GeradorEtiquetas } from "../_sub_pages/gerador_etiquetas"
 import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
 import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
+import { TabelasCorteCoracao } from "./tabelas/tabelas.corte_coracao"
 
 export const SubPagesCorteCoracao = () => {
 
@@ -27,16 +27,23 @@ export const SubPagesCorteCoracao = () => {
         alignItems: cCorteCoracao.tab === "modal_feedback" ? "center" : "",
         justifyContent: cCorteCoracao.tab === "modal_feedback" ? "center" : ""
     }
+
+    const tabelas = [
+        "resumo_lotes_etiquetas",
+        "medias_cachos"
+    ]
+
     return (
         <Stack sx={sx}>
             {/* {JSON.stringify(cCorteCoracao)} */}
-            {cCorteCoracao.tab === "modal_feedback" ? <ModalFeedBack /> : <></>}
-            {cCorteCoracao.tab !== "menu" ? <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} /> : <></>}
-            {cCorteCoracao.tab === "menu" ? <MenuPrincipalCorteCoracao /> : <></>}
-            {cCorteCoracao.tab === "resumo_lotes_etiquetas" ? <TabelasCorteCoracao minHeigth={540} /> : <></>}
+            {cCorteCoracao.tab === "modal_feedback" && <ModalFeedBack />}
+            {cCorteCoracao.tab !== "menu" && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
+            {cCorteCoracao.tab === "menu" && <MenuPrincipalCorteCoracao />}
+            {tabelas.includes(cCorteCoracao.tab) && <TabelasCorteCoracao minHeigth={540} />}
             {cCorteCoracao.tab === "resumo_etiquetas" ? <TabelasCorteCoracao minHeigth={540} tabela="lista_etiquetas" dados={cCorteCoracao.lista_etiquetas} /> : <></>}
-            {cCorteCoracao.tab === "cadastro_lote" ? <CadastroLoteEtiqueta /> : <></>}
-            {cCorteCoracao.tab === "gerador_etiquetas" ? <GeradorEtiquetas /> : <></>}
+            {cCorteCoracao.tab === "previsoes_mensais" ? <TabelasCorteCoracao minHeigth={540} tabela="previsoes_mensais" dados={dataContext.dData.previsoes_mensais} /> : <></>}
+            {cCorteCoracao.tab === "cadastro_lote" && <CadastroLoteEtiqueta />}
+            {cCorteCoracao.tab === "gerador_etiquetas" && <GeradorEtiquetas />}
         </Stack>
     )
 }

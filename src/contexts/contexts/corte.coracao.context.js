@@ -15,7 +15,7 @@ export const CorteCoracaoProvider = ({ children }) => {
     //dCorteCoracao = Dados Corte Coração
     const [dCorteCoracao, setDCorteCoracao] = useState(dInitialize)
 
-    const gControleCorteCoracao = (e, item, target = true) => {
+    const gControleCorteCoracao = async (e, item, target = true) => {
         setCCorteCoracao((currentState) => {
             return { ...currentState, [item]: target ? e.target.value : e }
         })
@@ -92,7 +92,7 @@ export const CorteCoracaoProvider = ({ children }) => {
     }
 
     const funcoes = {
-        gControleCorteCoracao: (e, item, target = true) => { gControleCorteCoracao(e, item, target) },
+        gControleCorteCoracao: async (e, item, target = true) => { await gControleCorteCoracao(e, item, target) },
         gDadosCorteCoracao: (object, item, e, target = true) => { gDadosCorteCoracao(object, item, e, target) },
         gerarPrevisao: (data, previsao_mensal = []) => { gerarPrevisao(data, previsao_mensal) },
         atualizarEtiquetas: (object, item, e, target = true) => { atualizarEtiquetas(object, item, e, target) },

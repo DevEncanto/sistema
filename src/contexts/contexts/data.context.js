@@ -1,7 +1,6 @@
 import { createContext, useState } from "react";
 import { dInitialize } from "../initialize/initialize.data.context";
-import { logger } from "../../utils/logger";
-
+    
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {

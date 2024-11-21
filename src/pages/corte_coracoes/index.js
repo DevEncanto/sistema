@@ -26,7 +26,7 @@ const Page = () => {
         <Box
             component="main"
         >
-           
+            {/* {JSON.stringify(dataContext.dData.previsoes_mensais)} */}
             <Container maxWidth="xl">
                 <Stack sx={{ width: "100%", height: "88vh" }}>
                     <Stack

@@ -1,6 +1,5 @@
 import { Stack, SvgIcon } from "@mui/material"
 import { useContext } from "react"
-import { useState } from "react"
 import { FaSearch } from "react-icons/fa"
 import { EstoqueContext } from "../../../contexts/components_context/estoque_context"
 
