@@ -32,11 +32,6 @@ export const CadastroLoteEtiqueta = () => {
         }
     }
 
-    const renderAlert = () => (
-        cCorteCoracao.alert && <PopupAlerta type={cCorteCoracao.type} title={cCorteCoracao.alert} minWidth={"400px"} />
-    );
-
-
     return (
         <Stack
             spacing={1}
@@ -46,8 +41,9 @@ export const CadastroLoteEtiqueta = () => {
             }}
         >
             <Stack
+                spacing={0}
                 direction="row"
-                sx={{ justifyContent: "center", marginTop: "-5px", width: "100%", minHeight: "40px" }}
+                sx={{ marginTop: "-5px", width: "100%", height: "100px" }}
             >
                 <Typography
                     variant="h5"
@@ -57,24 +53,22 @@ export const CadastroLoteEtiqueta = () => {
                         width: "50%",
                     }}
                 >
-
-                    {cCorteCoracao.edicao ? `Edição ` : `Novo `}
-                    Lote de Etiquetas
-
+                    <Stack
+                        sx={{ alignItems: "center", height: "50px" }}
+                        direction={`row`}
+                        spacing={2}
+                    >
+                        {cCorteCoracao.edicao ? `Edição ` : `Novo `}
+                        Lote de Etiquetas
+                        {cCorteCoracao.load ?
+                            <img src="/assets/loading.svg" width={50} height={50} style={{ marginLeft: "20px" }} />
+                            :
+                            <></>
+                        }
+                    </Stack>
                 </Typography>
-                <Stack
-                    direction="row"
-                    spacing={2}
-                    sx={{
-                        width: "70%",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        paddingTop: "5px"
-                    }}
-                >
-                    {renderAlert()}
-                </Stack>
-            </Stack>
+
+            </Stack >
             <Stack
                 direction="row"
                 spacing={4}
@@ -120,7 +114,7 @@ export const CadastroLoteEtiqueta = () => {
                 <ButtonCancelar onClick={cancelarCadastros} />
                 <ButtonSalvar onClick={salvarLote} />
             </Stack>
-        </Stack>
+        </Stack >
     );
 };
 

@@ -36,13 +36,15 @@ export const CorteCoracaoProvider = ({ children }) => {
         })
     }
 
-    const exibirAlerta = (mensagem, tipo) => {
+    const exibirAlerta = (mensagem, tipo, retorno, time = 2500) => {
         gControleCorteCoracao(mensagem, "alert", false)
         gControleCorteCoracao(tipo, "type", false)
+        gControleCorteCoracao("modal_feedback", "tab", false)
         setTimeout(() => {
             gControleCorteCoracao("", "alert", false)
             gControleCorteCoracao("", "type", false)
-        }, 2500);
+            gControleCorteCoracao(retorno, "tab", false)
+        }, time);
     };
 
     const validarDados = (dados) => {
@@ -71,7 +73,7 @@ export const CorteCoracaoProvider = ({ children }) => {
         const data_prevista = converterDataCalendario(calcularDatas(dataString, dias_previsao))
         const semana_previsao = obterSemana(converterDateParaString(data_prevista))
 
-            gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
+        gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
         gDadosCorteCoracao("lote_etiqueta", "data_prevista", data_prevista, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_corte", semana_corte, false)
         gDadosCorteCoracao("lote_etiqueta", "semana_colheita", semana_previsao, false)
@@ -95,7 +97,7 @@ export const CorteCoracaoProvider = ({ children }) => {
         gerarPrevisao: (data, previsao_mensal = []) => { gerarPrevisao(data, previsao_mensal) },
         atualizarEtiquetas: (object, item, e, target = true) => { atualizarEtiquetas(object, item, e, target) },
         validarDados: (dados) => { return validarDados(dados) },
-        exibirAlerta: (mensagem, tipo) => { exibirAlerta(mensagem, tipo) },
+        exibirAlerta: (mensagem, tipo, retorno = "", time = 2500) => { exibirAlerta(mensagem, tipo, retorno, time) },
         resetFormulario: (form) => { resetFormulario(form) },
         dControleCorteCoracaoComplex: (object, item, value, target = true) => { dControleCorteCoracaoComplex(object, item, value, target) },
         dControleCorteCoracaoSimple: (value, item, target = true) => { dControleCorteCoracaoSimple(value, item, target) }

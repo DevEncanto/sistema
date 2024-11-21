@@ -6,7 +6,7 @@ import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao
 export const BotaoVoltar = () => {
 
     const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const subPages = ["menu", "cadastro_lote"]
+    const subPages = ["menu", "cadastro_lote", "modal_feedback"]
 
 
     const handleClickVoltar = () => {

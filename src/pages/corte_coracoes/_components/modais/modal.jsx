@@ -9,10 +9,10 @@ export const ModalCorteCoracao = (props) => {
 
     }
     const teste = useContext(DataContext)
-    const { destino, children, title, width = "450px", height = "460px", icon = false } = props
+    const { header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     useEffect(() => {
-        
+
     }, [])
 
 
@@ -32,60 +32,64 @@ export const ModalCorteCoracao = (props) => {
                 boxShadow: "0px 0px 5px 4px rgba(0,0,0,0.2)",
             }}
         >
-            <Stack
-                direction={`row`}
-                sx={{
-                    height: "15%",
-                    width: "100%",
-                    borderTopLeftRadius: "10px",
-                    borderTopRightRadius: "10px",
-                    borderBottomColor: "grey"
-                }}
-            >
+            {header ?
                 <Stack
                     direction={`row`}
-                    spacing={2}
                     sx={{
-                        width: "90%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        paddingLeft: "13%"
+                        height: "15%",
+                        width: "100%",
+                        borderTopLeftRadius: "10px",
+                        borderTopRightRadius: "10px",
+                        borderBottomColor: "grey"
                     }}
                 >
-                    {
-                        icon
-                            ? <img src="/assets/sirene.gif" width={30} height={30} />
-                            : <></>
-                    }
-                    <Typography
-                        variant="h5"
-                        sx={{ fontSize: "20px" }}
-                    >
-                        {title}
-                    </Typography>
-                </Stack>
-                <Stack
-                    sx={{
-                        width: "10%",
-                        justifyContent: "center",
-                        alignItems: "center"
-                    }}
-                >
-                    <SvgIcon
-                        onClick={() => funcoes.gerenciarControle(destino, "tabsEntrada", false)}
+                    <Stack
+                        direction={`row`}
+                        spacing={2}
                         sx={{
-                            cursor: "pointer"
+                            width: "90%",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            paddingLeft: "13%"
                         }}
                     >
-                        <RiCloseFill />
-                    </SvgIcon>
-                </Stack>
-            </Stack>
+                        {
+                            icon
+                                ? <img src="/assets/sirene.gif" width={30} height={30} />
+                                : <></>
+                        }
+                        <Typography
+                            variant="h5"
+                            sx={{ fontSize: "20px" }}
+                        >
+                            {title}
+                        </Typography>
+                    </Stack>
+                    <Stack
+                        sx={{
+                            width: "10%",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                    >
+                        <SvgIcon
+                            onClick={() => funcoes.gerenciarControle(destino, "tabsEntrada", false)}
+                            sx={{
+                                cursor: "pointer"
+                            }}
+                        >
+                            <RiCloseFill />
+                        </SvgIcon>
+                    </Stack>
+                </Stack> :
+                <></>
+            }
             <Stack
                 sx={{
-                    height: "85%",
+                    height: header ? "85%" : "100%",
                     width: "100%",
-
+                    alignItems: "center",
+                    justifyContent: "center",
                 }}
             >
                 {children}

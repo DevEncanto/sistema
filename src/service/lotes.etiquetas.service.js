@@ -21,22 +21,19 @@ export class LotesEtiquetasService {
         const validarDados = funcoes.validarDados(dCorteCoracao.lote_etiqueta)
 
         if (!validarDados) {
-            funcoes.exibirAlerta("Preencha todos os campos!", "warning");
+            funcoes.exibirAlerta("Preencha todos os campos!", "warning", "cadastro_lote", 1800);
             return false
         }
 
         const { ano_colheita, ano_corte, data_corte, semana_colheita, semana_corte, etiqueta_inicial, etiqueta_final } = dCorteCoracao.lote_etiqueta
 
         if (etiqueta_inicial > etiqueta_final || etiqueta_final < 0 || etiqueta_inicial < 0) {
-            funcoes.exibirAlerta("Intervalo de etiquetas inválido!", "error");
+            funcoes.exibirAlerta("Intervalo de etiquetas inválido!", "error", "cadastro_lote");
             return false
         }
 
-        console.log(converterDateParaString(data_corte))
-
-
         const dados = {
-            criacao:converterDateParaString(data_corte),
+            criacao: converterDateParaString(data_corte),
             semana_colheita: parseInt(semana_colheita),
             semana_corte: parseInt(semana_corte),
             etiqueta_inicial: parseInt(etiqueta_inicial),
@@ -58,21 +55,22 @@ export class LotesEtiquetasService {
 
             if (!dados) { return }
             const { data: { message, status, data } } = await aRepository.create(dados)
-            await funcoes.exibirAlerta(message, status === 200 ? "success" : "error");
-
+            funcoes.gControleCorteCoracao(true, "load", false)
+            const type = status === 200 ? "success" : "error"
+            const retorno = status === 200 ? "resumo_lotes_etiquetas" : "cadastro_lote"
+            await funcoes.exibirAlerta(message, type, retorno);
+            funcoes.gControleCorteCoracao(false, "load", false)
             if (status === 200) {
                 const old_data = this.dataContext.dData.lotes_etiquetas
                 const new_data = [...old_data, data]
                 this.dataContext.funcoes.dControleDataSimple("lotes_etiquetas", new_data, false)
-                setTimeout(() => {
-                    funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "tab", false)
-                    funcoes.gControleCorteCoracao("menu", "return", false)
-                }, 2500)
+                funcoes.gControleCorteCoracao("menu", "return", false)
+                funcoes.resetFormulario("lote_etiqueta")
             }
             return
         } catch (error) {
             console.log(error)
-            return funcoes.exibirAlerta("Uma falha foi detectada!", "error");
+            return funcoes.exibirAlerta("Uma falha foi detectada!", "error", "cadastro_lote");
         }
     }
 
@@ -86,10 +84,24 @@ export class LotesEtiquetasService {
 
             if (!dados) { return }
             dados.id_lote_etiqueta = this.corteCoracaoContext.cCorteCoracao.id_lote
+            funcoes.gControleCorteCoracao(true, "load", false)
+            const { data: { message, status, data } } = await aRepository.update(dados)
+            const type = status === 200 ? "success" : "error"
+            const retorno = status === 200 ? "resumo_lotes_etiquetas" : "cadastro_lote"
 
-            const { data } = await aRepository.update(dados)
-            // await funcoes.exibirAlerta(message, status === 200 ? "success" : "error");
             logger(data)
+
+            if (status === 200) {
+                const array = this.dataContext.dData.lotes_etiquetas.map(obj =>
+                    obj.id_lote_etiqueta === parseInt(data.id_lote_etiqueta) ? data : obj
+                )
+                this.dataContext.funcoes.dControleDataSimple("lotes_etiquetas", array, false)
+            }
+
+            funcoes.gControleCorteCoracao("menu", "return", false)
+            funcoes.resetFormulario("lote_etiqueta")
+            funcoes.gControleCorteCoracao(false, "load", false)
+            await funcoes.exibirAlerta(message, type, retorno);
 
             return
         } catch (error) {
