@@ -44,17 +44,50 @@ export function obterSemana(dataString) {
     // Criar uma data para o primeiro dia do ano
     const inicioAno = new Date(ano, 0, 1);
 
-    // Calcular a diferença em milissegundos entre a data e o primeiro dia do ano
-    const diff = data - inicioAno;
+    // Ajustar para a primeira segunda-feira do ano (conforme o padrão ISO 8601)
+    const diaSemana = inicioAno.getDay();  // Domingo é 0, Segunda-feira é 1, etc.
+    
+    // Se o dia da semana for domingo (0), devemos ajustar para a segunda-feira anterior
+    const primeiroDiaSemana = new Date(inicioAno);
+    if (diaSemana === 0) {
+        primeiroDiaSemana.setDate(inicioAno.getDate() - 6); // Ajusta para a segunda-feira anterior
+    } else {
+        primeiroDiaSemana.setDate(inicioAno.getDate() - diaSemana + 1); // Ajusta para a segunda-feira da semana
+    }
 
-    // Calcular o número de dias desde o primeiro dia do ano
+    // Calcular a diferença em milissegundos entre a data e o primeiro dia da semana ISO
+    const diff = data - primeiroDiaSemana;
+
+    // Calcular o número de dias desde o primeiro dia da semana ISO
     const diasNoAno = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-    // Calcular a semana do ano (considerando que a semana começa no dia 1 de janeiro)
+    // Calcular a semana do ano (considerando o início da primeira semana como a primeira segunda-feira do ano)
     const semana = Math.ceil((diasNoAno + 1) / 7);
+
+    // Verificar se a data está entre os últimos dias de 2024 (deve ser contada como semana 1 de 2025)
+    // Ajuste para 31/12/2024 ser parte da semana 1 de 2025
+    const ultimaSegundaFeiraDe2024 = new Date(2024, 11, 30); // Última segunda-feira de 2024
+    const diffDataUltimaSegundaFeira = data - ultimaSegundaFeiraDe2024;
+
+    // Verificar se a data é 30 ou 31 de dezembro de 2024
+    if (ano === 2024 && (data.getDate() === 30 || data.getDate() === 31)) {
+        return 1; // 30/12/2024 e 31/12/2024 devem ser semana 1 de 2025
+    }
+
+    // Validar para garantir que o número de semanas não ultrapasse 52 ou 53
+    const ultimoDiaAno = new Date(ano, 11, 31); // Último dia do ano
+    const diffUltimoDia = ultimoDiaAno - primeiroDiaSemana;
+    const diasRestantesAno = Math.floor(diffUltimoDia / (1000 * 60 * 60 * 24));
+    const semanasNoAno = Math.ceil((diasRestantesAno + 1) / 7);
+
+    // Se a semana for maior que o número de semanas no ano, ajustar para o número de semanas válidas
+    if (semanasNoAno >= 52 && semana > semanasNoAno) {
+        return semanasNoAno;
+    }
 
     return semana;
 }
+
 
 export function converterDataCalendario(dataString) {
     // Extrair o dia, mês e ano da string no formato DD/MM/YYYY

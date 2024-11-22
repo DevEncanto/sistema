@@ -1,8 +1,9 @@
 export const lista_etiquetas = {
     header: [
         { title: "ETIQUETA", tooltip: "Número da Etiqueta" },
-        { title: "DATA", tooltip: "Data de criação da etiqueta" },
         { title: "SEM. COLHEITA", tooltip: "Semana para prevista para colheita" },
+        { title: "ÁREA", tooltip: "Área onde a etiqueta está localizada" },
+        { title: "PREVISÃO (KG)", tooltip: "Previsão de quantos KG será colhido" },
         { title: "STATUS", tooltip: "Status atual da etiqueta" },
         { title: "LOCALIZAR", tooltip: "Localização da etiqueta no Google Maps" },
     ],
@@ -20,15 +21,23 @@ export const lista_etiquetas = {
             },
             {
                 type: "text",
-                content: "data"
-            },
-            {
-                type: "text",
                 content: "semana_colheita"
             },
             {
                 type: "text",
-                content: "status"
+                content: "area"
+            },
+            {
+                type: "number",
+                content: "previsao_kg"
+            },
+            {
+                type: "colorText",
+                content: "status",
+                colors: {
+                    ["Em uso"]: 'success',
+                    ["Sem uso"]: 'neutral',
+                }
             },
             {
                 type: "blank",

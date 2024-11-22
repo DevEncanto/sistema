@@ -23,7 +23,7 @@ export const Calendario = (props) => {
 
     const handleOnChange = (e) => {
         funcoes.gDadosCorteCoracao(object, item, e, false)
-        funcoes.gerarPrevisao(e, dData.previsao_mensal)
+        funcoes.gerarPrevisao(e, dData.previsoes_mensais)
     }
 
     return (
