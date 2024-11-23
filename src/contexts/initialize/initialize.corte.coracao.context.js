@@ -46,6 +46,18 @@ export const cInitialize = {
             subPage: "previsoes_mensais",
             tabelaComponent: true,
             tabela: "previsoes_mensais"
+        },
+        ,
+        {
+            label: "Previsões de Colheita",
+            icon: (
+                <SvgIcon fontSize="medium" color='white'>
+                    <BiCalendar />
+                </SvgIcon>
+            ),
+            subPage: "previsao_colheita",
+            tabelaComponent: false,
+            tabela: ""
         }
     ]
 }
