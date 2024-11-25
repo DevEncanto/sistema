@@ -12,17 +12,16 @@ export const PrevisaoColheita = () => {
         display: "flex",  // Assegura que o Stack é um flex container
         alignItems: "center",
         justifyContent: "center",
-        padding: 0
     };
 
     return (
 
         <Stack sx={propsStackPrincipal}>
-            <ContainerDashboard width="100%" height="100%">
+            <ContainerDashboard width="100%" height="100%" bkColor="red">
                 <ContainerDashboard width="100%" height="50%" direction="row">
-                    <ContainerDashboard height="60%" width="40%">
-                        <ContainerDashboard width="100%" height="50%" bkColor="blue" direction="row">
-                            <ContainerDashboard width="33%" height="100%" bkColor="red">
+                    <ContainerDashboard height="100%" width="40%" direction="row">
+                        <ContainerDashboard height="100%" width="50%">
+                            <ContainerDashboard width="100%" height="33%">
                                 <Typography>
                                     Meta 2024(Ton)
                                 </Typography>
@@ -30,7 +29,60 @@ export const PrevisaoColheita = () => {
                                     2.130
                                 </Typography>
                             </ContainerDashboard>
-                            <ContainerDashboard width="33%" height="100%" bkColor="red">
+                            <ContainerDashboard width="100%" height="33%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                            <ContainerDashboard width="100%" height="33%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                        </ContainerDashboard>
+                        <ContainerDashboard height="100%" width="50%">
+                            <ContainerDashboard width="100%" height="33%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                            <ContainerDashboard width="100%" height="33%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                            <ContainerDashboard width="100%" height="33%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                            
+                        </ContainerDashboard>
+                        {/* <ContainerDashboard width="100%" height="50%"  direction="row">
+                            <ContainerDashboard width="33%" height="100%">
+                                <Typography>
+                                    Meta 2024(Ton)
+                                </Typography>
+                                <Typography>
+                                    2.130
+                                </Typography>
+                            </ContainerDashboard>
+                            <ContainerDashboard width="33%" height="100%">
                                 <Typography>
                                     % da Meta
                                 </Typography>
@@ -38,7 +90,7 @@ export const PrevisaoColheita = () => {
                                     64
                                 </Typography>
                             </ContainerDashboard>
-                            <ContainerDashboard width="33%" height="100%" bkColor="red">
+                            <ContainerDashboard width="33%" height="100%">
                                 <Typography>
                                     Total Colhido (Ton)
                                 </Typography>
@@ -46,9 +98,9 @@ export const PrevisaoColheita = () => {
                                     1.361
                                 </Typography>
                             </ContainerDashboard>
-                        </ContainerDashboard>
-                        <ContainerDashboard width="100%" height="50%" bkColor="red" direction="row">
-                            <ContainerDashboard width="33%" height="100%" bkColor="blue">
+                        </ContainerDashboard> */}
+                        {/* <ContainerDashboard width="100%" height="50%" direction="row">
+                            <ContainerDashboard width="33%" height="100%" >
                                 <Typography>
                                     Kg/Cacho
                                 </Typography>
@@ -56,7 +108,7 @@ export const PrevisaoColheita = () => {
                                     21.1
                                 </Typography>
                             </ContainerDashboard>
-                            <ContainerDashboard width="33%" height="100%" bkColor="blue">
+                            <ContainerDashboard width="33%" height="100%" >
                                 <Typography>
                                     Prev. Trim (Ton)
                                 </Typography>
@@ -64,7 +116,7 @@ export const PrevisaoColheita = () => {
                                     291
                                 </Typography>
                             </ContainerDashboard>
-                            <ContainerDashboard width="33%" height="100%" bkColor="blue">
+                            <ContainerDashboard width="33%" height="100%" >
                                 <Typography>
                                     Total Previsto
                                 </Typography>
@@ -72,14 +124,14 @@ export const PrevisaoColheita = () => {
                                     1.828
                                 </Typography>
                             </ContainerDashboard>
-                        </ContainerDashboard>
+                        </ContainerDashboard> */}
                     </ContainerDashboard>
                     <ContainerDashboard height="100%" width="75%">
-                        <GraficoPrevisaoColheita width="90%" height="100%" />
+                        <GraficoPrevisaoColheita width="100%" height="100%" />
                     </ContainerDashboard>
                 </ContainerDashboard>
-                <ContainerDashboard width="100%" height="50%">
-                    <GraficoPrevistoRealizado width="90%" height="100%" />
+                <ContainerDashboard width="100%" height="50%"  padding="0px">
+                    <GraficoPrevistoRealizado width="100%" height="100%" />
                 </ContainerDashboard>
             </ContainerDashboard>
         </Stack>

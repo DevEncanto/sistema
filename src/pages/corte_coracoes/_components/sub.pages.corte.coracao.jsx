@@ -8,7 +8,7 @@ import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
 import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
 import { TabelasCorteCoracao } from "./tabelas/tabelas.corte_coracao"
 import { PrevisaoColheita } from "../_sub_pages/previsao.colheita"
-
+     
 export const SubPagesCorteCoracao = () => {
 
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)

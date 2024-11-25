@@ -13,6 +13,7 @@ export const ModalCorteCoracao = (props) => {
 
     useEffect(() => {
 
+        
     }, [])
 
 
