@@ -34,11 +34,16 @@ export const SubPagesCorteCoracao = () => {
         "medias_cachos"
     ]
 
+    const divideHide = [
+        "menu",
+        "previsao_colheita"
+    ]
+
     return (
         <Stack sx={sx}>
             {/* {JSON.stringify(cCorteCoracao)} */}
             {cCorteCoracao.tab === "modal_feedback" && <ModalFeedBack />}
-            {cCorteCoracao.tab !== "menu" && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
+            {!divideHide.includes(cCorteCoracao.tab)  && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
             {cCorteCoracao.tab === "menu" && <MenuPrincipalCorteCoracao />}
             {tabelas.includes(cCorteCoracao.tab) && <TabelasCorteCoracao minHeigth={540} />}
             {cCorteCoracao.tab === "resumo_etiquetas" ? <TabelasCorteCoracao minHeigth={540} tabela="lista_etiquetas" dados={cCorteCoracao.lista_etiquetas} /> : <></>}

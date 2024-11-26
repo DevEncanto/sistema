@@ -16,12 +16,9 @@ const data = [
     { "mes": "Fev", "previsto": 11, "realizado": 0, "ano": 2025, "percentual": "29%" }
 ]
 
-
-
-
-
 export const GraficoPrevistoRealizado = (props) => {
     const { width, height } = props;
+
     const maiorValor = useMemo(() => {
         const maxPrevisto = Math.max(...data.map(item => item.previsto)); // Maior valor de "previsto"
         const maxRealizado = Math.max(...data.map(item => item.realizado)); // Maior valor de "realizado"
@@ -89,12 +86,10 @@ export const GraficoPrevistoRealizado = (props) => {
         >
             {/* header */}
             <Stack spacing={0} sx={{ height: "15%", width: width }} >
-
-
-                <Typography fontSize={14} fontWeight={600} sx={{ marginLeft: "5px" }}>
+                <Typography fontSize={14} fontWeight={600} sx={{ marginLeft: "7px" }}>
                     Previsto x Realizado
                 </Typography>
-                <Typography fontSize={12} fontWeight={600} sx={{ marginLeft: "5px" }}>
+                <Typography fontSize={12} fontWeight={600} sx={{ marginLeft: "7px" }}>
                     Variação Percentual (Ton) entre o previsto e o realizado ao longo do período de 12 meses.
                 </Typography>
                 <Divider color="#000" sx={{ height: 2 }} />
@@ -111,7 +106,7 @@ export const GraficoPrevistoRealizado = (props) => {
                         </Bar>
                         <Bar dataKey="realizado" fill="#12239E">
                             <LabelList dataKey="realizado" position="top" />
-                            <LabelList dataKey="percentual" position="top" offset={30}/>
+                            <LabelList dataKey="percentual" position="top" offset={30} />
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>
