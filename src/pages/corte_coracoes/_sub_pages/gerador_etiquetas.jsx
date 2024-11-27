@@ -39,22 +39,26 @@ export const GeradorEtiquetas = () => {
     const { cCorteCoracao } = useContext(CorteCoracaoContext)
     const [etiquetas, setEtiquetas] = useState([])
     const [filteredEtiquetas, setFilteredEtiquetas] = useState([])
-    const [filterString, setFilterString] = useState("") // Armazena o filtro inserido
+// Armazena o filtro inserido
     const [load, setLoad] = useState(true)
 
     const lazyLoading = async () => {
         const data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
+        
+        logger(data)
+        
         setEtiquetas(data)
         setFilteredEtiquetas(data) // Inicializa o estado filtrado com todas as etiquetas
         setLoad(false)
     }
 
     const applyFilter = () => {
-        if (filterString.trim() === "") {
+        if (cCorteCoracao.filtro.trim() === "") {
             setFilteredEtiquetas(etiquetas) // Sem filtro, mostra todas as etiquetas
         } else {
             const result = filterEtiquetas(etiquetas, cCorteCoracao.filtro)
             setFilteredEtiquetas(result)
+            logger(result)
         }
     }
 
@@ -62,11 +66,8 @@ export const GeradorEtiquetas = () => {
 
     useEffect(() => {
         lazyLoading()
-    }, [])
-
-    useEffect(() => {
         applyFilter()
-    }, [filterString, etiquetas])
+    }, [cCorteCoracao.filtro, etiquetas])
 
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
@@ -99,19 +100,13 @@ export const GeradorEtiquetas = () => {
                         padding: "30px 60px"
                     }}
                 >
-                    <Button
+                    {/* <Button
                         ref={filterPopover.anchorRef}
                         onClick={filterPopover.handleOpen}
                     >
                         Filtros
-                    </Button>
-                    <FilterPopover
-                        anchorEl={filterPopover.anchorRef.current}
-                        open={filterPopover.open}
-                        onClose={filterPopover.handleClose}
-                    >
-                        
-                    </FilterPopover>
+                    </Button> */}
+                    
                     <Grid
                         container
                         rowSpacing={8}

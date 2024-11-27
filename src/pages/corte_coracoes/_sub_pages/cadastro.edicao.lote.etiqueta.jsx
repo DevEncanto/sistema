@@ -5,7 +5,6 @@ import { DataContext } from "../../../contexts/contexts/data.context";
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context";
 import { Calendario } from "../_components/calendario";
 import { LotesEtiquetasService } from "../../../service/lotes.etiquetas.service";
-import { PopupAlerta } from "../_components/popups/popup_status";
 
 export const CadastroLoteEtiqueta = () => {
     const corteCoracaoContext = useContext(CorteCoracaoContext);
@@ -82,7 +81,6 @@ export const CadastroLoteEtiqueta = () => {
                     <Stack
                         sx={{ alignItems: "center" }}
                     >
-
                         <Stack direction="row" spacing={1} >
                             <Calendario object="lote_etiqueta" item="data_corte" value={lote_etiqueta.data_corte} width="198px" label="Data do Corte" />
                             <Calendario disabled={true} object="lote_etiqueta" item="data_prevista" value={lote_etiqueta.data_prevista} width="198px" label="Data Previsão Colheita" />

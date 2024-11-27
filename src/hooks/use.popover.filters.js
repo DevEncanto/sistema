@@ -13,7 +13,9 @@ export function usePopover() {
   }, []);
 
   const handleToggle = useCallback(() => {
+
     setOpen((prevState) => !prevState);
+
   }, []);
 
   return {

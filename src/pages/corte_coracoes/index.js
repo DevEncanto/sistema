@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import { Box, Stack, Container, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect,      } from 'react';
 import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 import { DataContext } from '../../contexts/contexts/data.context';
 import { SubPagesCorteCoracao } from './_components/sub.pages.corte.coracao';
 import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
 import { BotaoVoltar } from './_components/botoes/botao.voltar';
+import { BotaoFiltroEtiquetas } from './_components/botoes/botao.filtro.etiquetas';
 
 const Page = () => {
 
@@ -48,6 +49,7 @@ const Page = () => {
                             spacing={1}
                         >
                             <BotaoNovoLote />
+                            <BotaoFiltroEtiquetas />
                             <BotaoVoltar />
                         </Stack>
 

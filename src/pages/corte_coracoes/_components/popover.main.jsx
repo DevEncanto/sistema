@@ -3,20 +3,17 @@ import { useContext } from 'react';
 import { useState } from 'react';
 import { CorteCoracaoContext } from '../../../contexts/contexts/corte.coracao.context';
 import { usePopover } from '../../../hooks/use.popover.filters';
-import { filter } from 'lodash';
-import { logger } from '../../../utils/logger';
+
 
 export const FilterPopover = (props) => {
     const { anchorEl, onClose, open } = props;
 
     const [filtro, setFiltro] = useState("")
     const { funcoes } = useContext(CorteCoracaoContext)
-    const filterPopover = usePopover()
-
+    
     const handleFiltrar = () => {
         funcoes.gControleCorteCoracao(filtro, "filtro", false)
         setFiltro("")
-        filterPopover.handleToggle()
     }
 
     return (
@@ -40,7 +37,7 @@ export const FilterPopover = (props) => {
                     Filtro de etiquetas
                 </Typography>
             </Box>
-            <Divider />
+            <Divider color="#dbdbdb" sx={{ height: 2, marginBottom: "5px" }} />
             <Stack
                 sx={{ alignItems: "center" }}
             >
@@ -72,11 +69,24 @@ export const FilterPopover = (props) => {
                     value={filtro}
                 />
 
-                <Button
-                    onClick={handleFiltrar}
+                <Stack
+                    spacing={.5}
+                    direction={"row"}
+                    sx={{ marginBottom: "30px" }}
                 >
-                    Filtrar
-                </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleFiltrar}
+                    >
+                        Limpar Filtros
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleFiltrar}
+                    >
+                        Filtrar
+                    </Button>
+                </Stack>
             </Stack>
         </Popover>
     );
