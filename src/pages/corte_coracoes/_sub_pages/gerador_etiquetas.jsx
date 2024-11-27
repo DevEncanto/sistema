@@ -1,33 +1,78 @@
 import { DataContext } from "../../../contexts/contexts/data.context"
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
 import { Etiqueta } from "../../../componentes/corte_coracao/cadastros/entrada/etiqueta"
-const { Stack, Grid } = require("@mui/material")
+const { Stack, Grid, Button, TextField } = require("@mui/material")
 import { useReactToPrint } from 'react-to-print';
 import { LoaderEstatico } from "../_components/loader"
 import { useContext, useEffect, useState, useRef } from "react";
 import { logger } from "../../../utils/logger";
+import { usePopover } from "../../../hooks/use.popover.filters";
+import { FilterPopover } from "../_components/popover.main";
+
+const filterEtiquetas = (etiquetas, filterString) => {
+    const rangesAndItems = filterString.split(',').map(item => item.trim())
+    const validFilters = rangesAndItems.filter(item =>
+        /^\d+$/.test(item) || /^\d+-\d+$/.test(item)
+    )
+
+    const filteredEtiquetas = new Set()
+
+    for (const filter of validFilters) {
+        if (/^\d+$/.test(filter)) {
+            // Número único
+            filteredEtiquetas.add(filter.padStart(4, '0'))
+        } else if (/^\d+-\d+$/.test(filter)) {
+            // Intervalo
+            const [start, end] = filter.split('-').map(Number)
+            for (let i = start; i <= end; i++) {
+                filteredEtiquetas.add(String(i).padStart(4, '0'))
+            }
+        }
+    }
+
+    return etiquetas.filter(etiqueta => filteredEtiquetas.has(etiqueta.etiqueta))
+}
 
 export const GeradorEtiquetas = () => {
 
     const { dData } = useContext(DataContext)
     const { cCorteCoracao } = useContext(CorteCoracaoContext)
     const [etiquetas, setEtiquetas] = useState([])
+    const [filteredEtiquetas, setFilteredEtiquetas] = useState([])
+    const [filterString, setFilterString] = useState("") // Armazena o filtro inserido
     const [load, setLoad] = useState(true)
-   
-    const lazyLoading = async () => {
 
-        let data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
+    const lazyLoading = async () => {
+        const data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
         setEtiquetas(data)
+        setFilteredEtiquetas(data) // Inicializa o estado filtrado com todas as etiquetas
         setLoad(false)
     }
+
+    const applyFilter = () => {
+        if (filterString.trim() === "") {
+            setFilteredEtiquetas(etiquetas) // Sem filtro, mostra todas as etiquetas
+        } else {
+            const result = filterEtiquetas(etiquetas, cCorteCoracao.filtro)
+            setFilteredEtiquetas(result)
+        }
+    }
+
+    const filterPopover = usePopover()
 
     useEffect(() => {
         lazyLoading()
     }, [])
+
+    useEffect(() => {
+        applyFilter()
+    }, [filterString, etiquetas])
+
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current
     })
+
     const sx = {
         borderRadius: "12px",
         width: "230px",
@@ -40,9 +85,9 @@ export const GeradorEtiquetas = () => {
 
     return (
         <>
-            {load ?
+            {load ? (
                 <LoaderEstatico />
-                :
+            ) : (
                 <Stack
                     ref={componentRef}
                     sx={{
@@ -54,24 +99,31 @@ export const GeradorEtiquetas = () => {
                         padding: "30px 60px"
                     }}
                 >
-
+                    <Button
+                        ref={filterPopover.anchorRef}
+                        onClick={filterPopover.handleOpen}
+                    >
+                        Filtros
+                    </Button>
+                    <FilterPopover
+                        anchorEl={filterPopover.anchorRef.current}
+                        open={filterPopover.open}
+                        onClose={filterPopover.handleClose}
+                    >
+                        
+                    </FilterPopover>
                     <Grid
                         container
                         rowSpacing={8}
-                        columns={{ xs: 6, sm: 8, md: 12 }}  // Define as colunas para diferentes tamanhos de tela
+                        columns={{ xs: 6, sm: 8, md: 12 }}
                         sx={{ padding: "50px 0" }}
                     >
-                        {
-                            etiquetas.map((etiqueta, index) => {
-
-                                return (
-                                    <Etiqueta key={index} etiqueta={etiqueta} />
-                                )
-                            })
-                        }
+                        {filteredEtiquetas.map((etiqueta, index) => (
+                            <Etiqueta key={index} etiqueta={etiqueta} />
+                        ))}
                     </Grid>
-                </Stack >
-            }
+                </Stack>
+            )}
         </>
     )
 }

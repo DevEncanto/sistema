@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { DataContext } from "../../../../contexts/contexts/data.context"
 import { converterDataCalendario } from "../../../../utils/gerador-datas"
+import { logger } from "../../../../utils/logger"
 
 const { Button, Tooltip } = require("@mui/material")
 const { BsPencil } = require("react-icons/bs")
@@ -23,7 +24,7 @@ export const BotaoEditarLotesEtiquetas = (props) => {
         // Extrair informações necessárias
         const { etiquetas, criacao, etiqueta_inicial, etiqueta_final } = lote_etiqueta
         const data_corte = converterDataCalendario(criacao)
-        const previsao_mensal = dData.previsao_mensal
+        const previsao_mensal = dData.previsoes_mensais
     
         // Chamar funções agrupando lógica repetitiva
         const controles = [

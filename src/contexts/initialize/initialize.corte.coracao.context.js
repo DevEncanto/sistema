@@ -11,6 +11,7 @@ export const cInitialize = {
     return: "",
     lista_etiquetas: [],
     type: "",
+    filtro: "",
     alert: "",
     edicao: false,
     menu: [
