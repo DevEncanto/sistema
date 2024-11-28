@@ -8,7 +8,8 @@ import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
 import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
 import { TabelasCorteCoracao } from "./tabelas/tabelas.corte_coracao"
 import { PrevisaoColheita } from "../_sub_pages/previsao.colheita"
-     
+import { MenuFiltroEtiquetas } from "./modais/modal.filtro.etiquetas"
+
 export const SubPagesCorteCoracao = () => {
 
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
@@ -25,8 +26,8 @@ export const SubPagesCorteCoracao = () => {
         height: "100%",
         display: "flex",
         padding: "20px 0",
-        alignItems: cCorteCoracao.tab === "modal_feedback" ? "center" : "",
-        justifyContent: cCorteCoracao.tab === "modal_feedback" ? "center" : ""
+        alignItems: cCorteCoracao.tab.includes("modal") ? "center" : "",
+        justifyContent: cCorteCoracao.tab.includes("modal") ? "center" : ""
     }
 
     const tabelas = [
@@ -43,7 +44,8 @@ export const SubPagesCorteCoracao = () => {
         <Stack sx={sx}>
             {/* {JSON.stringify(cCorteCoracao)} */}
             {cCorteCoracao.tab === "modal_feedback" && <ModalFeedBack />}
-            {!divideHide.includes(cCorteCoracao.tab)  && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
+            {cCorteCoracao.tab === "modal_menu_etiquetas" && <MenuFiltroEtiquetas />}
+            {!divideHide.includes(cCorteCoracao.tab) && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
             {cCorteCoracao.tab === "menu" && <MenuPrincipalCorteCoracao />}
             {tabelas.includes(cCorteCoracao.tab) && <TabelasCorteCoracao minHeigth={540} />}
             {cCorteCoracao.tab === "resumo_etiquetas" ? <TabelasCorteCoracao minHeigth={540} tabela="lista_etiquetas" dados={cCorteCoracao.lista_etiquetas} /> : <></>}

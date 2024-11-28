@@ -1,11 +1,9 @@
 import { Box, Button, Divider, MenuItem, MenuList, Popover, Stack, TextField, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { useState } from 'react';
-import { CorteCoracaoContext } from '../../../contexts/contexts/corte.coracao.context';
-import { usePopover } from '../../../hooks/use.popover.filters';
+import { CorteCoracaoContext } from '../../../../contexts/contexts/corte.coracao.context';
 
-
-export const FilterPopover = (props) => {
+export const FilterPopoverEtiquetas = (props) => {
     const { anchorEl, onClose, open } = props;
 
     const [filtro, setFiltro] = useState("")

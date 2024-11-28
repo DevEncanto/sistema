@@ -1,8 +1,7 @@
-import { MenuItem, FormControl, InputLabel, Select } from "@mui/material"
+import { MenuItem, Select } from "@mui/material"
 import { SeverityPill } from "./severity-pill"
 
 export const Seletor = (props) => {
-
 
     const {
         value = "",

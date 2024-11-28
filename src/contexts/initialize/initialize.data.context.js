@@ -20,6 +20,69 @@ export const dInitialize = {
     ],
     lotes_etiquetas: [],
     usuario: {},
+    areas: [
+        {
+            id_area: 1,
+            nome: "N1"
+        },
+        {
+            id_area: 2,
+            nome: "N2"
+        },
+        {
+            id_area: 3,
+            nome: "N3"
+        },
+        {
+            id_area: 4,
+            nome: "N4"
+        },
+        {
+            id_area: 5,
+            nome: "N5"
+        },
+        {
+            id_area: 6,
+            nome: "N6"
+        },
+        {
+            id_area: 7,
+            nome: "N7"
+        },
+        {
+            id_area: 8,
+            nome: "N8"
+        },
+        {
+            id_area: 9,
+            nome: "N9"
+        },
+        {
+            id_area: 10,
+            nome: "N10"
+        },
+        {
+            id_area: 11,
+            nome: "N11"
+        },
+        {
+            id_area: 12,
+            nome: "N12"
+        },
+        {
+            id_area: 13,
+            nome: "N13"
+        },
+        {
+            id_area: 14,
+            nome: "N14"
+        },
+        {
+            id_area: 15,
+            nome: "N15"
+        }
+    ]
+    ,
     medias_cachos: [
         {
             id_media_cacho: 1,

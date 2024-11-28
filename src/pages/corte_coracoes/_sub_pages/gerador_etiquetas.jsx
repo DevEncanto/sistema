@@ -6,8 +6,6 @@ import { useReactToPrint } from 'react-to-print';
 import { LoaderEstatico } from "../_components/loader"
 import { useContext, useEffect, useState, useRef } from "react";
 import { logger } from "../../../utils/logger";
-import { usePopover } from "../../../hooks/use.popover.filters";
-import { FilterPopover } from "../_components/popover.main";
 
 const filterEtiquetas = (etiquetas, filterString) => {
     const rangesAndItems = filterString.split(',').map(item => item.trim())
@@ -61,8 +59,6 @@ export const GeradorEtiquetas = () => {
             logger(result)
         }
     }
-
-    const filterPopover = usePopover()
 
     useEffect(() => {
         lazyLoading()

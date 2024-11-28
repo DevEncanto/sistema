@@ -2,12 +2,13 @@ import Head from 'next/head';
 import { Box, Stack, Container, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useContext, useEffect,      } from 'react';
-import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
+import { CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 import { DataContext } from '../../contexts/contexts/data.context';
 import { SubPagesCorteCoracao } from './_components/sub.pages.corte.coracao';
 import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
 import { BotaoVoltar } from './_components/botoes/botao.voltar';
 import { BotaoFiltroEtiquetas } from './_components/botoes/botao.filtro.etiquetas';
+import { BotaoFiltroListaEtiquetas } from './_components/botoes/botao.filtro.lista.etiquetas';
 
 const Page = () => {
 
@@ -27,7 +28,7 @@ const Page = () => {
         <Box
             component="main"
         >
-            {/* {JSON.stringify(dataContext.dData.previsoes_mensais)} */}
+            {/* {JSON.stringify(dataContext.dData.areas)} */}
             <Container maxWidth="xl">
                 <Stack sx={{ width: "100%", height: "88vh" }}>
                     <Stack
@@ -50,6 +51,7 @@ const Page = () => {
                         >
                             <BotaoNovoLote />
                             <BotaoFiltroEtiquetas />
+                            <BotaoFiltroListaEtiquetas/>
                             <BotaoVoltar />
                         </Stack>
 
