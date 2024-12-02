@@ -1,3 +1,4 @@
+import { areas_filtro } from "./areas_filtro";
 import { lista_etiquetas } from "./lista_etiquetas";
 import { lotes_etiquetas } from "./lotes_etiquetas";
 import { medias_cachos } from "./medias_cachos";
@@ -7,5 +8,6 @@ export const config_tables = {
     lotes_etiquetas,
     lista_etiquetas,
     previsoes_mensais,
-    medias_cachos
+    medias_cachos,
+    areas_filtro
 };

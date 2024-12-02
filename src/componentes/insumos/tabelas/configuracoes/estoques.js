@@ -5,7 +5,7 @@ export const estoques = {
   header: [
     "ID ESTOQUE",
     "ESTOQUE",
-    "LOTE",
+    "LOTE", 
     <BotaoNovoCadastro title="Novo Estoque" cadastro="cadastroEstoque" />
   ],
   body: {

@@ -6,6 +6,7 @@ export const cInitialize = {
     tab: "modal_feedback",
     tabela: "lotes_etiquetas",
     tabsCadastro: "tabela",
+    tabFiltroListaEtiqueta: "resumo_filtro",
     id_lote: 0,
     load: false,
     return: "",
@@ -74,5 +75,9 @@ export const dInitialize = {
         etiqueta_final: "",
         ano_corte: "",
         ano_colheita: ""
+    },
+    filtro_lista_etiquetas: {
+        areas: [],
+        status: ["todos"]
     }
 }

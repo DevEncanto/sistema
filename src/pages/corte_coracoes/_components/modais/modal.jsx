@@ -5,12 +5,12 @@ import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao
 
 export const ModalCorteCoracao = (props) => {
 
-    const {funcoes} = useContext(CorteCoracaoContext)
-    const { header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
+    const { funcoes } = useContext(CorteCoracaoContext)
+    const { bkColor = "#fff", header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     useEffect(() => {
 
-        
+
     }, [])
 
 
@@ -21,7 +21,7 @@ export const ModalCorteCoracao = (props) => {
                 marginTop: "10px",
                 width: width,
                 height: height,
-                backgroundColor: "white",
+                backgroundColor: bkColor,
                 position: "fixed",
                 display: "flex",
                 justifyContent: "center",
