@@ -2,16 +2,25 @@ import { Stack, SvgIcon, Typography } from "@mui/material"
 import { useContext, useEffect } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
+import { logger } from "../../../../utils/logger";
 
 export const ModalCorteCoracao = (props) => {
 
-    const { funcoes } = useContext(CorteCoracaoContext)
-    const { bkColor = "#fff", header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
+    const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
+    const { tabela = null, bkColor = "#fff", header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     useEffect(() => {
 
 
     }, [])
+
+    const handleClick = () => {
+        logger(cCorteCoracao.return)
+        funcoes.gControleCorteCoracao(cCorteCoracao.return, "tabFiltroListaEtiqueta", false)
+        if (tabela) {
+            funcoes.gControleCorteCoracao(tabela, "tabela", false)
+        }
+    }
 
 
     return (
@@ -71,7 +80,7 @@ export const ModalCorteCoracao = (props) => {
                         }}
                     >
                         <SvgIcon
-                            onClick={() => funcoes.gControleCorteCoracao(destino, "tab", false)}
+                            onClick={handleClick}
                             sx={{
                                 cursor: "pointer"
                             }}

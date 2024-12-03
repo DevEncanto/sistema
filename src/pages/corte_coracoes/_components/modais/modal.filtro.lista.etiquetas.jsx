@@ -24,6 +24,7 @@ export const MenuFiltroListaEtiquetas = () => {
 
   const handleOpenAreas = () => {
     funcoes.gControleCorteCoracao("filtro_areas", "tabFiltroListaEtiqueta", false)
+    funcoes.gControleCorteCoracao("resumo_filtro", "return", false)
   }
 
 
@@ -37,7 +38,7 @@ export const MenuFiltroListaEtiquetas = () => {
     return (
       <>
         <Stack direction={`row`}
-          sx={{ backgroundColor: "red", alignItems: "center", justifyContent: "center" }}
+          sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <Stack
             sx={{ backgroundColor: "orange", width: "70%", padding: "0 10px" }}
@@ -124,7 +125,7 @@ export const MenuFiltroListaEtiquetas = () => {
       <Stack
         spacing={1}
       >
-        <TabelasCorteCoracao maxHeight={340} dados={dData.areas} tabela={`areas_filtro`} />
+        <TabelasCorteCoracao maxHeight={330} dados={dData.areas} tabela={`areas_filtro`} />
         <Stack
           direction={`row`}
           sx={{ alignItems: "center", justifyContent: "center" }}
@@ -161,11 +162,11 @@ export const MenuFiltroListaEtiquetas = () => {
     <ModalCorteCoracao
       title={"Filtros Lista Etiquetas"}
       destino={"resumo_lotes_etiquetas"}
-      width="380px"
-      bkColor='blue'
+      width="400px"
+      tabela="lotes_etiquetas"
     >
       <Stack
-        sx={{ width: "100%", backgroundColor: "green", height: "100%" }}
+        sx={{ width: "100%", height: "100%" }}
         spacing={1}
       >
         {cCorteCoracao.tabFiltroListaEtiqueta === "resumo_filtro" && body()}
