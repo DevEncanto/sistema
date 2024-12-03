@@ -6,14 +6,14 @@ import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao
 export const BotaoVoltar = () => {
 
     const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const subPages = ["menu", "cadastro_lote", "modal_feedback"]
+    const subPages = ["tab5", "tab8", "tab1"]
 
 
     const handleClickVoltar = () => {
         funcoes.gControleCorteCoracao(cCorteCoracao.return, "tab", false)
         funcoes.gControleCorteCoracao("lotes_etiquetas", "tabela", false)
-        if (cCorteCoracao.return === "resumo_lotes_etiquetas") {
-            funcoes.gControleCorteCoracao("menu", "return", false)
+        if (cCorteCoracao.return === "tab4") {
+            funcoes.gControleCorteCoracao("tab5", "return", false)
         }
     }
 

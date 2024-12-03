@@ -17,9 +17,9 @@ export const BotaoListarEtiquetas = (props) => {
         const lista = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta === id_lote_etiqueta)?.etiquetas
         funcoes.gControleCorteCoracao("lista_etiquetas", "tabela", false)
         funcoes.gControleCorteCoracao(lista, "lista_etiquetas", false)
-        funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "return", false)
+        funcoes.gControleCorteCoracao("tab4", "return", false)
         funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
-        funcoes.gControleCorteCoracao("resumo_etiquetas", "tab", false)
+        funcoes.gControleCorteCoracao("tab6", "tab", false)
     }
 
     return (

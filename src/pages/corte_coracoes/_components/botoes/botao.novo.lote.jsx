@@ -6,12 +6,12 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon"
 export const BotaoNovoLote = () => {
 
     const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const subPages = ["resumo_lotes_etiquetas"]
+    const subPages = ["tab4"]
 
 
     const handleClickNovoLote = () => {
-        funcoes.gControleCorteCoracao("cadastro_lote", "tab", false)
-        funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "return", false)
+        funcoes.gControleCorteCoracao("tab8", "tab", false)
+        funcoes.gControleCorteCoracao("tab4", "return", false)
     }
 
     return (

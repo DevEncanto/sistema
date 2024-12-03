@@ -10,9 +10,9 @@ export const BotaoFiltroListaEtiquetas = () => {
 
     const filterPopover = usePopover()
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const subPages = ["resumo_etiquetas"]
+    const subPages = ["tab6"]
     const handleClick = () => {
-        funcoes.gControleCorteCoracao("modal_menu_lista_etiquetas", "tab", false)
+        funcoes.gControleCorteCoracao("tab3", "tab", false)
     }
 
 

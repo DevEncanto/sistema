@@ -1,25 +1,22 @@
 import { Stack, SvgIcon, Typography } from "@mui/material"
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { RiCloseFill } from "react-icons/ri";
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
-import { logger } from "../../../../utils/logger";
+
 
 export const ModalCorteCoracao = (props) => {
 
-    const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const { tabela = null, bkColor = "#fff", header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
-
-    useEffect(() => {
-
-
-    }, [])
+    const { funcoes } = useContext(CorteCoracaoContext)
+    const { closeClick = null, tabela = null, bkColor = "#fff", header = true, destino, children, title, width = "450px", height = "460px", icon = false } = props
 
     const handleClick = () => {
-        logger(cCorteCoracao.return)
-        funcoes.gControleCorteCoracao(cCorteCoracao.return, "tabFiltroListaEtiqueta", false)
         if (tabela) {
             funcoes.gControleCorteCoracao(tabela, "tabela", false)
         }
+        if (closeClick) {
+            closeClick()
+        }
+        funcoes.gControleCorteCoracao(destino, "tab", false)
     }
 
 

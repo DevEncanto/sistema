@@ -19,6 +19,9 @@ export const BotaoSelecionarRemoverArea = (props) => {
                 item.selected = !item.selected
             }
         })
+
+        logger(array)
+
         funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", array, false)
     }
     logger("TESTE 2")

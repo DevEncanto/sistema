@@ -9,7 +9,7 @@ export const BotaoGerarQRCode = (props) => {
 
     const handleClick = () => {
         funcoes.gControleCorteCoracao("gerador_etiquetas", "tab", false)
-        funcoes.gControleCorteCoracao("resumo_lotes_etiquetas", "return", false)
+        funcoes.gControleCorteCoracao("tab4", "return", false)
         funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
     }
 

@@ -3,7 +3,7 @@ import { BsBox2Fill } from "react-icons/bs"
 import { BiAbacus, BiCalendar } from "react-icons/bi";
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
-    tab: "modal_feedback",
+    tab: "tab1",
     tabela: "lotes_etiquetas",
     tabsCadastro: "tabela",
     tabFiltroListaEtiqueta: "resumo_filtro",
@@ -23,7 +23,7 @@ export const cInitialize = {
                     <BsBox2Fill />
                 </SvgIcon>
             ),
-            subPage: "resumo_lotes_etiquetas",
+            subPage: "tab4",
             tabelaComponent: true,
             tabela: "lotes_etiquetas"
         },
@@ -45,7 +45,7 @@ export const cInitialize = {
                     <BiCalendar />
                 </SvgIcon>
             ),
-            subPage: "previsoes_mensais",
+            subPage: "tab7",
             tabelaComponent: true,
             tabela: "previsoes_mensais"
         },

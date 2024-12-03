@@ -4,16 +4,11 @@ import { DataContext } from "../../../../contexts/contexts/data.context"
 import { logger } from "../../../../utils/logger"
 
 const { Button, Tooltip } = require("@mui/material")
-const { BsPencil, BsCheck } = require("react-icons/bs")
+const { BsCheck } = require("react-icons/bs")
 
 export const BotaoSelecionarPrevisaoMensal = (props) => {
     const { status, id_media_cacho, index } = props
-    const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const { dData } = useContext(DataContext)
-
-
     const [load, setLoad] = useState(false)
-
 
     const handleClick = () => {
         logger(props)
