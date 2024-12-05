@@ -6,7 +6,7 @@ import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
 import { logger } from "../../../../../utils/logger"
 
-export const MenuFiltroListaEtiquetas = () => {
+export const MenuPrincipal = () => {
 
   const [filtro, setFiltro] = useState("")
   const { funcoes, cCorteCoracao, dCorteCoracao } = useContext(CorteCoracaoContext)
@@ -25,7 +25,7 @@ export const MenuFiltroListaEtiquetas = () => {
   }
 
   const handleOpenAreas = () => {
-    funcoes.gControleCorteCoracao("filtro_areas", "tabFiltroListaEtiqueta", false)
+    funcoes.gControleCorteCoracao("tab2", "tab", false)
     funcoes.gControleCorteCoracao("resumo_filtro", "return", false)
   }
 

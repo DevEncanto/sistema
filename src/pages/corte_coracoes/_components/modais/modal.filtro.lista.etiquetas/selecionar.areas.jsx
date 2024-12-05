@@ -6,7 +6,7 @@ import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
 import { logger } from "../../../../../utils/logger"
 
-export const MenuFiltroListaEtiquetas = () => {
+export const SelecionarAreas = () => {
 
   const [filtro, setFiltro] = useState("")
   const { funcoes, cCorteCoracao, dCorteCoracao } = useContext(CorteCoracaoContext)

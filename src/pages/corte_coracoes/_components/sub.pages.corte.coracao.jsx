@@ -10,6 +10,7 @@ import { TabelasCorteCoracao } from "./tabelas/tabelas.corte_coracao"
 import { PrevisaoColheita } from "../_sub_pages/previsao.colheita"
 import { MenuFiltroEtiquetas } from "./modais/modal.filtro.etiquetas"
 import { MenuFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/menu.principal"
+import { ModalFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/modal.filtro.lista.etiquetas"
 
 export const SubPagesCorteCoracao = () => {
 
@@ -49,7 +50,7 @@ export const SubPagesCorteCoracao = () => {
             {/* {JSON.stringify(cCorteCoracao)} */}
             {cCorteCoracao.tab === "tab1" && <ModalFeedBack />}
             {cCorteCoracao.tab === "tab2" && <MenuFiltroEtiquetas />}
-            {cCorteCoracao.tab === "tab3" && <MenuFiltroListaEtiquetas />}
+            <ModalFiltroListaEtiquetas />
             {!divideHide.includes(cCorteCoracao.tab) && <Divider color="#dbdbdb" sx={{ height: 3, marginBottom: "5px" }} />}
             {cCorteCoracao.tab === "tab5" && <MenuPrincipalCorteCoracao />}
             {tabelas.includes(cCorteCoracao.tab) && <TabelasCorteCoracao minHeigth={540} />}
