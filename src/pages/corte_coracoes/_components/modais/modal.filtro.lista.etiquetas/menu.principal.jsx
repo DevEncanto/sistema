@@ -25,7 +25,7 @@ export const MenuPrincipal = () => {
   }
 
   const handleOpenAreas = () => {
-    funcoes.gControleCorteCoracao("tab2", "tab", false)
+    funcoes.gControleCorteCoracao("tab9", "tab", false)
     funcoes.gControleCorteCoracao("resumo_filtro", "return", false)
   }
 
