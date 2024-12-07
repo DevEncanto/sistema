@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 import { cInitialize, dInitialize } from "../initialize/initialize.corte.coracao.context";
 import { calcularDatas, converterDataCalendario, obterSemana, parseDate } from "../../utils/gerador-datas";
 import { converterAno, converterDateParaString } from "../../utils/formatar-datas-createdAt";
-import { logger } from "../../utils/logger";
 
 export const CorteCoracaoContext = createContext();
 
@@ -73,9 +72,6 @@ export const CorteCoracaoProvider = ({ children }) => {
         const dias_previsao = previsao_mensal.find(item => item.mes === mes)?.dias ?? 0
         const data_prevista = converterDataCalendario(calcularDatas(dataString, dias_previsao))
         const semana_previsao = obterSemana(converterDateParaString(data_prevista))
-
-        logger(data_prevista)
-
 
         gDadosCorteCoracao("lote_etiqueta", "data_corte", data, false)
         gDadosCorteCoracao("lote_etiqueta", "data_prevista", data_prevista, false)

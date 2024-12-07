@@ -5,8 +5,6 @@ import { DataContext } from "../../../../contexts/contexts/data.context";
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
 import formatSaldo from "../../../../utils/formatarSaldos";
 import { SeverityPill } from "../../../../components/severity-pill";
-import { logger } from "../../../../utils/logger";
-
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses, Tooltip } = require("@mui/material");
 
 export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
@@ -34,10 +32,6 @@ export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minH
       case "colorText":
 
         const color = content.colors[item[content.content]]
-
-        logger(color)
-
-
         component = <SeverityPill color={color}>{item[content.content]}</SeverityPill>
         break;
 
@@ -65,7 +59,6 @@ export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minH
         component = ""
         break
       case "arrayComponent":
-        logger(content)
         const comps = content.components.map((Component, indexb) => {
           let data = {}
           content.params[indexb].forEach((param) => {
@@ -75,7 +68,6 @@ export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minH
               data = { ...data, [param]: item[param] }
             }
           })
-          logger(data)
           return cloneElement(Component, data)
         })
         component = content.content(comps)

@@ -1,14 +1,12 @@
 import { useContext, useState } from "react"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { DataContext } from "../../../../contexts/contexts/data.context"
-import { logger } from "../../../../utils/logger"
 
 const { Button, Tooltip } = require("@mui/material")
 const { BsPencil, BsCheck } = require("react-icons/bs")
 
 export const BotaoSelecionarMediaCacho = (props) => {
     const { status, id_media_cacho, index } = props
-    const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
     const { dData } = useContext(DataContext)
 
 
@@ -16,7 +14,6 @@ export const BotaoSelecionarMediaCacho = (props) => {
 
 
     const handleClick = () => {
-        logger(props)
         setLoad(true)
         setTimeout(() => {
             setLoad(false)

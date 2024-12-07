@@ -1,6 +1,5 @@
 import axios from 'axios'
 import cookie from 'js-cookie'
-import { logger } from '../../utils/logger'
 
 export class AxiosClientAPI {
 

@@ -4,7 +4,6 @@ import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.cora
 import { useContext, useEffect, useMemo, useState } from "react"
 import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
-import { logger } from "../../../../../utils/logger"
 
 export const MenuPrincipal = () => {
 
@@ -13,9 +12,7 @@ export const MenuPrincipal = () => {
   const { dData } = useContext(DataContext)
 
   useEffect(() => {
-    const areas_filtro = dData.areas.map(area => ({ area: area.nome, selected: true }))
-    logger(areas_filtro)
-    funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", areas_filtro, false)
+    
   }, [])
 
   const handleFiltrar = () => {

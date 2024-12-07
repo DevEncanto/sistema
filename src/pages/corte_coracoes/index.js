@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { Box, Stack, Container, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { useContext, useEffect,      } from 'react';
-import { CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
+import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 import { DataContext } from '../../contexts/contexts/data.context';
 import { SubPagesCorteCoracao } from './_components/sub.pages.corte.coracao';
 import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
@@ -13,6 +13,8 @@ import { BotaoFiltroListaEtiquetas } from './_components/botoes/botao.filtro.lis
 const Page = () => {
 
     const dataContext = useContext(DataContext)
+    const {dCorteCoracao} = useContext(CorteCoracaoContext)
+
 
     useEffect(() => {
         dataContext.funcoes.loadLocalStorage()
@@ -28,6 +30,7 @@ const Page = () => {
         <Box
             component="main"
         >
+            {/* {JSON.stringify(dCorteCoracao)} */}
             {/* {JSON.stringify(dataContext.dData.areas)} */}
             <Container maxWidth="xl">
                 <Stack sx={{ width: "100%", height: "88vh" }}>

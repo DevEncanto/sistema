@@ -1,5 +1,4 @@
 import { serialize } from 'cookie';
-import { logger } from '../../utils/logger';
 
 const SECRET_API_KEY = process.env.SECRET_API_KEY || ''; // Defina isso no arquivo .env
 

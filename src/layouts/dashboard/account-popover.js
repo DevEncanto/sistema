@@ -4,7 +4,6 @@ import { Box, Divider, MenuItem, MenuList, Popover, Typography } from '@mui/mate
 import { useAuth } from 'src/hooks/use-auth';
 import Cookies from 'js-cookie';
 import { AxiosClientAPI } from '../../service/api/axios.client.api';
-import { logger } from '../../utils/logger';
 
 export const AccountPopover = (props) => {
   const { anchorEl, onClose, open, usuario } = props;

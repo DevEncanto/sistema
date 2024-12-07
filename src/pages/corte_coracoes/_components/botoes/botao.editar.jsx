@@ -2,7 +2,6 @@ import { useContext } from "react"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
 import { DataContext } from "../../../../contexts/contexts/data.context"
 import { converterDataCalendario } from "../../../../utils/gerador-datas"
-import { logger } from "../../../../utils/logger"
 
 const { Button, Tooltip } = require("@mui/material")
 const { BsPencil } = require("react-icons/bs")

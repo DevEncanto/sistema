@@ -5,7 +5,6 @@ const { Stack, Grid, Button, TextField } = require("@mui/material")
 import { useReactToPrint } from 'react-to-print';
 import { LoaderEstatico } from "../_components/loader"
 import { useContext, useEffect, useState, useRef } from "react";
-import { logger } from "../../../utils/logger";
 
 const filterEtiquetas = (etiquetas, filterString) => {
     const rangesAndItems = filterString.split(',').map(item => item.trim())
@@ -42,9 +41,6 @@ export const GeradorEtiquetas = () => {
 
     const lazyLoading = async () => {
         const data = dData.lotes_etiquetas.find(lote => lote.id_lote_etiqueta == cCorteCoracao.id_lote).etiquetas
-        
-        logger(data)
-        
         setEtiquetas(data)
         setFilteredEtiquetas(data) // Inicializa o estado filtrado com todas as etiquetas
         setLoad(false)
@@ -56,7 +52,6 @@ export const GeradorEtiquetas = () => {
         } else {
             const result = filterEtiquetas(etiquetas, cCorteCoracao.filtro)
             setFilteredEtiquetas(result)
-            logger(result)
         }
     }
 

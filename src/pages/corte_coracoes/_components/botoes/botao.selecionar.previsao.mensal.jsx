@@ -1,8 +1,4 @@
 import { useContext, useState } from "react"
-import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
-import { DataContext } from "../../../../contexts/contexts/data.context"
-import { logger } from "../../../../utils/logger"
-
 const { Button, Tooltip } = require("@mui/material")
 const { BsCheck } = require("react-icons/bs")
 
@@ -11,7 +7,6 @@ export const BotaoSelecionarPrevisaoMensal = (props) => {
     const [load, setLoad] = useState(false)
 
     const handleClick = () => {
-        logger(props)
         setLoad(true)
         setTimeout(() => {
             setLoad(false)

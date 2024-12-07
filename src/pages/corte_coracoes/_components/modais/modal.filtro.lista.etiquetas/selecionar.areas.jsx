@@ -8,26 +8,14 @@ import { logger } from "../../../../../utils/logger"
 
 export const SelecionarAreas = () => {
 
-  const [filtro, setFiltro] = useState("")
-  const { funcoes, cCorteCoracao, dCorteCoracao } = useContext(CorteCoracaoContext)
+  const [save, setSave] = useState(false)
+  const { funcoes, dCorteCoracao } = useContext(CorteCoracaoContext)
   const { dData } = useContext(DataContext)
 
   useEffect(() => {
     const areas_filtro = dData.areas.map(area => ({ area: area.nome, selected: true }))
-    logger(areas_filtro)
     funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", areas_filtro, false)
   }, [])
-
-  const handleFiltrar = () => {
-    funcoes.gControleCorteCoracao(filtro, "filtro", false)
-    funcoes.gControleCorteCoracao("tab4", "tab", false)
-    setFiltro("")
-  }
-
-  const handleOpenAreas = () => {
-    funcoes.gControleCorteCoracao("filtro_areas", "tabFiltroListaEtiqueta", false)
-    funcoes.gControleCorteCoracao("resumo_filtro", "return", false)
-  }
 
   const hasSelected = useMemo(() => {
     return dCorteCoracao.filtro_lista_etiquetas.areas.some(item => item.selected)
@@ -45,12 +33,26 @@ export const SelecionarAreas = () => {
     funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", array, false)
   }
 
+
+  const closeClick = () => {
+    if (!save) {
+      const areas_filtro = dData.areas.map(area => ({ area: area.nome, selected: true }))
+      funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", areas_filtro, false)
+    }
+  }
+
+  const handleSaveClick = () => {
+    setSave(true)
+    funcoes.gControleCorteCoracao("tab3", "tab", false)
+  }
+
   return (
     <ModalCorteCoracao
-      title={"Filtros de Áreas"}
-      destino={"tab4"}
+      title={"Filtro de Áreas"}
+      destino={"tab3"}
       width="400px"
       tabela="lotes_etiquetas"
+      closeClick={closeClick}
     >
       <Stack
         sx={{ width: "100%", height: "100%" }}
@@ -82,6 +84,7 @@ export const SelecionarAreas = () => {
             {hasSelected && <Button
               variant="contained"
               sx={{ backgroundColor: hasSelected ? "green" : "gray" }}
+              onClick={handleSaveClick}
             >
               <Typography variant="overline" fontSize={10}>
                 Salvar

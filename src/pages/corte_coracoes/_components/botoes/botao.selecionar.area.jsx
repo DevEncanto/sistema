@@ -1,7 +1,6 @@
 import { BsCheck, BsTrash } from "react-icons/bs"
-import { logger } from "../../../../utils/logger"
 
-const { Button, Typography, Tooltip, Stack } = require("@mui/material")
+const { Button, Typography} = require("@mui/material")
 const { useContext } = require("react")
 const { CorteCoracaoContext } = require("../../../../contexts/contexts/corte.coracao.context")
 
@@ -9,8 +8,6 @@ export const BotaoSelecionarRemoverArea = (props) => {
 
     const { nome } = props
     const { dCorteCoracao: { filtro_lista_etiquetas }, funcoes } = useContext(CorteCoracaoContext)
-    logger("TESTE 1")
-    logger(nome)
     const handleClick = () => {
         let array = [...filtro_lista_etiquetas.areas]
 
@@ -20,15 +17,10 @@ export const BotaoSelecionarRemoverArea = (props) => {
             }
         })
 
-        logger(array)
-
         funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", array, false)
     }
-    logger("TESTE 2")
 
     const selected = filtro_lista_etiquetas.areas.find(item => item.area === nome)?.selected
-
-    logger(selected)
 
     return (
 

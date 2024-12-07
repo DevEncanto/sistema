@@ -2,7 +2,6 @@ import { LotesEtiquetasRepository } from "../repositorys/lotes.etiquetas.reposit
 import delay from "../utils/delay"
 import { converterAno, converterDateParaString, extrairAno } from "../utils/formatar-datas-createdAt"
 import { calcularDatas, formatDate } from "../utils/gerador-datas"
-import { logger } from "../utils/logger"
 import { AxiosClientAPI } from "./api/axios.client.api"
 
 export class LotesEtiquetasService {
@@ -88,9 +87,6 @@ export class LotesEtiquetasService {
             const { data: { message, status, data } } = await aRepository.update(dados)
             const type = status === 200 ? "success" : "error"
             const retorno = status === 200 ? "tab4" : "tab8"
-
-            logger(data)
-
             if (status === 200) {
                 const array = this.dataContext.dData.lotes_etiquetas.map(obj =>
                     obj.id_lote_etiqueta === parseInt(data.id_lote_etiqueta) ? data : obj
