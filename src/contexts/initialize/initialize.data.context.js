@@ -1,6 +1,5 @@
 export const dInitialize = {
     fornecedores: [],
-    areas: [],
     permissoes: [],
     estoque_insumos: [],
     saidas_insumos: [],
@@ -20,6 +19,28 @@ export const dInitialize = {
     ],
     lotes_etiquetas: [],
     usuario: {},
+    status: [
+        {
+            id_status: 1,
+            nome: "SEM USO"
+        },
+        {
+            id_status: 2,
+            nome: "EM USO"
+        },
+        {
+            id_status: 3,
+            nome: "AMADURECIMENTO"
+        },
+        {
+            id_status: 4,
+            nome: "TOMBAMENTO"
+        },
+        {
+            id_status: 5,
+            nome: "PRAGAS"
+        },
+    ],
     areas: [
         {
             id_area: 1,

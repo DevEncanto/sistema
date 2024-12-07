@@ -24,7 +24,7 @@ export const SubPagesCorteCoracao = () => {
     }, [])
 
 
-    const tabsCenter = ["tab2", "tab3", "tab9"]
+    const tabsCenter = ["tab2", "tab3", "tab9", "tab10"]
 
     const tabelas = [
         "tab4",

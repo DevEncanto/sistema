@@ -1,18 +1,15 @@
-import { Button, Stack, TextField, Typography } from "@mui/material"
+import { Button, Divider, Stack, TextField, Typography } from "@mui/material"
 import { ModalCorteCoracao } from "../modal"
 import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.coracao.context"
 import { useContext, useEffect, useMemo, useState } from "react"
-import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
-import { DataContext } from "../../../../../contexts/contexts/data.context"
 
 export const MenuPrincipal = () => {
 
   const [filtro, setFiltro] = useState("")
-  const { funcoes, cCorteCoracao, dCorteCoracao } = useContext(CorteCoracaoContext)
-  const { dData } = useContext(DataContext)
+  const { funcoes, dCorteCoracao } = useContext(CorteCoracaoContext)
 
   useEffect(() => {
-    
+
   }, [])
 
   const handleFiltrar = () => {
@@ -23,32 +20,9 @@ export const MenuPrincipal = () => {
 
   const handleOpenAreas = () => {
     funcoes.gControleCorteCoracao("tab9", "tab", false)
-    funcoes.gControleCorteCoracao("resumo_filtro", "return", false)
   }
-
-
-  const hasSelected = useMemo(() => {
-    return dCorteCoracao.filtro_lista_etiquetas.areas.some(item => item.selected)
-  }, [dCorteCoracao.filtro_lista_etiquetas.areas])
-
-  const body = () => {
-    return (
-      <>
-
-      </>
-    )
-  }
-
-  const handleSelecionarTudo = () => {
-    let array = [...dCorteCoracao.filtro_lista_etiquetas.areas]
-    array.forEach(item => { item.selected = true })
-    funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", array, false)
-  }
-
-  const handleRemoverTudo = () => {
-    let array = [...dCorteCoracao.filtro_lista_etiquetas.areas]
-    array.forEach(item => { item.selected = false })
-    funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", array, false)
+  const handleOpenStatus = () => {
+    funcoes.gControleCorteCoracao("tab10", "tab", false)
   }
 
   return (
@@ -58,10 +32,12 @@ export const MenuPrincipal = () => {
       tabela="lotes_etiquetas"
       destino="tab6"
     >
+
       <Stack
         sx={{ width: "100%", height: "100%" }}
         spacing={1}
       >
+        <Divider color="#c9c9c9" sx={{ height: 2 }} />
         <Stack direction={`row`}
           sx={{ alignItems: "center", justifyContent: "center" }}
         >
@@ -79,7 +55,7 @@ export const MenuPrincipal = () => {
             </Typography>
           </Stack>
           <Stack
-            sx={{ width: "30%", padding: "0 10px", alignItems: "center", justifyContent: "center" }}
+            sx={{ width: "30%", padding: "0 10px" }}
           >
             <Button variant="contained"
               onClick={handleOpenAreas}
@@ -90,33 +66,42 @@ export const MenuPrincipal = () => {
             </Button>
           </Stack>
         </Stack>
+        <Divider color="#c9c9c9" sx={{ height: 2 }} />
         <Stack direction={`row`}
-          sx={{ backgroundColor: "red", alignItems: "center", justifyContent: "center" }}
+          sx={{ alignItems: "center", justifyContent: "center" }}
         >
           <Stack
-            sx={{ backgroundColor: "orange", width: "70%", padding: "0 10px" }}
+            sx={{ width: "70%", padding: "0 10px" }}
+
           >
             <Typography variant="overline" fontSize={15}>
               STATUS
             </Typography>
             <Typography variant="overline" fontSize={11}>
-              {`[${dCorteCoracao.filtro_lista_etiquetas.status.join(', ')}]`}
+              {`[${dCorteCoracao.filtro_lista_etiquetas.status
+                .filter(status => status.selected)
+                .map(status => status.status)
+                .join(', ')}]`}
             </Typography>
           </Stack>
           <Stack
             sx={{ width: "30%", padding: "0 10px" }}
           >
-            <Button variant="contained">
+            <Button variant="contained"
+              onClick={handleOpenStatus}
+            >
               <Typography variant="overline" fontSize={11}>
                 selecionar
               </Typography>
             </Button>
           </Stack>
+
         </Stack>
+        <Divider color="#c9c9c9" sx={{ height: 2 }} />
         <Stack
           spacing={.5}
           direction={"row"}
-          sx={{ marginBottom: "30px" }}
+          sx={{ marginBottom: "30px", alignItems: "center", justifyContent: "center" }}
         >
           <Button
             variant="contained"
@@ -129,7 +114,7 @@ export const MenuPrincipal = () => {
             onClick={handleFiltrar}
           >
             Filtrar
-          </Button>
+          </Button>            
         </Stack>
       </Stack>
     </ModalCorteCoracao >
