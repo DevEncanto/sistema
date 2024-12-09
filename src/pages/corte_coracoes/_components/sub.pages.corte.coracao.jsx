@@ -11,6 +11,7 @@ import { PrevisaoColheita } from "../_sub_pages/previsao.colheita"
 import { MenuFiltroEtiquetas } from "./modais/modal.filtro.etiquetas"
 import { MenuFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/menu.principal"
 import { ModalFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/modal.filtro.lista.etiquetas"
+import { TabelaListaEtiquetas } from "./tabelas/tabela.lista.etiquetas"
 
 export const SubPagesCorteCoracao = () => {
 
@@ -59,6 +60,7 @@ export const SubPagesCorteCoracao = () => {
             {cCorteCoracao.tab === "tab8" && <CadastroLoteEtiqueta />}
             {cCorteCoracao.tab === "gerador_etiquetas" && <GeradorEtiquetas />}
             {cCorteCoracao.tab === "previsao_colheita" && <PrevisaoColheita />}
+            {cCorteCoracao.tab === "tab11" && <TabelaListaEtiquetas />}
         </Stack>
     )
 }

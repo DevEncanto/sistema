@@ -8,20 +8,19 @@ const { CorteCoracaoContext } = require("../../../../../contexts/contexts/corte.
 
 export const ModalFiltroListaEtiquetas = () => {
 
-    const { dCorteCoracao,cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
+    const { dCorteCoracao, cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
     const { dData } = useContext(DataContext)
 
     useEffect(() => {
         logger("Executando")
-        const areas_filtro = dData.areas.map(area => ({ area: area.nome, selected: true }))
-        const status_filtro = dData.status.map(status => ({ status: status.nome, selected: true }))
+        const areas_filtro = [{ area: "SEM ÁREA", selected: true, id_area: 0 }, ...dData.areas.map(area => ({ area: area.nome, selected: true, id_areas: area.id_area }))]
+        const status_filtro = dData.status.map(status => ({ status: status.nome, selected: true, id_status: status.id_status }))
         funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "areas", areas_filtro, false)
         funcoes.dControleCorteCoracaoComplex("filtro_lista_etiquetas", "status", status_filtro, false)
     }, [])
 
     return (
         <>
-            {JSON.stringify(dCorteCoracao.filtro_lista_etiquetas.status )}
             {cCorteCoracao.tab == "tab3" && <MenuPrincipal />}
             {cCorteCoracao.tab == "tab9" && <SelecionarAreas />}
             {cCorteCoracao.tab == "tab10" && <SelecionarStatus />}

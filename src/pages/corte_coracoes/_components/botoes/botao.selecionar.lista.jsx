@@ -16,7 +16,7 @@ export const BotaoListarEtiquetas = (props) => {
         funcoes.gControleCorteCoracao(lista, "lista_etiquetas", false)
         funcoes.gControleCorteCoracao("tab4", "return", false)
         funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
-        funcoes.gControleCorteCoracao("tab6", "tab", false)
+        funcoes.gControleCorteCoracao("tab11", "tab", false)
     }
 
     return (

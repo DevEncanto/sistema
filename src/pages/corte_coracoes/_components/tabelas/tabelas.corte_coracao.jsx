@@ -5,9 +5,10 @@ import { DataContext } from "../../../../contexts/contexts/data.context";
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
 import formatSaldo from "../../../../utils/formatarSaldos";
 import { SeverityPill } from "../../../../components/severity-pill";
+import { logger } from "../../../../utils/logger";
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses, Tooltip } = require("@mui/material");
 
-export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
+export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
   const { dData } = useContext(DataContext);
   const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext);
   const { header, body, sx } = config_tables[tabela ? tabela : cCorteCoracao.tabela];
@@ -32,7 +33,19 @@ export const  TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minH
       case "colorText":
 
         const color = content.colors[item[content.content]]
-        component = <SeverityPill color={color}>{item[content.content]}</SeverityPill>
+        logger("=============CONTENT============")
+        logger(content)
+        logger("=============ITEM============")
+        logger(item)
+        logger("=============COLOR============")
+        logger(color)
+
+        component =
+          <SeverityPill
+            isSeverityPill={content.isSeverityPill}
+            color={color}>
+            {item[content.content]}
+          </SeverityPill>
         break;
 
       case "component":

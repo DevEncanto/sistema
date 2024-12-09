@@ -35,9 +35,10 @@ export const lista_etiquetas = {
                 type: "colorText",
                 content: "status",
                 colors: {
-                    ["Em uso"]: 'success',
-                    ["Sem uso"]: 'neutral',
-                }
+                    ["EM USO"]: 'success',
+                    ["SEM USO"]: 'primary',
+                },
+                isSeverityPill: true
             },
             {
                 type: "blank",

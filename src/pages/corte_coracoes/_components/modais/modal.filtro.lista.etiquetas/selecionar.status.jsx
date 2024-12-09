@@ -4,6 +4,7 @@ import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.cora
 import { useContext, useMemo, useState } from "react"
 import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
+import { logger } from "../../../../../utils/logger"
 
 export const SelecionarStatus = () => {
   const [save, setSave] = useState(false)
@@ -37,6 +38,7 @@ export const SelecionarStatus = () => {
 
   const handleSaveClick = () => {
     setSave(true)
+    logger(dCorteCoracao.filtro_lista_etiquetas.status)
     funcoes.gControleCorteCoracao("tab3", "tab", false)
   }
 

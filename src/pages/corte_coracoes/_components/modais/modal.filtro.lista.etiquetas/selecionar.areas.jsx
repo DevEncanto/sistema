@@ -4,6 +4,7 @@ import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.cora
 import { useContext, useMemo, useState } from "react"
 import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
+import { logger } from "../../../../../utils/logger"
 
 export const SelecionarAreas = () => {
   const [save, setSave] = useState(false)
@@ -37,6 +38,7 @@ export const SelecionarAreas = () => {
 
   const handleSaveClick = () => {
     setSave(true)
+    logger(dCorteCoracao.filtro_lista_etiquetas.areas)
     funcoes.gControleCorteCoracao("tab3", "tab", false)
   }
 
@@ -53,7 +55,7 @@ export const SelecionarAreas = () => {
         spacing={1}
       >
         <Stack spacing={1}>
-          <TabelasCorteCoracao maxHeight={330} dados={dData.areas} tabela={`areas_filtro`} />
+          <TabelasCorteCoracao maxHeight={330} dados={[{ id_area: 0, nome: "SEM ÁREA" }, ...dData.areas]} tabela={`areas_filtro`} />
           <Stack
             direction={`row`}
             sx={{ alignItems: "center", justifyContent: "center" }}

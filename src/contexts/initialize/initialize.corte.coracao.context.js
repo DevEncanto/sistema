@@ -78,6 +78,6 @@ export const dInitialize = {
     },
     filtro_lista_etiquetas: {
         areas: [],
-        status: ["todos"]
+        status: []
     }
 }

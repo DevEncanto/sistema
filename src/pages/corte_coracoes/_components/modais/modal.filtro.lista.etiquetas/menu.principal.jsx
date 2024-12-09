@@ -1,7 +1,7 @@
-import { Button, Divider, Stack, TextField, Typography } from "@mui/material"
+import { Button, Divider, Stack, Typography } from "@mui/material"
 import { ModalCorteCoracao } from "../modal"
 import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.coracao.context"
-import { useContext, useEffect, useMemo, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 
 export const MenuPrincipal = () => {
 
@@ -14,7 +14,7 @@ export const MenuPrincipal = () => {
 
   const handleFiltrar = () => {
     funcoes.gControleCorteCoracao(filtro, "filtro", false)
-    funcoes.gControleCorteCoracao("tab4", "tab", false)
+    funcoes.gControleCorteCoracao("tab11", "tab", false)
     setFiltro("")
   }
 
