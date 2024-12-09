@@ -8,6 +8,8 @@ import HomeIcon from '@heroicons/react/24/solid/HomeIcon';
 import LinkIcon from '@heroicons/react/24/solid/LinkIcon';
 import { FaBoxes } from "react-icons/fa";
 import { SvgIcon } from '@mui/material';
+import { GiBananaBunch } from "react-icons/gi";
+import { PiPottedPlantFill } from "react-icons/pi";
 
 export const items = {
   USER: [
@@ -36,7 +38,18 @@ export const items = {
       path: '/corte_coracoes',
       icon: (
         <SvgIcon fontSize="small">
-          <FaBoxes />
+          <GiBananaBunch />
+        </SvgIcon>
+      ),
+      mode: "USER"
+    },
+    ,
+    {
+      title: 'Controle de Campo',
+      path: '/controle_campo',
+      icon: (
+        <SvgIcon fontSize="small">
+          <PiPottedPlantFill />
         </SvgIcon>
       ),
       mode: "USER"

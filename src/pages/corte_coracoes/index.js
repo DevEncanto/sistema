@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box, Stack, Container, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { useContext, useEffect,      } from 'react';
+import { useContext, useEffect, } from 'react';
 import { CorteCoracaoContext, CorteCoracaoProvider } from '../../contexts/contexts/corte.coracao.context';
 import { DataContext } from '../../contexts/contexts/data.context';
 import { SubPagesCorteCoracao } from './_components/sub.pages.corte.coracao';
@@ -9,12 +9,12 @@ import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
 import { BotaoVoltar } from './_components/botoes/botao.voltar';
 import { BotaoFiltroEtiquetas } from './_components/botoes/botao.filtro.etiquetas';
 import { BotaoFiltroListaEtiquetas } from './_components/botoes/botao.filtro.lista.etiquetas';
+import { BotaoNovoStatus } from './_components/botoes/botao.novo.status,etiqueta';
 
 const Page = () => {
 
     const dataContext = useContext(DataContext)
-    const {dCorteCoracao} = useContext(CorteCoracaoContext)
-
+    const { dCorteCoracao } = useContext(CorteCoracaoContext)
 
     useEffect(() => {
         dataContext.funcoes.loadLocalStorage()
@@ -53,8 +53,9 @@ const Page = () => {
                             spacing={1}
                         >
                             <BotaoNovoLote />
+                            <BotaoNovoStatus />
                             <BotaoFiltroEtiquetas />
-                            <BotaoFiltroListaEtiquetas/>
+                            <BotaoFiltroListaEtiquetas />
                             <BotaoVoltar />
                         </Stack>
 

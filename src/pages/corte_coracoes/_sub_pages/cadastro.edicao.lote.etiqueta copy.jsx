@@ -6,7 +6,7 @@ import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.co
 import { Calendario } from "../_components/calendario";
 import { LotesEtiquetasService } from "../../../service/lotes.etiquetas.service";
 
-export const CadastroLoteEtiqueta = () => {
+export const CadastroStatus0Etiqueta = () => {
     const corteCoracaoContext = useContext(CorteCoracaoContext);
     const dataContext = useContext(DataContext)
     const { dCorteCoracao, cCorteCoracao, funcoes } = corteCoracaoContext

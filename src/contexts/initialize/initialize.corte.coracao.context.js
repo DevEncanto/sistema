@@ -1,6 +1,8 @@
 import { SvgIcon } from "@mui/material"
 import { BsBox2Fill } from "react-icons/bs"
 import { BiAbacus, BiCalendar } from "react-icons/bi";
+import { IoCalendarNumberSharp } from "react-icons/io5";
+import { IoTicket } from "react-icons/io5";
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
     tab: "tab1",
@@ -42,7 +44,7 @@ export const cInitialize = {
             label: "Previsões Mensais",
             icon: (
                 <SvgIcon fontSize="medium" color='white'>
-                    <BiCalendar />
+                    <IoCalendarNumberSharp />
                 </SvgIcon>
             ),
             subPage: "tab7",
@@ -60,6 +62,18 @@ export const cInitialize = {
             subPage: "previsao_colheita",
             tabelaComponent: false,
             tabela: ""
+        }
+        ,
+        {
+            label: "Status Etiquetas",
+            icon: (
+                <SvgIcon fontSize="medium" color='white'>
+                    <IoTicket />
+                </SvgIcon>
+            ),
+            subPage: "tab12",
+            tabelaComponent: true,
+            tabela: "status_etiqueta"
         }
     ]
 }

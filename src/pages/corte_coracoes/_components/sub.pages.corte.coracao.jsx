@@ -2,7 +2,7 @@ import { Divider, Stack } from "@mui/material"
 import { useContext, useEffect } from "react"
 import { DataContext } from "../../../contexts/contexts/data.context"
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
-import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.lote.etiqueta"
+import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.status.etiqueta"
 import { GeradorEtiquetas } from "../_sub_pages/gerador_etiquetas"
 import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
 import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
@@ -29,7 +29,8 @@ export const SubPagesCorteCoracao = () => {
 
     const tabelas = [
         "tab4",
-        "medias_cachos"
+        "medias_cachos",
+        "tab12"
     ]
 
     const divideHide = [

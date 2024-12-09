@@ -3,6 +3,7 @@ import { lista_etiquetas } from "./lista_etiquetas";
 import { lotes_etiquetas } from "./lotes_etiquetas";
 import { medias_cachos } from "./medias_cachos";
 import { previsoes_mensais } from "./previsoes_mensais";
+import { status_etiqueta } from "./status_etiquetas";
 import { status_filtro } from "./status_filtro";
 
 export const config_tables = {
@@ -11,5 +12,6 @@ export const config_tables = {
     previsoes_mensais,
     medias_cachos,
     areas_filtro,
-    status_filtro
+    status_filtro,
+    status_etiqueta
 };
