@@ -9,7 +9,7 @@ export const BotaoFiltroEtiquetas = () => {
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
     const subPages = ["gerador_etiquetas"]
     const handleClick = () => {
-        funcoes.gControleCorteCoracao("tab2", "tab", false)
+        funcoes.gControleCorteCoracao("MOD2", "tab", false)
     }
     
     return (

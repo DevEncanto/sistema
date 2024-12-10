@@ -8,8 +8,8 @@ export const BotaoGerarQRCode = (props) => {
     const { funcoes } = useContext(CorteCoracaoContext)
 
     const handleClick = () => {
-        funcoes.gControleCorteCoracao("gerador_etiquetas", "tab", false)
-        funcoes.gControleCorteCoracao("tab4", "return", false)
+        funcoes.gControleCorteCoracao("COMP1", "tab", false)
+        funcoes.gControleCorteCoracao("TAB1", "return", false)
         funcoes.gControleCorteCoracao(id_lote_etiqueta.toString(), "id_lote", false)
     }
 

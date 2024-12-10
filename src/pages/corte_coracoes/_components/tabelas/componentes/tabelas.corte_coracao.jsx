@@ -1,11 +1,11 @@
 import { cloneElement, useContext, useEffect } from "react";
-import { config_tables } from "./configuracoes/config_tables"
-import { sxCardScrollPersonalizada } from "../../../../components/config-componentes/config-imagens-perfil";
-import { DataContext } from "../../../../contexts/contexts/data.context";
-import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context";
-import formatSaldo from "../../../../utils/formatarSaldos";
-import { SeverityPill } from "../../../../components/severity-pill";
-import { logger } from "../../../../utils/logger";
+import { config_tables } from "../configuracoes/config_tables"
+import { sxCardScrollPersonalizada } from "../../../../../components/config-componentes/config-imagens-perfil";
+import { DataContext } from "../../../../../contexts/contexts/data.context";
+import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.coracao.context";
+import formatSaldo from "../../../../../utils/formatarSaldos";
+import { SeverityPill } from "../../../../../components/severity-pill";
+import { logger } from "../../../../../utils/logger";
 const { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, listItemButtonClasses, Tooltip } = require("@mui/material");
 
 export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHeigth = 0 }) => {
@@ -33,13 +33,7 @@ export const TabelasCorteCoracao = ({ tabela, maxHeight = 350, dados = [], minHe
       case "colorText":
 
         const color = content.colors[item[content.content]]
-        logger("=============CONTENT============")
-        logger(content)
-        logger("=============ITEM============")
-        logger(item)
-        logger("=============COLOR============")
-        logger(color)
-
+      
         component =
           <SeverityPill
             isSeverityPill={content.isSeverityPill}

@@ -39,7 +39,7 @@ export const CorteCoracaoProvider = ({ children }) => {
     const exibirAlerta = (mensagem, tipo, retorno, time = 2500) => {
         gControleCorteCoracao(mensagem, "alert", false)
         gControleCorteCoracao(tipo, "type", false)
-        gControleCorteCoracao("tab1", "tab", false)
+        gControleCorteCoracao("MOD1", "tab", false)
         setTimeout(() => {
             gControleCorteCoracao("", "alert", false)
             gControleCorteCoracao("", "type", false)

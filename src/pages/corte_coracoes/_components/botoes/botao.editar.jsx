@@ -27,9 +27,9 @@ export const BotaoEditarLotesEtiquetas = (props) => {
     
         // Chamar funções agrupando lógica repetitiva
         const controles = [
-            { valor: "tab4", alvo: "return" },
+            { valor: "TAB1", alvo: "return" },
             { valor: id_lote_etiqueta.toString(), alvo: "id_lote" },
-            { valor: "tab8", alvo: "tab" },
+            { valor: "CAD1", alvo: "tab" },
             { valor: true, alvo: "edicao" }
         ]
     

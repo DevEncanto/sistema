@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import { useContext } from "react"
 import { BsArrowLeft } from "react-icons/bs"
 import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao.context"
@@ -6,15 +6,11 @@ import { CorteCoracaoContext } from "../../../../contexts/contexts/corte.coracao
 export const BotaoVoltar = () => {
 
     const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const subPages = ["tab5", "tab8", "tab1"]
+    const subPages = ["M1", "CAD1"]
 
 
     const handleClickVoltar = () => {
         funcoes.gControleCorteCoracao(cCorteCoracao.return, "tab", false)
-        funcoes.gControleCorteCoracao("lotes_etiquetas", "tabela", false)
-        if (cCorteCoracao.return === "tab4") {
-            funcoes.gControleCorteCoracao("tab5", "return", false)
-        }
     }
 
     return (
@@ -26,7 +22,9 @@ export const BotaoVoltar = () => {
                 onClick={handleClickVoltar}
                 startIcon={<BsArrowLeft height={20} width={20} fontWeight={600} />}
             >
-                Voltar
+                 <Typography variant="overline" fontSize={11}>
+                    voltar
+                </Typography>
             </Button>
             :
             <></>

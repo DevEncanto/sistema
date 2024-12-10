@@ -13,7 +13,8 @@ export const CadastroLoteEtiqueta = () => {
     const { lote_etiqueta } = dCorteCoracao
 
     const cancelarCadastros = () => {
-        funcoes.gControleCorteCoracao("tab4", "tab", false);
+        funcoes.gControleCorteCoracao("TAB1", "tab", false);
+        funcoes.gControleCorteCoracao("M1", "return", false);
         funcoes.gControleCorteCoracao("lotes_etiquetas", "tabela", false);
         funcoes.gControleCorteCoracao("tabela", "tabsCadastro", false);
         funcoes.resetFormulario("lote_etiqueta")

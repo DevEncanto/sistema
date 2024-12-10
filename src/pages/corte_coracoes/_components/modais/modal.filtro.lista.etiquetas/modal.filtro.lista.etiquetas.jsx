@@ -23,7 +23,7 @@ export const ModalFiltroListaEtiquetas = () => {
         <>
             {cCorteCoracao.tab == "tab3" && <MenuPrincipal />}
             {cCorteCoracao.tab == "tab9" && <SelecionarAreas />}
-            {cCorteCoracao.tab == "tab10" && <SelecionarStatus />}
+            {cCorteCoracao.tab == "MOD10" && <SelecionarStatus />}
         </>
     )
 }   

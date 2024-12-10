@@ -10,7 +10,7 @@ export const BotaoFiltroListaEtiquetas = () => {
 
     const filterPopover = usePopover()
     const { cCorteCoracao, funcoes } = useContext(CorteCoracaoContext)
-    const subPages = ["tab11"]
+    const subPages = ["MOD11"]
     const handleClick = () => {
         funcoes.gControleCorteCoracao("tab3", "tab", false)
     }

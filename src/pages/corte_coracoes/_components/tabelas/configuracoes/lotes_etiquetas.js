@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { cloneElement } from "react";
-import { BotaoGerarQRCode } from "../../botoes/botao.etiquetas";
+import { BotaoGerarQRCode } from "../../botoes/botao.gerar.qr.code";
 import { BotaoListarEtiquetas } from "../../botoes/botao.selecionar.lista";
 import { BotaoEditarLotesEtiquetas } from "../../botoes/botao.editar";
 

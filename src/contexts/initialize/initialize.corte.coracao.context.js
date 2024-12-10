@@ -5,7 +5,7 @@ import { IoCalendarNumberSharp } from "react-icons/io5";
 import { IoTicket } from "react-icons/io5";
 //Inicialização dos controles do Contexto Corte Coração
 export const cInitialize = {
-    tab: "tab1",
+    tab: "MOD1",
     tabela: "lotes_etiquetas",
     tabsCadastro: "tabela",
     tabFiltroListaEtiqueta: "resumo_filtro",
@@ -25,7 +25,7 @@ export const cInitialize = {
                     <BsBox2Fill />
                 </SvgIcon>
             ),
-            subPage: "tab4",
+            subPage: "TAB1",
             tabelaComponent: true,
             tabela: "lotes_etiquetas"
         },
@@ -36,7 +36,7 @@ export const cInitialize = {
                     <BiAbacus />
                 </SvgIcon>
             ),
-            subPage: "medias_cachos",
+            subPage: "TAB2",
             tabelaComponent: true,
             tabela: "medias_cachos"
         },
@@ -47,7 +47,7 @@ export const cInitialize = {
                     <IoCalendarNumberSharp />
                 </SvgIcon>
             ),
-            subPage: "tab7",
+            subPage: "TAB3",
             tabelaComponent: true,
             tabela: "previsoes_mensais"
         },
@@ -59,7 +59,7 @@ export const cInitialize = {
                     <BiCalendar />
                 </SvgIcon>
             ),
-            subPage: "previsao_colheita",
+            subPage: "COMP2",
             tabelaComponent: false,
             tabela: ""
         }
@@ -71,7 +71,7 @@ export const cInitialize = {
                     <IoTicket />
                 </SvgIcon>
             ),
-            subPage: "tab12",
+            subPage: "TAB5",
             tabelaComponent: true,
             tabela: "status_etiqueta"
         }

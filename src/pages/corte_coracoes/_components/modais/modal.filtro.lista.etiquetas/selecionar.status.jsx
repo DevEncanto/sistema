@@ -2,7 +2,7 @@ import { Button, Stack, Typography } from "@mui/material"
 import { ModalCorteCoracao } from "../modal"
 import { CorteCoracaoContext } from "../../../../../contexts/contexts/corte.coracao.context"
 import { useContext, useMemo, useState } from "react"
-import { TabelasCorteCoracao } from "../../tabelas/tabelas.corte_coracao"
+import { TabelasCorteCoracao } from "../../tabelas/componentes/tabelas.corte_coracao"
 import { DataContext } from "../../../../../contexts/contexts/data.context"
 import { logger } from "../../../../../utils/logger"
 

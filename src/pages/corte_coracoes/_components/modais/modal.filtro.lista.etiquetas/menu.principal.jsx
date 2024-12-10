@@ -14,7 +14,7 @@ export const MenuPrincipal = () => {
 
   const handleFiltrar = () => {
     funcoes.gControleCorteCoracao(filtro, "filtro", false)
-    funcoes.gControleCorteCoracao("tab11", "tab", false)
+    funcoes.gControleCorteCoracao("MOD11", "tab", false)
     setFiltro("")
   }
 
@@ -22,7 +22,7 @@ export const MenuPrincipal = () => {
     funcoes.gControleCorteCoracao("tab9", "tab", false)
   }
   const handleOpenStatus = () => {
-    funcoes.gControleCorteCoracao("tab10", "tab", false)
+    funcoes.gControleCorteCoracao("MOD10", "tab", false)
   }
 
   return (

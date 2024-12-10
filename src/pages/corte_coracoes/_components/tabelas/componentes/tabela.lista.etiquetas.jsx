@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
-import { logger } from "../../../../utils/logger";
+import { logger } from "../../../../../utils/logger";
+import { TabelasCorteCoracao } from "./tabelas.corte_coracao";
 
 const { useMemo, useContext } = require("react");
-const { TabelasCorteCoracao } = require("./tabelas.corte_coracao");
-const { CorteCoracaoContext } = require("../../../../contexts/contexts/corte.coracao.context");
+const { CorteCoracaoContext } = require("../../../../../contexts/contexts/corte.coracao.context");
 
 export const TabelaListaEtiquetas = () => {
 
@@ -29,7 +29,7 @@ export const TabelaListaEtiquetas = () => {
         });
     }, [lista_etiquetas, filtro_lista_etiquetas]);
 
-    return cCorteCoracao.tab == "tab11" && <Stack>
+    return cCorteCoracao.tab == "MOD11" && <Stack>
         {/* {JSON.stringify(lista_etiquetas)} */}
         {/* {JSON.stringify(filtro_lista_etiquetas)} */}
 

@@ -10,8 +10,8 @@ export const Cadastros = () => {
 
     return (
         <>
-            {tab === "tab8" && <CadastroLoteEtiqueta />}
-            {tab === "tab13" && <CadastroStatusEtiqueta />}
+            {tab === "CAD1" && <CadastroLoteEtiqueta />}
+            {tab === "CAD2" && <CadastroStatusEtiqueta />}
         </>
     )
 }

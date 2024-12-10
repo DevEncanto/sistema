@@ -42,7 +42,7 @@ const Page = () => {
                         spacing={4}
                     >
                         <Stack spacing={1}>
-                            <Stack direction={`row`} spacing={2} sx={{ alignItems: "center" }}>
+                            <Stack direction={`row`} spacing={1} sx={{ alignItems: "center" }}>
                                 <Typography variant="h4" fontSize={25}>
                                     Corte de Corações
                                 </Typography>
@@ -61,7 +61,7 @@ const Page = () => {
 
                     </Stack>
                     <Stack
-                        sx={{ width: "100%", height: "100%" }}
+                        sx={{ width: "100%", height: "95%" }}
                     >
                         <SubPagesCorteCoracao />
                     </Stack>

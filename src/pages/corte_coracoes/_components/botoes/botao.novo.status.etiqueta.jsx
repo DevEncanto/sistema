@@ -6,11 +6,11 @@ import PlusIcon from "@heroicons/react/24/solid/PlusIcon"
 export const BotaoNovoStatus = () => {
 
     const { funcoes, cCorteCoracao } = useContext(CorteCoracaoContext)
-    const subPages = ["tab12"]
+    const subPages = ["MOD12"]
 
     const handleClickNovoLote = () => {
-        funcoes.gControleCorteCoracao("tab13", "tab", false)
-        funcoes.gControleCorteCoracao("tab12", "return", false)
+        funcoes.gControleCorteCoracao("MOD13", "tab", false)
+        funcoes.gControleCorteCoracao("MOD12", "return", false)
     }
 
     return (

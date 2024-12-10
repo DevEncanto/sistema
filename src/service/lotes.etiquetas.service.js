@@ -20,14 +20,14 @@ export class LotesEtiquetasService {
         const validarDados = funcoes.validarDados(dCorteCoracao.lote_etiqueta)
 
         if (!validarDados) {
-            funcoes.exibirAlerta("Preencha todos os campos!", "warning", "tab8", 1800);
+            funcoes.exibirAlerta("Preencha todos os campos!", "warning", "CAD1", 1800);
             return false
         }
 
         const { ano_colheita, ano_corte, data_corte, semana_colheita, semana_corte, etiqueta_inicial, etiqueta_final } = dCorteCoracao.lote_etiqueta
 
         if (etiqueta_inicial > etiqueta_final || etiqueta_final < 0 || etiqueta_inicial < 0) {
-            funcoes.exibirAlerta("Intervalo de etiquetas inválido!", "error", "tab8");
+            funcoes.exibirAlerta("Intervalo de etiquetas inválido!", "error", "CAD1");
             return false
         }
 
@@ -56,14 +56,14 @@ export class LotesEtiquetasService {
             const { data: { message, status, data } } = await aRepository.create(dados)
             funcoes.gControleCorteCoracao(true, "load", false)
             const type = status === 200 ? "success" : "error"
-            const retorno = status === 200 ? "tab4" : "tab8"
+            const retorno = status === 200 ? "TAB1" : "CAD1"
             await funcoes.exibirAlerta(message, type, retorno);
             funcoes.gControleCorteCoracao(false, "load", false)
             if (status === 200) {
                 const old_data = this.dataContext.dData.lotes_etiquetas
                 const new_data = [...old_data, data]
                 this.dataContext.funcoes.dControleDataSimple("lotes_etiquetas", new_data, false)
-                funcoes.gControleCorteCoracao("tab5", "return", false)
+                funcoes.gControleCorteCoracao("TAB1", "return", false)
                 funcoes.resetFormulario("lote_etiqueta")
             }
             return
@@ -86,7 +86,7 @@ export class LotesEtiquetasService {
             funcoes.gControleCorteCoracao(true, "load", false)
             const { data: { message, status, data } } = await aRepository.update(dados)
             const type = status === 200 ? "success" : "error"
-            const retorno = status === 200 ? "tab4" : "tab8"
+            const retorno = status === 200 ? "TAB1" : "MOD1"
             if (status === 200) {
                 const array = this.dataContext.dData.lotes_etiquetas.map(obj =>
                     obj.id_lote_etiqueta === parseInt(data.id_lote_etiqueta) ? data : obj
@@ -94,7 +94,7 @@ export class LotesEtiquetasService {
                 this.dataContext.funcoes.dControleDataSimple("lotes_etiquetas", array, false)
             }
 
-            funcoes.gControleCorteCoracao("tab5", "return", false)
+            funcoes.gControleCorteCoracao("M1", "return", false)
             funcoes.resetFormulario("lote_etiqueta")
             funcoes.gControleCorteCoracao(false, "load", false)
             await funcoes.exibirAlerta(message, type, retorno);
