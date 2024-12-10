@@ -6,7 +6,7 @@ import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.co
 import { Calendario } from "../_components/calendario";
 import { LotesEtiquetasService } from "../../../service/lotes.etiquetas.service";
 
-export const CadastroLoteEtiqueta = () => {
+export const CadastroStatusEtiqueta = () => {
     const corteCoracaoContext = useContext(CorteCoracaoContext);
     const dataContext = useContext(DataContext)
     const { dCorteCoracao, cCorteCoracao, funcoes } = corteCoracaoContext
@@ -58,7 +58,7 @@ export const CadastroLoteEtiqueta = () => {
                         spacing={2}
                     >
                         {cCorteCoracao.edicao ? `Edição ` : `Novo `}
-                        Lote de Etiquetas
+                        Status de Etiquetas
                         {cCorteCoracao.load ?
                             <img src="/assets/loading.svg" width={50} height={50} style={{ marginLeft: "20px" }} />
                             :
@@ -81,21 +81,11 @@ export const CadastroLoteEtiqueta = () => {
                     <Stack
                         sx={{ alignItems: "center" }}
                     >
-                        <Stack direction="row" spacing={1} >
-                            <Calendario object="lote_etiqueta" item="data_corte" value={lote_etiqueta.data_corte} width="198px" label="Data do Corte" />
-                            <Calendario disabled={true} object="lote_etiqueta" item="data_prevista" value={lote_etiqueta.data_prevista} width="198px" label="Data Previsão Colheita" />
+                        <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
+                            <TextField sx={{ ...sxTexfieldMenor, width: "386px", marginTop: "px" }} label="Status Etiqueta" value={lote_etiqueta.semana_corte} />
                         </Stack>
                         <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Semana Corte" value={lote_etiqueta.semana_corte} />
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Semana Colheita" value={lote_etiqueta.semana_colheita} />
-                        </Stack>
-                        <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Ano do Corte" value={lote_etiqueta.ano_corte} />
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Ano da Colheita" value={lote_etiqueta.ano_colheita} />
-                        </Stack>
-                        <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "px" }} label="Etiqueta Inicial" onChange={(e) => { funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_inicial", e) }} value={lote_etiqueta.etiqueta_inicial} />
-                            <TextField sx={{ ...sxTexfieldMenor, width: "198px", marginTop: "8px" }} label="Etiqueta Final" onChange={(e) => { funcoes.gDadosCorteCoracao("lote_etiqueta", "etiqueta_final", e) }} value={lote_etiqueta.etiqueta_final} />
+                            <TextField multiline rows={4} sx={{ ...sxTexfieldMenor, width: "386px", height: "150px", marginTop: "px" }} label="Descrição do Status" value={lote_etiqueta.ano_corte} />
                         </Stack>
                     </Stack>
                 </Stack>
@@ -115,6 +105,13 @@ export const CadastroLoteEtiqueta = () => {
         </Stack >
     );
 };
+
+const CampoComBotao = ({ label, value, onClick }) => (
+    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
+        <TextField sx={sxTexfield} label={label} value={value} />
+        <ButtonSearch onClick={onClick} />
+    </Stack>
+);
 
 const ButtonCancelar = ({ onClick }) => (
     <Button
@@ -147,6 +144,12 @@ const ButtonSalvar = ({ onClick }) => (
         Salvar
     </Button>
 );
+
+const sxTexfield = {
+    width: "350px",
+    height: "60px",
+    marginTop: "5px",
+};
 
 const sxTexfieldMenor = {
     width: "170px",

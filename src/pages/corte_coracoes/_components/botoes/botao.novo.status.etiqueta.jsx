@@ -9,8 +9,8 @@ export const BotaoNovoStatus = () => {
     const subPages = ["tab12"]
 
     const handleClickNovoLote = () => {
-        funcoes.gControleCorteCoracao("tab8", "tab", false)
-        funcoes.gControleCorteCoracao("tab4", "return", false)
+        funcoes.gControleCorteCoracao("tab13", "tab", false)
+        funcoes.gControleCorteCoracao("tab12", "return", false)
     }
 
     return (

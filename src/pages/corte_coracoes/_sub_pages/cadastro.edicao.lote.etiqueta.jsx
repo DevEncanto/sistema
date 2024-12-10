@@ -6,7 +6,7 @@ import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.co
 import { Calendario } from "../_components/calendario";
 import { LotesEtiquetasService } from "../../../service/lotes.etiquetas.service";
 
-export const CadastroStatus0Etiqueta = () => {
+export const CadastroLoteEtiqueta = () => {
     const corteCoracaoContext = useContext(CorteCoracaoContext);
     const dataContext = useContext(DataContext)
     const { dCorteCoracao, cCorteCoracao, funcoes } = corteCoracaoContext
@@ -116,13 +116,6 @@ export const CadastroStatus0Etiqueta = () => {
     );
 };
 
-const CampoComBotao = ({ label, value, onClick }) => (
-    <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-        <TextField sx={sxTexfield} label={label} value={value} />
-        <ButtonSearch onClick={onClick} />
-    </Stack>
-);
-
 const ButtonCancelar = ({ onClick }) => (
     <Button
         variant="contained"
@@ -154,12 +147,6 @@ const ButtonSalvar = ({ onClick }) => (
         Salvar
     </Button>
 );
-
-const sxTexfield = {
-    width: "350px",
-    height: "60px",
-    marginTop: "5px",
-};
 
 const sxTexfieldMenor = {
     width: "170px",

@@ -9,7 +9,7 @@ import { BotaoNovoLote } from './_components/botoes/botao.novo.lote';
 import { BotaoVoltar } from './_components/botoes/botao.voltar';
 import { BotaoFiltroEtiquetas } from './_components/botoes/botao.filtro.etiquetas';
 import { BotaoFiltroListaEtiquetas } from './_components/botoes/botao.filtro.lista.etiquetas';
-import { BotaoNovoStatus } from './_components/botoes/botao.novo.status,etiqueta';
+import { BotaoNovoStatus } from './_components/botoes/botao.novo.status.etiqueta';
 
 const Page = () => {
 

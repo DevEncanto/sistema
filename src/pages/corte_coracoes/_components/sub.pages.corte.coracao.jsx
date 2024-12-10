@@ -2,7 +2,7 @@ import { Divider, Stack } from "@mui/material"
 import { useContext, useEffect } from "react"
 import { DataContext } from "../../../contexts/contexts/data.context"
 import { CorteCoracaoContext } from "../../../contexts/contexts/corte.coracao.context"
-import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.status.etiqueta"
+import { CadastroLoteEtiqueta } from "../_sub_pages/cadastro.edicao.lote.etiqueta"
 import { GeradorEtiquetas } from "../_sub_pages/gerador_etiquetas"
 import { MenuPrincipalCorteCoracao } from "../_sub_pages/menu"
 import { ModalFeedBack } from "../_sub_pages/modal.feedback.user"
@@ -12,6 +12,7 @@ import { MenuFiltroEtiquetas } from "./modais/modal.filtro.etiquetas"
 import { MenuFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/menu.principal"
 import { ModalFiltroListaEtiquetas } from "./modais/modal.filtro.lista.etiquetas/modal.filtro.lista.etiquetas"
 import { TabelaListaEtiquetas } from "./tabelas/tabela.lista.etiquetas"
+import { Cadastros } from "./cadastros"
 
 export const SubPagesCorteCoracao = () => {
 
@@ -58,7 +59,7 @@ export const SubPagesCorteCoracao = () => {
             {tabelas.includes(cCorteCoracao.tab) && <TabelasCorteCoracao minHeigth={540} />}
             {cCorteCoracao.tab === "tab6" ? <TabelasCorteCoracao minHeigth={540} tabela="lista_etiquetas" dados={cCorteCoracao.lista_etiquetas} /> : <></>}
             {cCorteCoracao.tab === "tab7" ? <TabelasCorteCoracao minHeigth={540} tabela="previsoes_mensais" dados={dataContext.dData.previsoes_mensais} /> : <></>}
-            {cCorteCoracao.tab === "tab8" && <CadastroLoteEtiqueta />}
+            <Cadastros />
             {cCorteCoracao.tab === "gerador_etiquetas" && <GeradorEtiquetas />}
             {cCorteCoracao.tab === "previsao_colheita" && <PrevisaoColheita />}
             {cCorteCoracao.tab === "tab11" && <TabelaListaEtiquetas />}
