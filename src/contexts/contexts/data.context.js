@@ -1,21 +1,21 @@
 import { createContext, useState } from "react";
 import { dInitialize } from "../initialize/initialize.data.context";
-    
+
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 
     //Estados de controle do estoque
-
+    //dData = "d" de DataProvider e Data, de Dados seguindo p padrão Camel Case
     const [dData, setDData] = useState(dInitialize)
 
-    const dControleDataSimple = (item, value, target = true) => {
+    const dControleS = (item, value, target = true) => {
         setDData((currentState) => {
             return { ...currentState, [item]: target ? value.target.value : value }
         })
     }
 
-    const dControleDataComplex = (object, item, value, target = true) => {
+    const dControleC= (object, item, value, target = true) => {
         setDData((currentState) => {
             return {
                 ...currentState, [object]: {
@@ -37,11 +37,11 @@ export const DataProvider = ({ children }) => {
     const funcoes = {
         loadLocalStorage: () => { loadLocalStorage() },
         saveLocalStorage: () => { saveLocalStorage() },
-        dControleDataComplex: (object, item, value, target = true) => {
-            dControleDataComplex(object, item, value, target)
+        dControleC: (object, item, value, target = true) => {
+            dControleC(object, item, value, target)
         },
-        dControleDataSimple: (item, value, target = true) => {
-            dControleDataSimple(item, value, target)
+        dControleS: (item, value, target = true) => {
+            dControleS(item, value, target)
         }
     }
 

@@ -51,6 +51,7 @@ const Page = () => {
                         <Stack
                             direction={`row`}
                             spacing={1}
+                            sx={{marginRight: "30px"}} 
                         >
                             <BotaoNovoLote />
                             <BotaoNovoStatus />

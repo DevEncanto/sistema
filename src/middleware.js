@@ -26,18 +26,18 @@ export async function middleware(request) {
         return NextResponse.next()
     }
 
-    const { creationTimestamp, expirationTimestamp } = cookie
+    // const { creationTimestamp, expirationTimestamp } = cookie
 
-    // Verificar se o token é válido
-    if (!isTokenValid(creationTimestamp, expirationTimestamp)) {
-        logger("Usuário não autenticado!")
-        // Evitar redirecionamento se já estiver na página de login
-        if (pathname === "/auth/login") {
-            logger("Permitir prosseguir na página de login.")
-            return NextResponse.next()
-        }
-        return NextResponse.redirect(new URL("/auth/login", request.url))
-    }
+    // // Verificar se o token é válido
+    // if (!isTokenValid(creationTimestamp, expirationTimestamp)) {
+    //     logger("Usuário não autenticado!")
+    //     // Evitar redirecionamento se já estiver na página de login
+    //     if (pathname === "/auth/login") {
+    //         logger("Permitir prosseguir na página de login.")
+    //         return NextResponse.next()
+    //     }
+    //     return NextResponse.redirect(new URL("/auth/login", request.url))
+    // }
 
     // Caso o usuário já esteja autenticado e tente acessar a página de login, redirecionar para a home
     if (pathname === "/auth/login") {

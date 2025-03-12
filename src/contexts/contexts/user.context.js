@@ -8,11 +8,11 @@ export const UserProvider = ({ children }) => {
 
     //Estados de controle do usuário
 
-    const [controle, setControle] = useState({})
+    const [uControle, setUControle] = useState({})
     const router = useRouter()
 
     const gerenciarControle = (e, item, target = true) => {
-        setControle((currentState) => {
+        setUControle((currentState) => {
             return { ...currentState, [item]: target ? e.target.value : e }
         })
     }
@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
     }
 
     const value = {
-        controle,
+        uControle,
         router,
         gerenciarControle,
         statusLogin

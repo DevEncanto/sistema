@@ -11,7 +11,7 @@ const Page = () => {
 
   const dataContext = useContext(DataContext)
   const userContext = useContext(UserContext)
-  const { controle, gerenciarControle } = userContext
+  const { uControle, gerenciarControle } = userContext
 
   const handleLogin = async () => {
     const aService = UsuariosService.build(userContext, dataContext)
@@ -55,7 +55,7 @@ const Page = () => {
                 <Typography variant="h4">
                   Login
                 </Typography>
-                {controle.load ?
+                {uControle.load ?
                   <img src="/assets/loading.svg" width={38} height={38} /> : <></>
                 }
 
@@ -67,13 +67,13 @@ const Page = () => {
                 margin: "-15px 0 20px 0"
               }}
             >
-              {!!(controle.message) ?
+              {!!(uControle.message) ?
                 <Typography
-                  color={controle.alert}
+                  color={uControle.alert}
                   variant="body2"
                   fontWeight={600}
                 >
-                  {controle.message}
+                  {uControle.message}
                 </Typography> :
                 <></>
               }
@@ -85,14 +85,14 @@ const Page = () => {
                 name="usuario"
                 onChange={(e) => { gerenciarControle(e, "usuario") }}
                 type="text"
-                value={controle.usuario}
+                value={uControle.usuario}
               />
               <TextField
                 fullWidth
                 label="Senha"
                 name="password"
                 onChange={(e) => { gerenciarControle(e, "senha") }}
-                value={controle.senha}
+                value={uControle.senha}
                 type="password"
               />
             </Stack>

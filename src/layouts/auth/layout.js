@@ -47,8 +47,6 @@ export const Layout = (props) => {
             }}
           >
             <Box
-              component={NextLink}
-              href="/atualizacoes"
               sx={{
                 display: 'inline-flex',
                 height: 32,
@@ -60,8 +58,8 @@ export const Layout = (props) => {
                 className='imagem-auth'
                 alt=""
                 src="/assets/logo_encanto_transparente.png"
-                width={140}
-                height={140}
+                width={130}
+                height={130}
               />
             </Box>
           </Box>
